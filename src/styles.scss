@@ -3,9 +3,8 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-* {
-  font-family: "Rubik", sans-serif !important;
-}
+*{font-family: "Rubik", sans-serif !important;}
+body{background-color: rgb(241, 241, 241);}
 
 .switchButton {
   background: rgb(71, 180, 58);

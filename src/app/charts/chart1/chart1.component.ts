@@ -46,15 +46,18 @@ export class Chart1Component {
   constructor() {
     this.chartOptions = {
       series: [{
-          name: "Marine Sprite",
-          data: [12, 50, 32, 89, 65, 173, 83, 20]
-        }],
+        name: "Marine Sprite",
+        data: [12, 50, 32, 89, 65, 173, 83, 20, 12, 50, 32, 89, 65, 173, 83]
+      },{
+        name: "Marine Sprite-2",
+        data: [20, 100, 10, 40, 60, 100, 24, 64, 30, 10, 5, 150, 200, 123, 5]
+      }],
       chart: {
-        width: '90%',
-        offsetX: 10,
+        // width: '90%',
+        // offsetX: 10,
         offsetY: -10,
         type: "bar",
-        height: 345,
+        height: 700,
         stacked: false,
         toolbar: {
           show: false
@@ -62,17 +65,17 @@ export class Chart1Component {
       },
       plotOptions: {
         bar: {
-          horizontal: true,
+          // horizontal: true,
           startingShape: 'flat',
           endingShape: 'rounded',
         }
       },
       fill: {
-        colors: ['#3dd13f'],
+        colors: ['#3dd13f', '#6246ea'],
         type: "gradient",
         gradient: {
           shade: "light",
-          type: "vertical",
+          type: "horizontal",
           shadeIntensity: 0.25,
           gradientToColors: undefined,
           inverseColors: true,
