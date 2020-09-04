@@ -122,7 +122,7 @@ export class Chart1Component {
         show: false
       },
       xaxis: {
-        categories: [0, 25, 75, 100, 125, 150, 175, 225, 250, 275, 300, 325, 350, 375, 400],
+        categories: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
         labels: {
           show: true,
         },
