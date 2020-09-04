@@ -1,73 +1,47 @@
 <!-- Создаю макет -->
 <div class="row" style="width: 100%;" *ngIf="!adaptCharts;else fitCharts">
-
     <div class="col-sm-6">
-        <!-- <nb-card class="template-left-top-card" size="large">
-          <ngx-chart9></ngx-chart9>
-      </nb-card> -->
         <div class="row">
             <div class="col-sm-6 small">
-                <nb-card class="template-left-bottom-card" size="small">
+                <div class="template-left-bottom-card" size="small">
                     <ngx-chart7></ngx-chart7>
-                </nb-card>
+                </div>
             </div>
-            <!-- <div class="col-sm-6 small">
-              <nb-card class="template-left-bottom-card" size="small">
-                  <ngx-chart8></ngx-chart8>
-              </nb-card>
-          </div> -->
         </div>
     </div>
 
     <div class="col-sm-3">
-        <!-- <nb-card class="template-right-top-card" size="small">
-          <ngx-chart5></ngx-chart5>
-      </nb-card> -->
-        <nb-card class="template-right-medium-card" size="small">
+        <div class="template-right-medium-card" size="small">
             <ngx-chart1></ngx-chart1>
-        </nb-card>
-        <!-- <nb-card class="template-right-bottom-card" size="tiny">
-          <ngx-chart6></ngx-chart6>
-      </nb-card> -->
+        </div>
     </div>
 
     <div class="col-sm-3">
-        <nb-card class="template-right-top-card" size="small">
+        <div class="template-right-top-card" size="small">
             <ngx-chart2></ngx-chart2>
-        </nb-card>
-        <!-- <nb-card class="template-right-medium-card" size="small">
-          <ngx-chart3></ngx-chart3>
-      </nb-card> -->
-        <!-- <nb-card class="template-right-bottom-card" size="tiny">
-          <ngx-chart4></ngx-chart4>
-      </nb-card> -->
+        </div>
     </div>
 
 </div>
 
 <ng-template #fitCharts>
     <div class="row" style="width: 100%;">
-
         <div class="col-sm-6">
-            <!-- <nb-card class="template-left-top-card" size="large">
-                <ngx-chart9></ngx-chart9>
-            </nb-card> -->
             <div class="row">
                 <div class="col-sm-6 small">
-                    <nb-card class="template-left-bottom-card" size="small">
+                    <div class="template-left-bottom-card" size="small">
                         <ngx-chart7></ngx-chart7>
-                    </nb-card>
+                    </div>
                 </div>
-
                 <div class="col-sm-6">
-                    <nb-card class="template-right-medium-card" size="small">
+                    <div class="template-right-medium-card" size="small">
                         <ngx-chart1></ngx-chart1>
-                    </nb-card>
+                    </div>
                 </div>
                 <div class="col-sm-6">
-                    <nb-card class="template-right-medium-card" size="small">
+                    <div class="template-right-medium-card" size="small">
                         <ngx-chart2></ngx-chart2>
-                    </nb-card>
+                    </div>
                 </div>
             </div>
         </div>
