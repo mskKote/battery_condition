@@ -45,7 +45,7 @@ export class Chart2Component {
 
   constructor() {
     this.chartOptions = {
-      series: [55],
+      series: [100],
       title: {
         text: 'Chart 2',
         offsetY: 35
@@ -57,35 +57,62 @@ export class Chart2Component {
       },
       plotOptions: {
         radialBar: {
-          startAngle: -125,
-          endAngle: 125,
+          startAngle: -90,
+          endAngle: 90,
           dataLabels: {
             name: {
+              offsetY: -25,
               fontSize: "16px",
+              colour: 'black',
+              
             },
             value: {
+              offsetY: -20,
               fontSize: "22px",
               formatter: (val: number) => val + "%"
-            }
+            },
           }
         }
       },
-      // '#47b43a', '#fdfb1d', '#fc4545'
-      colors: ['red'],
       fill: {
         type: "gradient",
         gradient: {
+          shade: "light",
           type: "horizontal",
-          gradientFromColors: ['#47b43a', '#fdfb1d', '#fc4545'],
-          inverseColors: false,
-          stops: [0, 50, 100],
-          colorStops: []
+          inverseColors: true,
+          colorStops: [
+            {
+              offset: 0,
+              color: "#00ff00",
+              opacity: 1
+            },
+            {
+              offset: 20,
+              color: "#b0ff00",
+              opacity: 1
+            },
+            {
+              offset: 50,
+              color: "#f9ff00",
+              opacity: 1
+            },
+            {
+              offset: 80,
+              color: "#ffaf00",
+              opacity: 1
+            },
+            {
+              offset: 100,
+              color: "#ff0000",
+              opacity: 1
+            },
+          ]
         }
       },
       stroke: {
         dashArray: 6
       },
-      labels: ["Median Ratio"]
+      labels: ["Уровень зарядки"]
     };
   }
 }
