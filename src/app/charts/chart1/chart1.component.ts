@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild } from '@angular/core';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -14,8 +14,8 @@ import {
   ApexResponsive,
   ApexDataLabels,
   ApexLegend,
-  ApexFill
-} from "ng-apexcharts";
+  ApexFill,
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -31,110 +31,164 @@ export type ChartOptions = {
   responsive: ApexResponsive;
   dataLabels: ApexDataLabels;
   legend: ApexLegend;
-  fill: ApexFill
+  fill: ApexFill;
 };
 
 @Component({
   selector: 'ngx-chart1',
   templateUrl: './chart1.component.html',
-  styleUrls: ['./chart1.component.scss']
+  styleUrls: ['./chart1.component.scss'],
 })
 export class Chart1Component {
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<any>;
 
   constructor() {
     this.chartOptions = {
-      series: [{
-        name: "Marine Sprite",
-        data: [1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85]
-      },{
-        name: "Marine Sprite-2",
-        data: [1.85, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75]
-      }],
+      series: [
+        {
+          name: 'Вольтаж',
+          data: [
+            1.85,
+            1.95,
+            2.15,
+            2.0,
+            1.75,
+            2.45,
+            2.55,
+            1.8,
+            2.3,
+            1.85,
+            1.85,
+            2.65,
+            1.85,
+            2.2,
+            2.25,
+          ],
+        },
+        {
+          name: 'Вольтаж',
+          data: [
+            1.85,
+            2.45,
+            2.7,
+            2.0,
+            1.95,
+            2.2,
+            2.35,
+            2.55,
+            2.45,
+            2.65,
+            2.4,
+            2.55,
+            1.8,
+            2.15,
+            2.0,
+          ],
+        },
+      ],
       chart: {
         offsetY: -10,
-        type: "bar",
+        type: 'bar',
         height: 700,
         stacked: false,
         toolbar: {
-          show: false
-        }
+          show: false,
+        },
       },
       plotOptions: {
         bar: {
           startingShape: 'flat',
           endingShape: 'rounded',
-        }
+        },
       },
       fill: {
-        type: "gradient",
+        type: 'gradient',
         gradient: {
-          shade: "light",
-          type: "vertical",
-          inverseColors: true,
+          shade: 'light',
+          type: 'vertical',
+          shadeIntensity: 0.5,
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 1,
           colorStops: [
-            {
-              offset: 1.75,
-              color: "#00ff00",
-              opacity: .75
-            },
-            {
-              offset:  1.95,
-              color: "#b0ff00",
-              opacity: .75
-            },
-            {
-              offset:  2.15,
-              color: "#f9ff00",
-              opacity: .75
-            },
-            {
-              offset:  2.45,
-              color: "#ffaf00",
-              opacity: .75
-            },
-            {
-              offset:  2.75,
-              color: "#ff0000",
-              opacity: .75
-            },
-          ]
-        }
+              {
+                offsetY: 1.75,
+                color: 'red',
+                opacity: 1,
+              },
+              {
+                offsetY: 2.45,
+                color: 'yellow',
+                opacity: 1,
+              },
+              {
+                offsetY: 2.75,
+                color: 'green',
+                opacity: 1,
+              },
+          ],
+          //   {
+          //     offset: 1,
+          //     color: '#00ff00',
+          //     opacity: 0.75,
+          //   },
+          //   {
+          //     offset: 2,
+          //     color: '#b0ff00',
+          //     opacity: 0.75,
+          //   },
+          //   {
+          //     offset: 2,
+          //     color: '#f9ff00',
+          //     opacity: 0.75,
+          //   },
+          //   {
+          //     offset: 2,
+          //     color: '#ffaf00',
+          //     opacity: 0.75,
+          //   },
+          //   {
+          //     offset: 0,
+          //     color: '#ff0000',
+          //     opacity: 0.75,
+          //   },
+          // ],
+        },
       },
       grid: {
         xaxis: {
           lines: {
             show: false,
-          }
+          },
         },
         yaxis: {
           lines: {
             show: false,
-          }
+          },
         },
       },
       title: {
         offsetY: 10,
-        text: "Chart 1 | Зарядка всех батареек"
+        text: 'Chart 1 | Зарядка всех батареек',
       },
       legend: {
-        show: false
+        show: false,
       },
       xaxis: {
-        categories: [0, 25, 75, 100, 125, 150, 175, 225, 250, 275, 300, 325, 350, 375, 400],
+        categories: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
         labels: {
           show: true,
         },
         axisBorder: {
-            show: false,
+          show: false,
         },
         crosshairs: {
-            show: false,
+          show: false,
         },
         tooltip: {
-            enabled: true,
-        }
+          enabled: true,
+        },
       },
       yaxis: {
         show: true,
@@ -142,22 +196,22 @@ export class Chart1Component {
         max: 2.75,
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       tooltip: {
         enabled: true,
         theme: 'light',
         marker: {
-            show: false,
+          show: false,
         },
         x: {
-          show: false
-        }
-      }
-    }
+          show: false,
+        },
+      },
+    };
   }
 
   brightness: {} = {
     low: [],
-  }
+  };
 }
