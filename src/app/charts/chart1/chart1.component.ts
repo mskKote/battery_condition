@@ -47,14 +47,12 @@ export class Chart1Component {
     this.chartOptions = {
       series: [{
         name: "Marine Sprite",
-        data: [12, 50, 32, 89, 65, 173, 83, 20, 12, 50, 32, 89, 65, 173, 83]
+        data: [1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85, 1.85]
       },{
         name: "Marine Sprite-2",
-        data: [20, 100, 10, 40, 60, 100, 24, 64, 30, 10, 5, 150, 200, 123, 5]
+        data: [1.85, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75, 2.75]
       }],
       chart: {
-        // width: '90%',
-        // offsetX: 10,
         offsetY: -10,
         type: "bar",
         height: 700,
@@ -65,23 +63,43 @@ export class Chart1Component {
       },
       plotOptions: {
         bar: {
-          // horizontal: true,
           startingShape: 'flat',
           endingShape: 'rounded',
         }
       },
       fill: {
-        colors: ['#3dd13f', '#6246ea'],
         type: "gradient",
         gradient: {
           shade: "light",
-          type: "horizontal",
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
+          type: "vertical",
           inverseColors: true,
-          opacityFrom: 0.85,
-          opacityTo: 0.85,
-          stops: [50, 0, 100]
+          colorStops: [
+            {
+              offset: 1.75,
+              color: "#00ff00",
+              opacity: .75
+            },
+            {
+              offset:  1.95,
+              color: "#b0ff00",
+              opacity: .75
+            },
+            {
+              offset:  2.15,
+              color: "#f9ff00",
+              opacity: .75
+            },
+            {
+              offset:  2.45,
+              color: "#ffaf00",
+              opacity: .75
+            },
+            {
+              offset:  2.75,
+              color: "#ff0000",
+              opacity: .75
+            },
+          ]
         }
       },
       grid: {
@@ -98,13 +116,13 @@ export class Chart1Component {
       },
       title: {
         offsetY: 10,
-        text: "Chart 1"
+        text: "Chart 1 | Зарядка всех батареек"
       },
       legend: {
         show: false
       },
       xaxis: {
-        categories: [0, 25, 75, 100, 125, 150, 175, 200].reverse(),
+        categories: [0, 25, 75, 100, 125, 150, 175, 225, 250, 275, 300, 325, 350, 375, 400],
         labels: {
           show: true,
         },
@@ -117,6 +135,11 @@ export class Chart1Component {
         tooltip: {
             enabled: true,
         }
+      },
+      yaxis: {
+        show: true,
+        min: 1.75,
+        max: 2.75,
       },
       dataLabels: {
         enabled: false
@@ -132,5 +155,9 @@ export class Chart1Component {
         }
       }
     }
+  }
+
+  brightness: {} = {
+    low: [],
   }
 }

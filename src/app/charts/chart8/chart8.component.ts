@@ -24,11 +24,11 @@ export type ChartOptions = {
   tooltip: ApexTooltip;
 };
 @Component({
-  selector: 'ngx-chart7',
-  templateUrl: './chart7.component.html',
-  styleUrls: ['./chart7.component.scss']
+  selector: 'ngx-chart8',
+  templateUrl: './chart8.component.html',
+  styleUrls: ['./chart8.component.scss']
 })
-export class Chart7Component {
+export class Chart8Component {
   
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<any>;
@@ -62,12 +62,12 @@ export class Chart7Component {
         colors: ['#39DA8A']
       },
       title: {
-        text: 'Chart 7 | Потребление по амперам от времени'
+        text: 'Chart 8 | Температура от времени'
       },
       yaxis: {
         show: true,
         title: {
-          text: 'Ампер'
+          text: 'Температура'
         }
       },
       xaxis: {
