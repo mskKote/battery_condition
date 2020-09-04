@@ -1,0 +1,20 @@
+// #E1ECFE гол #8F96A0 сер #598DFF син
+.grid{
+    grid-template-columns: repeat(4, 1fr);
+    padding-left: 100px;
+
+    .btn-filter{
+        display: inline-block;
+        margin: 30px 5px 0 5px;
+        padding: 10px;
+        border-radius: 3px;
+        background-color: white;
+        color: #8F96A0;
+        outline: none;
+        border: none;
+        transition: .1s;
+    }
+    .btn-filter:hover, .clicked{
+        background-color: #E1ECFE;
+    }
+}
