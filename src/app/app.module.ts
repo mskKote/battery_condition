@@ -10,18 +10,12 @@ import { Chart6Component } from './charts/chart6/chart6.component';
 import { Chart7Component } from './charts/chart7/chart7.component';
 import { Chart8Component } from './charts/chart8/chart8.component';
 import { Chart9Component } from './charts/chart9/chart9.component';
-// import { ChartjsBarComponent } from './charts/chartjs-bar.component';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    // ChartjsBarComponent,
-    NgApexchartsModule,
+    AppComponent,
     Chart1Component,
     Chart5Component,
     Chart2Component,
@@ -31,6 +25,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     Chart7Component,
     Chart8Component,
     Chart9Component,
+  ],
+  imports: [
+    BrowserModule,
+    // ChartjsBarComponent,
+    NgApexchartsModule,
     NgbModule
   ],
   providers: [],

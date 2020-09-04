@@ -36,6 +36,7 @@ export type ChartOptions = {
 @Component({
   selector: 'ngx-chart9',
   templateUrl: './chart9.component.html',
+  // templateUrl: './chart9.component.html',
   styleUrls: ['./chart9.component.scss']
 })
 export class Chart9Component{
