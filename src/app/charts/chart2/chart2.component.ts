@@ -70,17 +70,16 @@ export class Chart2Component {
           }
         }
       },
-      colors: ['blue'],
+      // '#47b43a', '#fdfb1d', '#fc4545'
+      colors: ['red'],
       fill: {
         type: "gradient",
         gradient: {
-          type: 'diagonal1',
-          gradientToColors: ["red"],
-          shadeIntensity: 0.15,
+          type: "horizontal",
+          gradientFromColors: ['#47b43a', '#fdfb1d', '#fc4545'],
           inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100]
+          stops: [0, 50, 100],
+          colorStops: []
         }
       },
       stroke: {
