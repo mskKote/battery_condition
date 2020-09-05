@@ -107,27 +107,11 @@ export class Chart1Component {
         gradient: {
           shade: 'light',
           type: 'vertical',
-          shadeIntensity: 0.5,
+          shadeIntensity: 0.1,
           inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 1,
-          colorStops: [
-              {
-                offsetY: 1.75,
-                color: 'red',
-                opacity: 1,
-              },
-              {
-                offsetY: 2.45,
-                color: 'yellow',
-                opacity: 1,
-              },
-              {
-                offsetY: 2.75,
-                color: 'green',
-                opacity: 1,
-              },
-          ],
+          gradientToColors: ['#00ff00','#00ff00'],
+          opacityFrom: 0.9,
+          opacityTo: 0.5,
           //   {
           //     offset: 1,
           //     color: '#00ff00',
@@ -154,7 +138,7 @@ export class Chart1Component {
           //     opacity: 0.75,
           //   },
           // ],
-        },
+        }
       },
       grid: {
         xaxis: {
