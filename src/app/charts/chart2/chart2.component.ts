@@ -47,10 +47,11 @@ export class Chart2Component {
     this.chartOptions = {
       series: [100],
       title: {
+        offsetY: 0,
         text: 'Chart 2 | Зарядка батареи сейчас',
       },
       chart: {
-        offsetY: 35,
+        offsetY: 38,
         height: 300,
         type: 'radialBar',
       },

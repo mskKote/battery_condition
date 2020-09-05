@@ -90,7 +90,7 @@ export class Chart1Component {
       chart: {
         offsetY: -10,
         type: 'bar',
-        height: 700,
+        height: 'auto',
         stacked: false,
         toolbar: {
           show: false,
@@ -112,32 +112,33 @@ export class Chart1Component {
           gradientToColors: ['#00ff00','#00ff00'],
           opacityFrom: 0.9,
           opacityTo: 0.5,
-          //   {
-          //     offset: 1,
-          //     color: '#00ff00',
-          //     opacity: 0.75,
-          //   },
-          //   {
-          //     offset: 2,
-          //     color: '#b0ff00',
-          //     opacity: 0.75,
-          //   },
-          //   {
-          //     offset: 2,
-          //     color: '#f9ff00',
-          //     opacity: 0.75,
-          //   },
-          //   {
-          //     offset: 2,
-          //     color: '#ffaf00',
-          //     opacity: 0.75,
-          //   },
-          //   {
-          //     offset: 0,
-          //     color: '#ff0000',
-          //     opacity: 0.75,
-          //   },
-          // ],
+          colorstart:[
+            {
+              offset: 0,
+              color: '#00ff00',
+              opacity: 0.75,
+            },
+            {
+              offset: 15,
+              color: '#b0ff00',
+              opacity: 0.75,
+            },
+            {
+              offset: 50,
+              color: '#f9ff00',
+              opacity: 0.75,
+            },
+            {
+              offset: 85,
+              color: '#ffaf00',
+              opacity: 0.75,
+            },
+            {
+              offset: 100,
+              color: '#ff0000',
+              opacity: 0.75,
+            },
+          ],
         }
       },
       grid: {
@@ -160,7 +161,8 @@ export class Chart1Component {
         show: false,
       },
       xaxis: {
-        categories: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+        // categories: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
         labels: {
           show: true,
         },
@@ -176,8 +178,10 @@ export class Chart1Component {
       },
       yaxis: {
         show: true,
+        tickAmount:10.5,
         min: 1.75,
-        max: 2.75,
+        max: 2.80,
+        forceNiceScale: true,
       },
       dataLabels: {
         enabled: false,
