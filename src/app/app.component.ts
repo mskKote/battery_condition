@@ -1,3 +1,4 @@
+import { ServerService, totals,total,val } from './server.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  constructor() {
-    
-  }
-  
-  ngOnInit() {
+  constructor(public server:ServerService) {
 
+  }
+
+  mew:totals;
+  ngOnInit() {
+    this.server.getDataQuery();
   }
 }

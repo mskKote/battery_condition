@@ -30,3 +30,6 @@
         </div>
     </div>
 </div>
+<div *ngFor="let dataSource of server.datas">
+  {{dataSource.data[0].voltages[0].index|json}}
+</div>
