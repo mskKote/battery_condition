@@ -24,11 +24,11 @@ export type ChartOptions = {
   tooltip: ApexTooltip;
 };
 @Component({
-  selector: 'ngx-chart8',
-  templateUrl: './chart8.component.html',
-  styleUrls: ['./chart8.component.scss']
+  selector: 'ngx-chart4',
+  templateUrl: './chart4.component.html',
+  styleUrls: ['./chart4.component.scss']
 })
-export class Chart8Component {
+export class Chart4Component {
   
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<any>;
