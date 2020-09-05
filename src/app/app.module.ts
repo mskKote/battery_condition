@@ -1,3 +1,4 @@
+import { ServerService } from './server.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -7,6 +8,7 @@ import { Chart3Component } from './charts/chart3/chart3.component';
 import { Chart4Component } from './charts/chart4/chart4.component';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {HttpClientModule} from '@angular/common/http'
 import { HeaderComponent } from './header/header.component';
 import { DateRangePickerModule } from '@uiowa/date-range-picker';
 
@@ -21,11 +23,12 @@ import { DateRangePickerModule } from '@uiowa/date-range-picker';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     NgApexchartsModule,
     DateRangePickerModule,
     NgbModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [ServerService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
