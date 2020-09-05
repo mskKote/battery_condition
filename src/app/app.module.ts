@@ -8,9 +8,11 @@ import { Chart3Component } from './charts/chart3/chart3.component';
 import { Chart4Component } from './charts/chart4/chart4.component';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 import { HeaderComponent } from './header/header.component';
 import { DateRangePickerModule } from '@uiowa/date-range-picker';
+import { SeriesPipe } from './charts/chart3/series.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,15 @@ import { DateRangePickerModule } from '@uiowa/date-range-picker';
     Chart3Component,
     Chart4Component,
     HeaderComponent,
+    SeriesPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgApexchartsModule,
     DateRangePickerModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
   ],
   providers: [ServerService],

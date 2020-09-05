@@ -1,3 +1,4 @@
+import { OnChanges, SimpleChanges } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { DateRange } from '@uiowa/date-range-picker';
 
@@ -6,7 +7,7 @@ import { DateRange } from '@uiowa/date-range-picker';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
   constructor() {}
 
   elClicked: any;
@@ -23,5 +24,9 @@ export class HeaderComponent implements OnInit {
   date: Date;
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate() + 20);
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("FIGNYA")
+    // console.log(this.dateRange)
   }
 }

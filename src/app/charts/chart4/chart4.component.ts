@@ -36,9 +36,10 @@ export class Chart4Component {
     this.chartOptions = {
       series: [{
         name: 'Series 1',
-        data: [80, 50, 30, 40, 90, 20, 5, 35, 50, 55],
+        data: [344, -55, -55, -55, -55, -55, -55, -55, -55, -55],
       }],
       chart: {
+        offsetY: 30,
         height: 350,
         type: 'line',
         toolbar: {
@@ -71,7 +72,18 @@ export class Chart4Component {
       },
       xaxis: {
         type: 'category',
-        categories: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'],
+        categories: [
+          new Date(1599232519).toLocaleDateString('ru', this.opts),
+          new Date(1599296061).toLocaleDateString('ru', this.opts),
+          new Date(1599296064).toLocaleDateString('ru', this.opts),
+          new Date(1599296067).toLocaleDateString('ru', this.opts),
+          new Date(1599296070).toLocaleDateString('ru', this.opts),
+          new Date(1599296073).toLocaleDateString('ru', this.opts),
+          new Date(1599296076).toLocaleDateString('ru', this.opts),
+          new Date(1599296079).toLocaleDateString('ru', this.opts),
+          new Date(1599296082).toLocaleDateString('ru', this.opts),
+          new Date(1599296085).toLocaleDateString('ru', this.opts),
+        ],
         title: {
           text: 'Время'
         },
@@ -121,4 +133,9 @@ export class Chart4Component {
       }
     };
   }
+  opts = {
+    year: '2-digit',
+    month: '2-digit',
+    day: 'numeric',
+  };
 }

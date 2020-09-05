@@ -1,4 +1,14 @@
-import { Component, ViewChild, Output, OnInit, Input, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  Output,
+  OnInit,
+  Input,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -10,7 +20,7 @@ import {
   ApexGrid,
   ApexMarkers,
   ApexTooltip,
-} from "ng-apexcharts";
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -26,21 +36,88 @@ export type ChartOptions = {
 @Component({
   selector: 'ngx-chart3',
   templateUrl: './chart3.component.html',
-  styleUrls: ['./chart3.component.scss']
+  styleUrls: ['./chart3.component.scss'],
 })
-export class Chart3Component implements OnInit{
-  @Input() chart3: any
-  
-  @ViewChild("chart", { static: false }) chart: ChartComponent;
+export class Chart3Component {
+  // @ViewChild('chart') chart: ChartComponent;
+
+  // form: FormGroup;
+
+  // constructor() {
+  //   this.form = new FormGroup({
+  //     title: new FormControl('Basic Chart'),
+  //     type: new FormControl('line'),
+  //     height: new FormControl(350),
+  //     series: new FormArray([
+  //       new FormGroup({
+  //         name: new FormControl('Series'),
+  //         type: new FormControl('line'),
+  //         data: new FormArray([
+  //           new FormControl(this.getRandomArbitrary(0, 100)),
+  //           new FormControl(this.getRandomArbitrary(0, 100)),
+  //           new FormControl(this.getRandomArbitrary(0, 100)),
+  //           new FormControl(this.getRandomArbitrary(0, 100)),
+  //         ]),
+  //       }),
+  //     ]),
+  //     xaxis: new FormArray([
+  //       new FormControl('Jan'),
+  //       new FormControl('Feb'),
+  //       new FormControl('Mar'),
+  //       new FormControl('Apr'),
+  //     ]),
+  //   });
+  // }
+
+  // addValue() {
+  //   (<FormArray>this.form.get('series')).controls.forEach((c) => {
+  //     (<FormArray>c.get('data')).push(
+  //       new FormControl(this.getRandomArbitrary(0, 100))
+  //     );
+  //   });
+  //   (<FormArray>this.form.get('xaxis')).push(new FormControl('Jan'));
+  // }
+
+  // addSeries() {
+  //   (<FormArray>this.form.get('series')).push(
+  //     new FormGroup({
+  //       name: new FormControl('Series'),
+  //       type: new FormControl('line'),
+  //       data: new FormArray([
+  //         new FormControl(this.getRandomArbitrary(0, 100)),
+  //         new FormControl(this.getRandomArbitrary(0, 100)),
+  //         new FormControl(this.getRandomArbitrary(0, 100)),
+  //         new FormControl(this.getRandomArbitrary(0, 100)),
+  //       ]),
+  //     })
+  //   );
+  // }
+
+  // withoutType(series) {
+  //   return series.map((s) => {
+  //     return { name: s.name, data: s.data };
+  //   });
+  // }
+
+  // private getRandomArbitrary(min, max) {
+  //   return Math.random() * (max - min) + min;
+  // }
+
+  @Input() chart3: any;
+  @ViewChild('chart', { static: false }) chart: ChartComponent;
   public chartOptions: Partial<any>;
 
   constructor() {
     this.chartOptions = {
-      series: [{
-        name: 'Series 1',
-        data: [-80, 50, 30, 40, 90, 20, 5, 35, 50, 55],
-      }],
+      series: [
+        {
+          name: 'Series 1',
+          data: [6, -55, -55, 2178, 2213, -55, 2197, -55, -55, 2195],
+          // data: this.chart3.yVal
+        },
+      ],
       chart: {
+        offsetY: 30,
         height: 350,
         type: 'line',
         toolbar: {
@@ -51,55 +128,66 @@ export class Chart3Component implements OnInit{
           top: 5,
           blur: 3,
           color: '#39DA8A',
-          opacity: 0.35
+          opacity: 0.35,
         },
         zoom: {
           enabled: false,
-        }
+        },
       },
       stroke: {
         show: true,
         curve: 'smooth',
-        colors: ['#39DA8A']
+        colors: ['#39DA8A'],
       },
       title: {
-        text: 'Chart 3 | Потребление по амперам от времени'
+        text: 'Chart 3 | Потребление по амперам от времени',
       },
       yaxis: {
         show: true,
         title: {
-          text: 'Ампер'
-        }
+          text: 'Ампер',
+        },
       },
       xaxis: {
         type: 'category',
-        categories: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'],
+        categories: [
+          new Date(1599232519).toLocaleDateString('ru', this.opts),
+          new Date(1599296061).toLocaleDateString('ru', this.opts),
+          new Date(1599296064).toLocaleDateString('ru', this.opts),
+          new Date(1599296067).toLocaleDateString('ru', this.opts),
+          new Date(1599296070).toLocaleDateString('ru', this.opts),
+          new Date(1599296073).toLocaleDateString('ru', this.opts),
+          new Date(1599296076).toLocaleDateString('ru', this.opts),
+          new Date(1599296079).toLocaleDateString('ru', this.opts),
+          new Date(1599296082).toLocaleDateString('ru', this.opts),
+          new Date(1599296085).toLocaleDateString('ru', this.opts),
+        ],
         title: {
-          text: 'Время'
+          text: 'Время',
         },
         labels: {
-            show: true,
+          show: true,
         },
         axisBorder: {
-            show: false,
+          show: false,
         },
         crosshairs: {
-            show: true,
+          show: true,
         },
         tooltip: {
-            enabled: true,
-        }
+          enabled: true,
+        },
       },
       grid: {
         xaxis: {
           lines: {
             show: false,
-          }
+          },
         },
         yaxis: {
           lines: {
             show: false,
-          }
+          },
         },
       },
       markers: {
@@ -108,39 +196,25 @@ export class Chart3Component implements OnInit{
         strokeWidth: 3,
         hover: {
           size: 7,
-          sizeOffset: 3
-        }
+          sizeOffset: 3,
+        },
       },
       tooltip: {
         enabled: true,
         theme: 'light',
         marker: {
-            show: false,
+          show: false,
         },
         x: {
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     };
   }
 
-  ngOnInit() {
-    console.log(this.chart3.yVal);
-    setInterval(() => {
-      this.updateSeries()
-    }, 1000);
-  }
-  updateSeries() {
-    let vals = [];
-    for(let i = 0, l = this.chart3.yVal.length; i < l; i++) {
-      vals.push(this.chart3.yVal[i])
-    }
-    this.chartOptions.series[0].data = vals;
-    // console.log(this.chartOptions.series[0])
-  }
-  updateCategories() {
-    this.chartOptions.series = [{
-      data: [23, 44, 1, 22]
-    }];
-  }
+  opts = {
+    year: '2-digit',
+    month: '2-digit',
+    day: 'numeric',
+  };
 }

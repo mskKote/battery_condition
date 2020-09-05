@@ -45,14 +45,43 @@ export class Chart2Component {
 
   constructor() {
     this.chartOptions = {
-      series: [100],
+      series: [
+        1.85+
+        1.95+
+        2.15+
+        2.0+
+        1.75+
+        2.45+
+        2.55+
+        1.8+
+        2.3+
+        1.85+
+        1.85+
+        2.65+
+        1.85+
+        2.2+
+        2.25+
+        1.85+
+        2.45+
+        2.7+
+        2.0+
+        1.95+
+        2.2+
+        2.35+
+        2.55+
+        2.45+
+        2.65+
+        2.4+
+        2.55+
+        1.8+
+        2.15+
+        2.0],
       title: {
-        offsetY: 0,
         text: 'Chart 2 | Зарядка батареи сейчас',
       },
       chart: {
-        offsetY: 38,
-        height: 300,
+        offsetY: 15,
+        height: 500,
         type: 'radialBar',
       },
       plotOptions: {
@@ -64,13 +93,13 @@ export class Chart2Component {
           endAngle: 90,
           dataLabels: {
             name: {
-              offsetY: -25,
+              offsetY: 45,
               fontSize: '14px',
               fontWeight: 700,
               // color: '#00000',
             },
             value: {
-              offsetY: -18,
+              offsetY: 60,
               fontSize: '20px',
               fontWeight: 400,
               // color: '#00000',
