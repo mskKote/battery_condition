@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, Output, OnInit, Input, AfterViewInit } from "@angular/core";
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -9,7 +9,7 @@ import {
   ApexStroke,
   ApexGrid,
   ApexMarkers,
-  ApexTooltip
+  ApexTooltip,
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -28,16 +28,17 @@ export type ChartOptions = {
   templateUrl: './chart3.component.html',
   styleUrls: ['./chart3.component.scss']
 })
-export class Chart3Component {
+export class Chart3Component implements OnInit{
+  @Input() chart3: any
   
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild("chart", { static: false }) chart: ChartComponent;
   public chartOptions: Partial<any>;
-  
+
   constructor() {
     this.chartOptions = {
       series: [{
         name: 'Series 1',
-        data: [80, 50, 30, 40, 90, 20, 5, 35, 50, 55],
+        data: [-80, 50, 30, 40, 90, 20, 5, 35, 50, 55],
       }],
       chart: {
         height: 350,
@@ -62,7 +63,7 @@ export class Chart3Component {
         colors: ['#39DA8A']
       },
       title: {
-        text: 'Chart 7 | Потребление по амперам от времени'
+        text: 'Chart 3 | Потребление по амперам от времени'
       },
       yaxis: {
         show: true,
@@ -121,5 +122,25 @@ export class Chart3Component {
         }
       }
     };
+  }
+
+  ngOnInit() {
+    console.log(this.chart3.yVal);
+    setInterval(() => {
+      this.updateSeries()
+    }, 1000);
+  }
+  updateSeries() {
+    let vals = [];
+    for(let i = 0, l = this.chart3.yVal.length; i < l; i++) {
+      vals.push(this.chart3.yVal[i])
+    }
+    this.chartOptions.series[0].data = vals;
+    // console.log(this.chartOptions.series[0])
+  }
+  updateCategories() {
+    this.chartOptions.series = [{
+      data: [23, 44, 1, 22]
+    }];
   }
 }

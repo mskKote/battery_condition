@@ -29,7 +29,6 @@ export type ChartOptions = {
   styleUrls: ['./chart4.component.scss']
 })
 export class Chart4Component {
-  
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<any>;
   
@@ -62,7 +61,7 @@ export class Chart4Component {
         colors: ['#39DA8A']
       },
       title: {
-        text: 'Chart 8 | Температура от времени'
+        text: 'Chart 4 | Температура от времени'
       },
       yaxis: {
         show: true,
