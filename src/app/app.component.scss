@@ -10,15 +10,13 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 50vh 30vh repeat(7, minmax(20vh, 1fr));
     grid-template-areas:
-      "hero   hero"
-      "big1   big1"
-      "med1   med1"
-      "med2   med2"
-      "small1 small2"
-      "small3 small4"
-      "small5 small6"
-      "small7 small8"
-      "small9 small10";
+      "box2 box2"
+      "box1 box1"
+      "box1 box1"
+      "box3 box3"
+      "box4 box4"
+      "box5 box5"
+      "box6 box6";
   }
 
   @media screen and (min-width: 750px) {
@@ -26,11 +24,10 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(5, 25vh);
       grid-template-areas:
-        "hero   hero   hero   med1   med1"
-        "hero   hero   hero   med2   med2"
-        "big1   big1   big1   big1   big1"
-        "small1 small2 small3 small4 small5"
-        "small6 small7 small8 small9 small10";
+      "box1 box1 box1 box1 box2"
+      "box1 box1 box1 box1 box2"
+      "box3 box3 box4 box4 box5"
+      "box3 box3 box4 box4 box6";
     }
   }
 
@@ -39,54 +36,30 @@
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: auto;
       grid-template-areas:
-        "small1 hero   hero hero med1   med1"
-        "small2 hero   hero hero med2   med2"
-        "small3 small5 big1 big1 small7 small8"
-        "small4 small6 big1 big1 small9 small10";
+        "box1 box1 box1 box1 box2 box2"
+        "box1 box1 box1 box1 box2 box2"
+        "box1 box1 box1 box1 box5 box6"
+        "box3 box3 box3 box4 box4 box4";
     }
   }
 
   .grid .item:nth-child(1) {
-    grid-area: hero;
+    grid-area: box1;
   }
   .grid .item:nth-child(2) {
-    grid-area: big1;
+    grid-area: box2;
   }
   .grid .item:nth-child(3) {
-    grid-area: med1;
+    grid-area: box3;
   }
   .grid .item:nth-child(4) {
-    grid-area: med2;
+    grid-area: box4;
   }
   .grid .item:nth-child(5) {
-    grid-area: small1;
+    grid-area: box5;
   }
   .grid .item:nth-child(6) {
-    grid-area: small2;
-  }
-  .grid .item:nth-child(7) {
-    grid-area: small3;
-  }
-  .grid .item:nth-child(8) {
-    grid-area: small4;
-  }
-  .grid .item:nth-child(9) {
-    grid-area: small5;
-  }
-  .grid .item:nth-child(10) {
-    grid-area: small6;
-  }
-  .grid .item:nth-child(11) {
-    grid-area: small7;
-  }
-  .grid .item:nth-child(12) {
-    grid-area: small8;
-  }
-  .grid .item:nth-child(13) {
-    grid-area: small9;
-  }
-  .grid .item:nth-child(14) {
-    grid-area: small10;
+    grid-area: box6;
   }
 }
 
@@ -123,30 +96,30 @@
   .grid .item:nth-child(6) {
     flex: 0 1 calc(50% - 1.5vw);
   }
-  .grid .item:nth-child(7) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(8) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(9) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(10) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(11) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(12) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(13) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
-  .grid .item:nth-child(14) {
-    flex: 0 1 calc(50% - 1.5vw);
-  }
+  // .grid .item:nth-child(7) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(8) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(9) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(10) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(11) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(12) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(13) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
+  // .grid .item:nth-child(14) {
+  //   flex: 0 1 calc(50% - 1.5vw);
+  // }
 
   @media screen and (min-width: 1400px) {
     .grid .item:nth-child(1) {
@@ -167,30 +140,30 @@
     .grid .item:nth-child(6) {
       flex: 0 1 calc(25% - 1.5vw);
     }
-    .grid .item:nth-child(7) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(8) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(9) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(10) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(11) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(12) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(13) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
-    .grid .item:nth-child(14) {
-      flex: 0 1 calc(25% - 1.5vw);
-    }
+    // .grid .item:nth-child(7) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(8) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(9) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(10) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(11) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(12) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(13) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
+    // .grid .item:nth-child(14) {
+    //   flex: 0 1 calc(25% - 1.5vw);
+    // }
   }
 }
 
@@ -215,13 +188,6 @@ body {
   }
 }
 
-// .box {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-// }
-
 // .grid .item:nth-child(1) {
 //   background-image: linear-gradient(45deg, #cbabfb 0%, #fb7ef6 60%);
 // }
@@ -238,4 +204,44 @@ body {
   border-radius: 10px;
   box-shadow: -10px 10px 10px 0px lightgrey;
   background-color: rgb(255, 255, 255);
+}
+.grid .item:nth-child(2){
+  border: double 6px grey;
+  box-shadow: 
+    0px 0px 10px 3px grey,
+    0px 0px 10px 0px inset grey;
+  // border-left  : solid 4px grey;
+  // border-bottom: solid 4px grey;
+}
+.switchButton {
+  background-color: #484848;
+  border: 0px;
+  font-size: 28px;
+  color: white;
+  padding: 20px 70px;
+  width: 100%;
+  height: 89.6px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  font-weight:bold;
+}
+
+.switchButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.switched {
+  background-color: white;
+  color: #484848;
+  font-weight: bolder 600;
+}
+
+.switched {
+  box-shadow: none;
 }
