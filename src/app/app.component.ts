@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.server.getDataQuery();
-  }
+    this.server.getDataQuery()
+    .then((d:totals[]) => console.log(d))  }
 
   contractor: boolean = false;
   switcher: boolean = false;

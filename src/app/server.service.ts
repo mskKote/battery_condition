@@ -40,7 +40,7 @@ export class ServerService {
       '\&data=' +
       data;
       let response = await fetch(str);
-      let res: totals[] =  JSON.parse(await response.json());
+      let res: totals[] = await response.json();
       return res;
   }
 }
