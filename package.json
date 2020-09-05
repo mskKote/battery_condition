@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~10.0.6",
     "@angular/router": "~10.0.6",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@uiowa/date-range-picker": "^4.0.0",
     "apexcharts": "^3.20.0",
     "bootstrap": "^4.5.0",
     "ng-apexcharts": "^1.5.1",

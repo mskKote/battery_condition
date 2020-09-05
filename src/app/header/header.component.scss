@@ -1,20 +1,26 @@
-// #E1ECFE гол #8F96A0 сер #598DFF син
-.grid{
-    grid-template-columns: repeat(4, 1fr);
-    padding-left: 100px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr)) 40%;
+  align-items: center;
+  justify-items: center;
+  max-width: 40vw;
+  padding: 20px 20px 0px 20px;
 
-    .btn-filter{
-        display: inline-block;
-        margin: 30px 5px 0 5px;
-        padding: 10px;
-        border-radius: 3px;
-        background-color: white;
-        color: #8F96A0;
-        outline: none;
-        border: none;
-        transition: .1s;
-    }
-    .btn-filter:hover, .clicked{
-        background-color: #E1ECFE;
-    }
+  .btn-filter {
+    width: 80%;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: white;
+    color: #8f96a0;
+    outline: none;
+    border: none;
+    transition: 0.1s;
+  }
+  .btn-filter:hover,
+  .clicked {
+    background-color: #e1ecfe;
+  }
+  date-range-picker *{
+      height: 100%;
+  }
 }
