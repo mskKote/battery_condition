@@ -29,7 +29,7 @@ export class ServerService {
   public datas: totals[];
   constructor(public http: HttpClient) {}
 
-  async getDataQuery(start_time = '1000', end_time = '4999999000', data = '10') {
+  async getDataQuery(start_time = '1000', end_time = '4999999000', data = '10'){
     const str:string =
     ServerService.HOST +
       '/api/bms?' +
@@ -40,6 +40,7 @@ export class ServerService {
       '\&data=' +
       data;
       let response = await fetch(str);
-      return response.json();
+      let res: totals[] =  JSON.parse(await response.json());
+      return res;
   }
 }
