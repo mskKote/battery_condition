@@ -45,46 +45,46 @@ export class Chart1Component {
 
   constructor() {
     this.chartOptions = {
-      series: [
-        {
+      series: [{
           name: 'Вольтаж',
-          data: [
-            1.85,
-            1.95,
-            2.15,
-            2.0,
-            1.75,
-            2.45,
-            2.55,
-            1.8,
-            2.3,
-            1.85,
-            1.85,
-            2.65,
-            1.85,
-            2.2,
-            2.25,
-          ],
-        },
-        {
+          data: this.randomSeries()
+          // data: [
+          //   1.85,
+          //   1.95,
+          //   2.15,
+          //   2.0,
+          //   1.75,
+          //   2.45,
+          //   2.55,
+          //   1.8,
+          //   2.3,
+          //   1.85,
+          //   1.85,
+          //   2.65,
+          //   1.85,
+          //   2.2,
+          //   2.25,
+          // ],
+        },{
           name: 'Вольтаж',
-          data: [
-            1.85,
-            2.45,
-            2.7,
-            2.0,
-            1.95,
-            2.2,
-            2.35,
-            2.55,
-            2.45,
-            2.65,
-            2.4,
-            2.55,
-            1.8,
-            2.15,
-            2.0,
-          ],
+          data: this.randomSeries()
+          // data: [
+          //   1.85,
+          //   2.45,
+          //   2.7,
+          //   2.0,
+          //   1.95,
+          //   2.2,
+          //   2.35,
+          //   2.55,
+          //   2.45,
+          //   2.65,
+          //   2.4,
+          //   2.55,
+          //   1.8,
+          //   2.15,
+          //   2.0,
+          // ],
         },
       ],
       chart: {
@@ -155,7 +155,7 @@ export class Chart1Component {
       },
       title: {
         offsetY: 10,
-        text: 'Chart 1 | Зарядка всех батареек',
+        text: 'Зарядка всех батареек',
       },
       legend: {
         show: false,
@@ -199,7 +199,15 @@ export class Chart1Component {
     };
   }
 
-  brightness: {} = {
-    low: [],
-  };
+  randomSeries() {
+    let arr = [];
+    for(let i = 0; i < 15; i++) {
+      arr.push(Math.floor(1.75 + Math.random() * 2.8))
+    }
+    return arr;
+  }
+
+  // brightness: {} = {
+  //   low: [],
+  // };
 }

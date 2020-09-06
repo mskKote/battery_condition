@@ -32,11 +32,15 @@ export class Chart4Component {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<any>;
   
+  getDataArr() {
+    return [344, -55, -55, -55, -55, -55, -55, -55, -55, -55]
+  }
   constructor() {
     this.chartOptions = {
       series: [{
         name: 'Series 1',
-        data: [344, -55, -55, -55, -55, -55, -55, -55, -55, -55],
+        // data: [344, -55, -55, -55, -55, -55, -55, -55, -55, -55],
+        data: this.getDataArr()
       }],
       chart: {
         offsetY: 30,
@@ -62,7 +66,7 @@ export class Chart4Component {
         colors: ['#39DA8A']
       },
       title: {
-        text: 'Chart 4 | Температура от времени'
+        text: 'Температура от времени'
       },
       yaxis: {
         show: true,

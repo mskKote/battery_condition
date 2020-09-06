@@ -1,7 +1,5 @@
 import { ServerService, totals,total,val } from './server.service';
 import { Component, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import { async } from 'rxjs/internal/scheduler/async';
-
 
 @Component({
   selector: 'app-root',
@@ -14,13 +12,13 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.server.getDataQuery()
-      .then( (d: totals[]) => {
+      .then((d: totals[]) => {
+        console.groupCollapsed('data from server -- app.component')
         console.log(d)
+        console.groupEnd()
       })
 
   }
-
-
 
   contractor: boolean = true;
   switcher: boolean = false;

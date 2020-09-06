@@ -109,11 +109,9 @@ export class Chart3Component {
 
   constructor() {
     this.chartOptions = {
-      series: [
-        {
+      series: [{
           name: 'Series 1',
           data: [6, -55, -55, 2178, 2213, -55, 2197, -55, -55, 2195],
-          // data: this.chart3.yVal
         },
       ],
       chart: {
@@ -140,7 +138,7 @@ export class Chart3Component {
         colors: ['#39DA8A'],
       },
       title: {
-        text: 'Chart 3 | Потребление по амперам от времени',
+        text: 'Потребление по амперам от времени',
       },
       yaxis: {
         show: true,
@@ -210,6 +208,14 @@ export class Chart3Component {
         },
       },
     };
+  }
+
+  randomSeries() {
+    let arr = [];
+    for(let i = 0; i < 10; i++) {
+      arr.push(Math.floor(1.75 + Math.random() * 2.8))
+    }
+    return arr;
   }
 
   opts = {

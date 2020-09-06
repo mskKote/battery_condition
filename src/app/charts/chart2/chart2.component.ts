@@ -77,7 +77,7 @@ export class Chart2Component {
         2.15+
         2.0],
       title: {
-        text: 'Chart 2 | Зарядка батареи сейчас',
+        text: 'Зарядка батареи сейчас',
       },
       chart: {
         offsetY: 15,
@@ -93,13 +93,13 @@ export class Chart2Component {
           endAngle: 90,
           dataLabels: {
             name: {
-              offsetY: 45,
+              offsetY: -25,
               fontSize: '14px',
               fontWeight: 700,
               // color: '#00000',
             },
             value: {
-              offsetY: 60,
+              offsetY: -20,
               fontSize: '20px',
               fontWeight: 400,
               // color: '#00000',
