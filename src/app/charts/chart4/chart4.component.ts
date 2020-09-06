@@ -95,7 +95,7 @@ export class Chart4Component {
             show: true,
             style: {
               fontSize: 'auto',
-            },g
+            },
         },
         axisBorder: {
             show: false,
