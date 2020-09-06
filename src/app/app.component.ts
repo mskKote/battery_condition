@@ -11,13 +11,14 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.server.getDataQuery()
-      .then((d: totals[]) => {
-        console.groupCollapsed('data from server -- app.component')
-        console.log(d)
-        console.groupEnd()
-      })
-
+    setInterval(() => {
+      this.server.getDataQuery()
+        .then((d: totals[]) => {
+          console.groupCollapsed('data from server -- app.component');
+          console.log(d);
+          console.groupEnd();
+        })
+    }, 2000)
   }
 
   contractor: boolean = true;

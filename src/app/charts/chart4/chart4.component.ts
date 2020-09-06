@@ -77,16 +77,16 @@ export class Chart4Component {
       xaxis: {
         type: 'category',
         categories: [
-          new Date(1599232519).toLocaleDateString('ru', this.opts),
-          new Date(1599296061).toLocaleDateString('ru', this.opts),
-          new Date(1599296064).toLocaleDateString('ru', this.opts),
-          new Date(1599296067).toLocaleDateString('ru', this.opts),
-          new Date(1599296070).toLocaleDateString('ru', this.opts),
-          new Date(1599296073).toLocaleDateString('ru', this.opts),
-          new Date(1599296076).toLocaleDateString('ru', this.opts),
-          new Date(1599296079).toLocaleDateString('ru', this.opts),
-          new Date(1599296082).toLocaleDateString('ru', this.opts),
-          new Date(1599296085).toLocaleDateString('ru', this.opts),
+          `${new Date(1599232519).getMinutes()}:${new Date(1599232519).getSeconds()}:${new Date(1599232519).getMilliseconds()}`,
+          `${new Date(1599296061).getMinutes()}:${new Date(1599296061).getSeconds()}:${new Date(1599296061).getMilliseconds()}`,
+          `${new Date(1599296064).getMinutes()}:${new Date(1599296064).getSeconds()}:${new Date(1599296064).getMilliseconds()}`,
+          `${new Date(1599296067).getMinutes()}:${new Date(1599296067).getSeconds()}:${new Date(1599296067).getMilliseconds()}`,
+          `${new Date(1599296070).getMinutes()}:${new Date(1599296070).getSeconds()}:${new Date(1599296070).getMilliseconds()}`,
+          `${new Date(1599296073).getMinutes()}:${new Date(1599296073).getSeconds()}:${new Date(1599296073).getMilliseconds()}`,
+          `${new Date(1599296076).getMinutes()}:${new Date(1599296076).getSeconds()}:${new Date(1599296076).getMilliseconds()}`,
+          `${new Date(1599296079).getMinutes()}:${new Date(1599296079).getSeconds()}:${new Date(1599296079).getMilliseconds()}`,
+          `${new Date(1599296082).getMinutes()}:${new Date(1599296082).getSeconds()}:${new Date(1599296082).getMilliseconds()}`,
+          `${new Date(1599296085).getMinutes()}:${new Date(1599296085).getSeconds()}:${new Date(1599296085).getMilliseconds()}`,
         ],
         title: {
           text: 'Время'
@@ -137,9 +137,4 @@ export class Chart4Component {
       }
     };
   }
-  opts = {
-    year: '2-digit',
-    month: '2-digit',
-    day: 'numeric',
-  };
 }
