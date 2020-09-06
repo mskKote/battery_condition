@@ -19,7 +19,7 @@
       "box4 box4";
   }
 
-  @media screen and (min-width:900px) {
+  @media screen and (min-width:800px) {
     .grid {
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: auto;

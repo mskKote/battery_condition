@@ -165,6 +165,9 @@ export class Chart3Component {
         },
         labels: {
           show: true,
+          style: {
+            fontSize: 'auto',
+          },
         },
         axisBorder: {
           show: false,
