@@ -1,5 +1,6 @@
-import { ServerService, totals,total,val } from './server.service';
-import { Component, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { ServerService, totals } from './server.service';
+import { Component, OnInit } from '@angular/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,62 @@ import { Component, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angu
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(public server: ServerService){
+  //multi: any[];
+  view: any[] = [700, 400];
 
+  // options
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Country';
+  showYAxisLabel: boolean = true;
+  yAxisLabel: string = 'Population';
+  legendTitle: string = 'Заряд От Всех Батареек';
+  animations: boolean = false;
+
+  colorScheme = {
+    domain: ['#6391ef', 'deeppink']
+  };
+
+ onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    this.genData();
   }
+
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+
+  multi:any[];
+  genData() {    // Генерируем данные
+    this.multi = [];
+    for (let i = 0; i < 15; i++) {
+      this.multi.push(    {
+        "name": "USA" + i,
+        "series": [
+          {
+            "name": "2010",
+            "value": (Math.random()*100000).toFixed(2)
+          },
+          {
+            "name": "2011",
+            "value": (Math.random()*100000).toFixed(2)
+          }
+        ]
+      });
+    }
+  }
+
+  constructor(public server: ServerService){
+    this.genData();
+  }
+
   ngOnInit(): void {
     setInterval(() => {
       this.server.getDataQuery()
@@ -24,9 +78,11 @@ export class AppComponent implements OnInit {
   contractor: boolean = true;
   switcher: boolean = false;
   clickContractor() {
+    this.genData();
     this.contractor = !this.contractor;
   }
   clickSwitcher() {
+    this.genData();
     this.switcher = !this.switcher;
   }
 
