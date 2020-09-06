@@ -45,9 +45,10 @@ export class Chart1Component {
 
   constructor() {
     this.chartOptions = {
-      series: [{
+      series: [
+        {
           name: 'Вольтаж',
-          data: this.randomSeries()
+          data: this.randomSeries(),
           // data: [
           //   1.85,
           //   1.95,
@@ -65,9 +66,10 @@ export class Chart1Component {
           //   2.2,
           //   2.25,
           // ],
-        },{
+        },
+        {
           name: 'Вольтаж',
-          data: this.randomSeries()
+          data: this.randomSeries(),
           // data: [
           //   1.85,
           //   2.45,
@@ -109,10 +111,10 @@ export class Chart1Component {
           type: 'vertical',
           shadeIntensity: 0.1,
           inverseColors: false,
-          gradientToColors: ['#00ff00','#00ff00'],
+          gradientToColors: ['#00ff00', '#00ff00'],
           opacityFrom: 0.9,
           opacityTo: 0.5,
-          colorstart:[
+          colorstart: [
             {
               offset: 0,
               color: '#00ff00',
@@ -139,7 +141,7 @@ export class Chart1Component {
               opacity: 0.75,
             },
           ],
-        }
+        },
       },
       grid: {
         xaxis: {
@@ -162,7 +164,38 @@ export class Chart1Component {
       },
       xaxis: {
         // categories: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
-        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        categories: [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+        ],
         labels: {
           show: true,
           style: {
@@ -181,9 +214,9 @@ export class Chart1Component {
       },
       yaxis: {
         show: true,
-        tickAmount:10.5,
+        tickAmount: 10.5,
         min: 1.75,
-        max: 2.80,
+        max: 2.8,
         forceNiceScale: true,
       },
       dataLabels: {
@@ -204,8 +237,8 @@ export class Chart1Component {
 
   randomSeries() {
     let arr = [];
-    for(let i = 0; i < 15; i++) {
-      arr.push((1.75 + Math.random() * (2.8 - 1.75)).toFixed(2))
+    for (let i = 0; i < 15; i++) {
+      arr.push((1.75 + Math.random() * (2.8 - 1.75)).toFixed(2));
     }
     return arr;
   }
