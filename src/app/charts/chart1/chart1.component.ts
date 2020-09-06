@@ -202,8 +202,9 @@ export class Chart1Component {
   randomSeries() {
     let arr = [];
     for(let i = 0; i < 15; i++) {
-      arr.push(Math.floor(1.75 + Math.random() * 2.8))
+      arr.push((1.75 + Math.random() * 2.8).toFixed(2))
     }
+    console.log(arr);
     return arr;
   }
 
