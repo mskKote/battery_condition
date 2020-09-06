@@ -81,7 +81,7 @@ export class Chart2Component {
       },
       chart: {
         offsetY: 15,
-        height: 500,
+        height: 'auto',
         type: 'radialBar',
       },
       plotOptions: {
