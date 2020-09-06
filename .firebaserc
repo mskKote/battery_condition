@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mew2-ultra": {
+      "hosting": {
+        "battery": [
+          "mew2-ultra"
+        ]
+      }
+    }
+  }
+}
