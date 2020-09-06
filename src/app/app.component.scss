@@ -151,6 +151,8 @@ body {
     0px 0px 10px 3px grey;
 }
 
+
+
 *, :after, :before {
   box-sizing: border-box;
 }
@@ -166,13 +168,16 @@ body {
 }
 .toggle {
   position: relative;
-  transform: translate(140%, 10%);
+  margin: auto;
+
   width: 9.5vw;
   height: 20vh;
   
   label {
     position: relative;
+    left: 40px;
     display: inline-block;
+    margin: auto;
     width: 90px;
     height: 90px;
     background-color: #ff6164;
