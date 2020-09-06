@@ -7,7 +7,9 @@
   padding: 20px 20px 0px 20px;
 
   .btn-filter {
-    width: 80%;
+    white-space: nowrap;
+    width: 90%;
+    height: 90%;
     padding: 10px;
     border-radius: 3px;
     background-color: white;
@@ -19,8 +21,5 @@
   .btn-filter:hover,
   .clicked {
     background-color: #e1ecfe;
-  }
-  date-range-picker *{
-    height: 100%;
   }
 }
