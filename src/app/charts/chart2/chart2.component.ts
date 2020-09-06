@@ -121,12 +121,12 @@ export class Chart2Component {
           colorStops: [
             {
               offset: 0,
-              color: '#00ff00',
+              color: '#ff0000',
               opacity: 1,
             },
             {
               offset: 20,
-              color: '#b0ff00',
+              color: '#ffaf00',
               opacity: 1,
             },
             {
@@ -136,12 +136,12 @@ export class Chart2Component {
             },
             {
               offset: 80,
-              color: '#ffaf00',
+              color: '#b0ff00',
               opacity: 1,
             },
             {
               offset: 100,
-              color: '#ff0000',
+              color: '#00ff00',
               opacity: 1,
             },
           ],
