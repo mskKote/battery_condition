@@ -49,11 +49,11 @@ export class AppComponent implements OnInit {
         "series": [
           {
             "name": "2010",
-            "value": (Math.random()*100000).toFixed(2)
+            "value": 1.75 + Math.random()*1.05
           },
           {
             "name": "2011",
-            "value": (Math.random()*100000).toFixed(2)
+            "value": 1.75 + Math.random()*1.05
           }
         ]
       });
@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
 
   constructor(public server: ServerService){
     this.genData();
+    setInterval( () => {this.genData();}, 1000);
   }
 
   ngOnInit(): void {
