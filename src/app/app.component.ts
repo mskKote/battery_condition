@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
 
   onSelect(data: any): void {
     //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.genData();
+    //this.genData();
   }
 
   onActivate(data: any): void {
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     "series": []
   }];
   contractor: any[] = [{
-    "name": "Балансировка",
+    "name": "Контактор",
     "series": []
   }];
   multi:any[];
@@ -83,7 +83,22 @@ export class AppComponent implements OnInit {
   
   currentBattery: number = 0;
   changeBattery(target){
-    console.log('currentBattery :>> ', this.currentBattery);
+    this.time_temp0 = [{
+      "name": "Температура",
+      "series": []
+    }];
+    this.time_temp1 = [{
+      "name": "Сила тока",
+      "series": []
+    }];
+    this.balance = [{
+      "name": "Балансировка",
+      "series": []
+    }];
+    this.contractor = [{
+      "name": "Балансировка",
+      "series": []
+    }];
     this.currentBattery = target;
   }
 
@@ -178,9 +193,15 @@ export class AppComponent implements OnInit {
         this.multi = [];
         this.single = [];
         let total_voltage_value = 0;
+        let lastDataset;
+        try {
+          let lastObj = data[this.currentBattery];//data.length - 1];
+          lastDataset = lastObj.data[lastObj.data.length - 1];
+        } catch (error) {
+          let lastObj = data[data.length - 1];
+          lastDataset = lastObj.data[lastObj.data.length - 1];
+        }
 
-        let lastObj = data[this.currentBattery];//data.length - 1];
-        let lastDataset = lastObj.data[lastObj.data.length - 1];
 
         console.groupCollapsed('data from server -- app.component');
         // Графикс c 30 батареями и total_voltage
