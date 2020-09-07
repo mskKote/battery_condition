@@ -29,6 +29,8 @@ export class AppComponent implements OnInit {
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
 
+  RightTickValues: string[] = ['Выкл','Вкл']
+
   //Линиии
   linearCurveCardinal= shape.curveCardinal;
   linearCurveStep= shape.curveStep;
@@ -77,7 +79,7 @@ export class AppComponent implements OnInit {
       value: 50,
     },
   ];
-
+  batteries: any[] = new Array(30);
   static randomDate(start:Date, end:Date): Date {
     return new Date(start.getTime() 
             + Math.random() * (end.getTime() - start.getTime()));
