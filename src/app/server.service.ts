@@ -28,7 +28,8 @@ export class ServerService {
   static HOST = 'http://localhost:4200/api';
   public datas: totals[];
   constructor(public http: HttpClient) {}
-
+  public static end:Date;
+  public static start:Date;
   async getDataQuery(start_time = '1000', end_time = '4999999000', data = '10'){
     const str:string =
     ServerService.HOST +

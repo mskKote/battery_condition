@@ -1,3 +1,4 @@
+import { ServerService } from 'src/app/server.service';
 import { OnChanges, SimpleChanges } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { DateRange } from '@uiowa/date-range-picker';
@@ -8,7 +9,7 @@ import { DateRange } from '@uiowa/date-range-picker';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  constructor(private server : ServerService) {}
 
   elClicked: any;
   clickFilter(e: any) {
@@ -18,6 +19,8 @@ export class HeaderComponent implements OnInit {
 
     this.dateRange.start = new Date(+e.target.value);
     this.dateRange.end   = new Date();
+    ServerService.start =this.dateRange.start;
+    ServerService.end = this.dateRange.end;
   }
 
   reload() {
@@ -35,9 +38,11 @@ export class HeaderComponent implements OnInit {
     for (let i = 0, l = document.cookie.split(';').length; i < l; i++) {
       if (document.cookie.split(';')[i].indexOf('start=')) {
         this.dateRange.start = new Date(this.getCookie('start'));
+        ServerService.start =this.dateRange.start;
       }
       if (document.cookie.split(';')[i].indexOf('end=')) {
         this.dateRange.end = new Date(this.getCookie('end'));
+        ServerService.end = this.dateRange.end;
       }
     }
 

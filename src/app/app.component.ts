@@ -45,6 +45,15 @@ export class AppComponent implements OnInit {
 
   multi:any[];
   genData() {    // Генерируем данные
+
+    try{
+    console.log(ServerService.end.getTime());
+    console.log(ServerService.start.getTime());
+    const bn = this.server.getDataQuery(ServerService.start.getTime().toString(),ServerService.end.getTime().toString());
+    bn.then(b=>console.log(b));
+  }
+
+    catch{}
     this.multi = [];
     for (let i = 0; i < 15; i++) {
       this.multi.push({
