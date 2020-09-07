@@ -137,20 +137,20 @@
         </div>
     </div> -->
     
-</div>
-
-<div class="item" style="margin: 1rem 2rem; max-width: 100vw; margin-bottom: 3rem;">
-    <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" *ngFor="let battery of batteries; let i = index" 
-                (click)="changeBattery(i)" class="btn btn-secondary"
-                [ngClass]="{active: i == currentBattery}">
-                {{i + 1}}
-            </button>
+    <div class="item">
+        <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" *ngFor="let battery of batteries; let i = index" 
+                    (click)="changeBattery(i)" class="btn btn-secondary"
+                    [ngClass]="{active: i == currentBattery}">
+                    {{i + 1}}
+                </button>
+            </div>
         </div>
     </div>
-  </div>
+</div>
+
 
 <!-- <div *ngFor="let dataSource of server.datas ">
   {{dataSource.data[0].voltages[0].index|json}}
