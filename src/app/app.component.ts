@@ -8,64 +8,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  //multi: any[];
-  view: any[] = [700, 400];
-
-  // options
-  yAxisTicks: any[] = this.getArrY(1.75, 2.8, 0.05);
-  showXAxis: boolean = true;
-  showYAxis: boolean = true;
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Country';
-  showYAxisLabel: boolean = true;
-  yAxisLabel: string = 'Population';
-  legendTitle: string = 'Заряд От Всех Батареек';
-  animations: boolean = false;
-
-  colorScheme = {
-    domain: ['#6391ef', 'deeppink']
-  };
-
- onSelect(data: any): void {
-    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.genData();
-  }
-
-  onActivate(data: any): void {
-    // console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-
-  multi:any[];
-  genData() {    // Генерируем данные
-    this.multi = [];
-    for (let i = 0; i < 15; i++) {
-      this.multi.push(    {
-        "name": "USA" + i,
-        "series": [
-          {
-            "name": "2010",
-            "value": 1.75 + Math.random()*1.05
-          },
-          {
-            "name": "2011",
-            "value": 1.75 + Math.random()*1.05
-          }
-        ]
-      });
-    }
-  }
-
-  constructor(public server: ServerService){
-    this.genData();
-    setInterval( () => {this.genData();}, 1000);
-  }
-
   ngOnInit(): void {
     // setInterval(() => {
     //   this.server.getDataQuery()
@@ -97,12 +39,11 @@ export class AppComponent implements OnInit {
   contractor: boolean = true;
   switcher: boolean = false;
   clickContractor() {
-    this.genData();
+    // this.genData();
     this.contractor = !this.contractor;
   }
   clickSwitcher() {
-    this.genData();
+    // this.genData();
     this.switcher = !this.switcher;
   }
-
 }
