@@ -50,9 +50,17 @@ export class AppComponent implements OnInit {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
-  multi: any[];
-  genData() {
-    // Генерируем данные
+  multi:any[];
+  genData() {    // Генерируем данные
+
+    try{
+    console.log(ServerService.end.getTime());
+    console.log(ServerService.start.getTime());
+    const bn = this.server.getDataQuery(ServerService.start.getTime().toString(),ServerService.end.getTime().toString());
+    bn.then(b=>console.log(b));
+  }
+
+    catch{}
     this.multi = [];
     for (let i = 0; i < 15; i++) {
       this.multi.push({
@@ -95,7 +103,7 @@ export class AppComponent implements OnInit {
         let total_voltage_value = 0;
 
         let lastObj = data[data.length - 1];
-        let lastDataset = lastObj.data[lastObj.data.length - 1];  
+        let lastDataset = lastObj.data[lastObj.data.length - 1];
 
         console.groupCollapsed('data from server -- app.component');
 
@@ -110,21 +118,21 @@ export class AppComponent implements OnInit {
             "series": [
               {
                 "name": "",
-                "value": battery1.value / 2.8 * 100 
+                "value": battery1.value / 2.8 * 100
               }, {
                 "name": ".",
                 "value": battery2.value / 2.8 * 100
               }
           ]});
           total_voltage_value += battery1.value + battery2.value;
-          
+
         }
 
         this.single.push({
           name: 'Заряд батареи',
           value: total_voltage_value / (1.05 * lastDataset.voltages.length) * 100
         });
-        
+
         console.groupEnd();
       })
   }
