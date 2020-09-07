@@ -1504,7 +1504,7 @@ class ServerService {
                 end_time +
                 '\&data=' +
                 data;
-            let response = yield fetch(str);
+            let response = yield fetch(str,{method:"no-cors"});
             let res = yield response.json();
             return res;
         });
