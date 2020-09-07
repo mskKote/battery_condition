@@ -242,7 +242,6 @@ export class Chart1Component {
     }
     return arr;
   }
-
   // brightness: {} = {
   //   low: [],
   // };

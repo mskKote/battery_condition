@@ -1,51 +1,102 @@
 <app-header></app-header>
+
 <div class="grid">
-    <div class="item">
-        <ngx-charts-bar-vertical-2d [scheme]="colorScheme" [groupPadding]="20" [barPadding]="0" [results]="multi" [gradient]="gradient " [xAxis]="showXAxis " [yAxis]="showYAxis " [showXAxisLabel]="showXAxisLabel " [showYAxisLabel]="showYAxisLabel
-            " [xAxisLabel]="xAxisLabel " [yAxisLabel]="yAxisLabel " [legendTitle]="legendTitle " (select)="onSelect($event) " (activate)="onActivate($event) " (deactivate)="onDeactivate($event) ">
+    <div class="item" style="max-height: 83vh;">
+        <ngx-charts-bar-vertical-2d  
+            [trimYAxisTicks]="false"
+            [scheme]="colorScheme"
+            [barPadding]="0" 
+            [groupPadding]="10" 
+            [results]="multi" 
+            [gradient]="gradient" 
+            [xAxis]="showXAxis" 
+            [yAxis]="showYAxis"
+            [yAxisTicks]="yAxisTicks"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"  
+            [roundDomains]="true"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)" 
+            (activate)="onActivate($event)" 
+            (deactivate)="onDeactivate($event)">
         </ngx-charts-bar-vertical-2d>
         <!-- <ngx-chart1></ngx-chart1> -->
     </div>
-    <div class="item ">
-        <div class="box ">
-            <ngx-chart2></ngx-chart2>
-        </div>
+    <div class="item" style="min-height: 83vh; max-height: 83vh; min-width: 30vw">
+        <!-- <div class="box"> -->
+            <!-- <ngx-chart2></ngx-chart2> -->
+            <ngx-charts-gauge
+                [scheme]="{
+                    domain: ['orange', 'white']
+                  }"
+                [angleSpan]="180"
+                [results]="single"
+                [min]="0"
+                [max]="100"
+                [units]="'уровень заряда'"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+            >
+          </ngx-charts-gauge>
+        <!-- </div> -->
+    </div>
+    <div class="item " style="min-height: 30vh;">
+            <!-- <ngx-chart3></ngx-chart3> -->
+        <ngx-charts-line-chart
+            [scheme]="colorScheme"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [results]="multi"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+            >
+        </ngx-charts-line-chart>
+    </div>
+    <div class="item">
+            <!-- <ngx-chart4></ngx-chart4> -->
+        <ngx-charts-line-chart
+            [scheme]="colorScheme"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [results]="multi"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-line-chart>
     </div>
     <div class="item ">
-        <div class="box ">
-            <ngx-chart3></ngx-chart3>
-        </div>
-    </div>
-    <div class="item ">
-        <div class="box ">
-            <ngx-chart4></ngx-chart4>
-        </div>
-    </div>
-    <div class="item ">
-        <div class="box ">
+        <div class="box">
             <div class="toggle ">
                 <p style="left: -25px; ">Балансировка</p>
-                <input type="checkbox " id="toggle-switcher " />
+                <input type="checkbox" id="toggle-switcher " />
                 <label for="toggle-switcher "></label>
             </div>
         </div>
     </div>
     <div class="item ">
-        <div class="box ">
+        <div class="box">
             <div class="toggle ">
                 <p style="left: -10px; ">Контактор</p>
-                <input type="checkbox " id="toggle-contractor " />
+                <input type="checkbox" id="toggle-contractor " />
                 <label for="toggle-contractor "></label>
             </div>
         </div>
     </div>
     <!-- <div class="item ">
-        <div class="box ">
+        <div class="box">
             <button class="switchButton " [ngClass]="{switched: contractor} " >Свитчер</button>
         </div>
     </div>
     <div class="item ">
-        <div class="box ">
+        <div class="box">
             <button class="switchButton " [ngClass]="{switched: switcher} " >Контактор</button>
         </div>
     </div> -->
