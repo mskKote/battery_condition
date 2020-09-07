@@ -106,12 +106,11 @@ export class AppComponent implements OnInit {
   contractor: boolean = true;
   switcher: boolean = false;
   clickContractor() {
-    this.genData();
+    // this.genData();
     this.contractor = !this.contractor;
   }
   clickSwitcher() {
-    this.genData();
+    // this.genData();
     this.switcher = !this.switcher;
   }
-
 }
