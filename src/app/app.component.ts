@@ -36,13 +36,13 @@ export class AppComponent implements OnInit {
   };
   schemeType: string = 'linear';
 
-  onSelect(data: any): void {
-    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+ onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.genData();
   }
 
   onActivate(data: any): void {
-    // console.log('Activate', JSON.parse(JSON.stringify(data)));
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
@@ -58,14 +58,14 @@ export class AppComponent implements OnInit {
         name: i + 1,
         series: [
           {
-            name: '',
-            value: (Math.random() * 100).toFixed(2),
+            "name": "",
+            "value": (Math.random()*100).toFixed(2)
           },
           {
-            name: '.',
-            value: (Math.random() * 100).toFixed(2),
-          },
-        ],
+            "name": ".",
+            "value": (Math.random()*100).toFixed(2)
+          }
+        ]
       });
     }
   }
