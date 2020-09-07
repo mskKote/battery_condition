@@ -84,6 +84,13 @@ export class AppComponent implements OnInit {
     },
   ];
   batteries: any[] = new Array(30);
+  
+  currentBattery: number = 0;
+  changeBattery(target){
+    console.log('currentBattery :>> ', this.currentBattery);
+    this.currentBattery = target;
+  }
+
   static randomDate(start:Date, end:Date): Date {
     return new Date(start.getTime() 
             + Math.random() * (end.getTime() - start.getTime()));
@@ -176,7 +183,7 @@ export class AppComponent implements OnInit {
         this.single = [];
         let total_voltage_value = 0;
 
-        let lastObj = data[data.length - 1];
+        let lastObj = data[this.currentBattery];//data.length - 1];
         let lastDataset = lastObj.data[lastObj.data.length - 1];
 
         console.groupCollapsed('data from server -- app.component');
@@ -207,17 +214,15 @@ export class AppComponent implements OnInit {
         for (let i = 0; i < data.length; i++) {
           const element = data[i]; // 1 по Х
           console.log(element);
-          let temp0: number = element.data[0].temperatures[0].value;
           for (let j = 0; j < element.data.length; j++) {
             const dataset = element.data[j];
             //console.log('dataset :>> ', dataset);
             // temp0 = dataset.temperatures[0].value;
             //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
-            console.log('contractor :>> ', dataset.contractor ? "1" : "0");
-
-            if (dataset.total_amp.value > 100) {
+            //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
+            if (dataset.total_amp.value > 100)
               continue;              
-            }
+
             this.addTimePointTime1({
               "value": (dataset.total_amp.value).toFixed(2),
               "name": new Date(element.timestamp)
@@ -228,9 +233,8 @@ export class AppComponent implements OnInit {
               "name": new Date(element.timestamp)
             }); 
           }
-          //console.log('temp0 :>> ', temp0);
           this.addTimePointTime0({
-            "value": "" + temp0,
+            "value": "" + element.data[0].temperatures[this.currentBattery].value,
             "name": new Date(element.timestamp)
           });                  
         }
@@ -246,23 +250,4 @@ export class AppComponent implements OnInit {
     arr.push(max);
     return arr;
   }
-
-  randomSeries() {
-    let arr = [];
-    for (let i = 0; i < 15; i++) {
-      arr.push((1.75 + Math.random() * (2.8 - 1.75)).toFixed(2));
-    }
-    return arr;
-  }
-
-  // contractor: boolean = true;
-  // switcher: boolean = false;
-  // clickContractor() {
-  //   // this.genData();
-  //   this.contractor = !this.contractor;
-  // }
-  // clickSwitcher() {
-  //   // this.genData();
-  //   this.switcher = !this.switcher;
-  // }
 }

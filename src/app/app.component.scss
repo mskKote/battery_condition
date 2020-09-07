@@ -229,7 +229,7 @@ body {
     }
   }
 
-  input {
+  input { 
     display: none;
 
     &:checked + label {
@@ -255,6 +255,11 @@ body {
       color: #fff;
     }
   }
+}
+
+.active {
+  background-color: #fff !important;
+  color: #29343d !important;
 }
 
 // .switchButton {
