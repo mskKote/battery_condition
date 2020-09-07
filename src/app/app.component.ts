@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   //multi: any[];
 
   // Главный график
-  yAxisTicks: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; //this.getArrY(1.75, 2.8, 0.05);
+  yAxisTicksArr: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; //this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
@@ -38,12 +38,12 @@ export class AppComponent implements OnInit {
   schemeType: string = 'linear';
 
  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.genData();
+    //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    //this.genData();
   }
 
   onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    //console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
@@ -77,22 +77,49 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  constructor(public server: ServerService) {
-    this.genData();
-    setInterval(() => {
-      this.genData();
-    }, 4000);
+  constructor(public server: ServerService){
+    //this.genData();
+    //setInterval( () => {this.genData();}, 4000);
   }
 
   ngOnInit(): void {
-    // setInterval(() => {
-    //   this.server.getDataQuery()
-    //     .then((d: totals[]) => {
-    //       console.groupCollapsed('data from server -- app.component');
-    //       console.log(d);
-    //       console.groupEnd();
-    //     })
-    // }, 2000)
+    this.request();
+    setInterval(() => { this.request(); } , 1000)
+  }
+
+  request()  {
+    //Создаём объекты с данными
+    let contractorArr = [];
+
+    this.server.getDataQuery()
+      .then((data: totals[]) => {
+        this.multi = [];
+        let lastObj = data[data.length - 1];
+        let lastDataset = lastObj.data[lastObj.data.length - 1];  
+
+        console.groupCollapsed('data from server -- app.component');
+
+        let i = lastDataset.voltages.length - 1;
+        console.log('lastDataset :>> ', lastDataset);
+
+        for (let j = 0; j < lastDataset.voltages.length; j+=2) {
+          const battery1 = lastDataset.voltages[j]; // 1 батарейка
+          const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
+          this.multi.push({
+            "name": j / 2 + 1 ,
+            "series": [
+              {
+                "name": "",
+                "value": battery1.value / 2.8 * 100 
+              }, {
+                "name": ".",
+                "value": battery2.value / 2.8 * 100
+              }
+            ]});
+        }
+
+        console.groupEnd();
+      })
   }
 
   getArrY(min: number, max: number, dist: number) {
