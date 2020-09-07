@@ -94,24 +94,23 @@ export class AppComponent implements OnInit {
           for (let u = 0; u < data[i].data.length; u++) { // По самим данным
             const element = data[i].data[u];
             //console.log(element);
-            for (let voltage = 0; voltage < data[i].data[u].voltages.length; voltage+=2) {
-              const battery1 = data[i].data[u].voltages[voltage];
-              const battery2 = data[i].data[u].voltages[voltage + 1];
-              this.multi.push({
-                "name": voltage / 2,
-                "series": [
-                  {
-                    "name": "",
-                    "value": battery1.value 
-                  }, {
-                    "name": ".",
-                    "value": battery2.value
-                  }
-                ]});
-            }
-
           }
-          
+
+          for (let voltage = 0; voltage < data[i].data[data[i].data.length - 1].voltages.length; voltage+=2) {
+            const battery1 = data[i].data[data[i].data.length - 1].voltages[voltage];
+            const battery2 = data[i].data[data[i].data.length - 1].voltages[voltage + 1];
+            this.multi.push({
+              "name": voltage / 2,
+              "series": [
+                {
+                  "name": "",
+                  "value": battery1.value 
+                }, {
+                  "name": ".",
+                  "value": battery2.value
+                }
+              ]});
+          }
           //this.multi =
         }
          
