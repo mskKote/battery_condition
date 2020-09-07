@@ -26,7 +26,7 @@ export class val {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST = 'http://80.89.235.39';
+  static HOST = 'http://localhost:4200/api';
   public datas: totals[];
   constructor(public http: HttpClient) {}
   public static end:Date;

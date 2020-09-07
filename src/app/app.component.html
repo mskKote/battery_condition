@@ -84,7 +84,8 @@
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [yAxisLabel]="'Сила тока, A'"            
+            [yAxisLabel]="'Сила тока, A'"      
+            [curve]="linearCurveStep"                  
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [roundDomains]="false"
@@ -98,18 +99,19 @@
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </div>
-    <div class="item ">
+    <div class="item">
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [yAxisLabel]="'Сила тока, A'"            
+            [yAxisLabel]="'Контактор'"
+            [curve]="linearCurveStep"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [roundDomains]="false"
             [showGridLines]="false"
             [animations]="false"
-            [results]="time_temp1"
+            [results]="contractor"
             (select)="onSelect($event)"
             (activate)="onActivate($event)"
             (deactivate)="onDeactivate($event)"

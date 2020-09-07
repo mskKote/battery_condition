@@ -30,7 +30,8 @@ export class AppComponent implements OnInit {
   rotateXAxisTicks: boolean = false;
 
   //Линиии
-  //linearCurve= shape.curveCardinal;
+  linearCurveCardinal= shape.curveCardinal;
+  linearCurveStep= shape.curveStep;
   amperTicks: any[] =  [0, 0.01, 0.02, 0.03, 0.04];
   xAxis: boolean = true;
   yAxis: boolean = true;
@@ -62,6 +63,10 @@ export class AppComponent implements OnInit {
     "series": []
   }];
   balance: any[] = [{
+    "name": "Балансировка",
+    "series": []
+  }];
+  contractor: any[] = [{
     "name": "Балансировка",
     "series": []
   }];
@@ -135,6 +140,17 @@ export class AppComponent implements OnInit {
     let buff = this.time_temp1[0];
     this.time_temp1 = [buff];
   }
+  addTimePointContractor(point) {
+    this.contractor[0].series.push(point);
+    let buff = this.contractor[0];
+    this.contractor = [buff];
+  }
+  addTimePointBalance(point) {
+    this.balance[0].series.push(point);
+    let buff = this.balance[0];
+    this.balance = [buff];
+  }
+
 
   
   constructor(public server: ServerService){
@@ -153,8 +169,6 @@ export class AppComponent implements OnInit {
         this.multi = [];
         this.single = [];
         let total_voltage_value = 0;
-
-
 
         let lastObj = data[data.length - 1];
         let lastDataset = lastObj.data[lastObj.data.length - 1];
@@ -178,21 +192,23 @@ export class AppComponent implements OnInit {
           total_voltage_value += battery1.value + battery2.value;
 
         }
-
         this.single.push({
           name: 'Заряд батареи',
           value: total_voltage_value / (1.05 * lastDataset.voltages.length) * 100
         });
       
+        // Line charts
         for (let i = 0; i < data.length; i++) {
           const element = data[i]; // 1 по Х
-          //console.log(element);
+          console.log(element);
           let temp0: number = element.data[0].temperatures[0].value;
           for (let j = 0; j < element.data.length; j++) {
             const dataset = element.data[j];
             //console.log('dataset :>> ', dataset);
             // temp0 = dataset.temperatures[0].value;
-            console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
+            //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
+            console.log('contractor :>> ', dataset.contractor ? "1" : "0");
+
             if (dataset.total_amp.value > 100) {
               continue;              
             }
@@ -200,13 +216,17 @@ export class AppComponent implements OnInit {
               "value": (dataset.total_amp.value).toFixed(2),
               "name": new Date(element.timestamp)
             }); 
+
+            this.addTimePointContractor({
+              "value":  dataset.contractor ? "1" : "0",
+              "name": new Date(element.timestamp)
+            }); 
           }
           //console.log('temp0 :>> ', temp0);
           this.addTimePointTime0({
             "value": "" + temp0,
             "name": new Date(element.timestamp)
-          });          
-          
+          });                  
         }
        console.groupEnd();
       })
@@ -229,14 +249,14 @@ export class AppComponent implements OnInit {
     return arr;
   }
 
-  contractor: boolean = true;
-  switcher: boolean = false;
-  clickContractor() {
-    // this.genData();
-    this.contractor = !this.contractor;
-  }
-  clickSwitcher() {
-    // this.genData();
-    this.switcher = !this.switcher;
-  }
+  // contractor: boolean = true;
+  // switcher: boolean = false;
+  // clickContractor() {
+  //   // this.genData();
+  //   this.contractor = !this.contractor;
+  // }
+  // clickSwitcher() {
+  //   // this.genData();
+  //   this.switcher = !this.switcher;
+  // }
 }
