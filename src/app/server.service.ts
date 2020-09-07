@@ -5,6 +5,7 @@ import { Timestamp, Observable } from 'rxjs';
 ///MODELS
 export class totals {
   data: total[];
+  timestamp: number
 }
 export class total {
   total_voltage: val[];

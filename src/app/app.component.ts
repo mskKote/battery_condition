@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
  onSelect(data: any): void {
     //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    //this.genData();
+    this.genData();
   }
 
   onActivate(data: any): void {
@@ -50,34 +50,15 @@ export class AppComponent implements OnInit {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
+  time_temp0: any[] = [{
+    "name": "Батарея 1",
+    "series": []
+  }];
+  time_temp1: any[] = [{
+    "name": "Батарея 2",
+    "series": []
+  }];
   multi:any[];
-  genData() {    // Генерируем данные
-
-    try{
-    console.log(ServerService.end.getTime());
-    console.log(ServerService.start.getTime());
-    const bn = this.server.getDataQuery(ServerService.start.getTime().toString(),ServerService.end.getTime().toString());
-    bn.then(b=>console.log(b));
-  }
-
-    catch{}
-    this.multi = [];
-    for (let i = 0; i < 15; i++) {
-      this.multi.push({
-        name: i + 1,
-        series: [
-          {
-            "name": "",
-            "value": (Math.random()*100).toFixed(2)
-          },
-          {
-            "name": ".",
-            "value": (Math.random()*100).toFixed(2)
-          }
-        ]
-      });
-    }
-  }
   single: any[] = [
     {
       name: 'Заряд батареи',
@@ -85,6 +66,70 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  static randomDate(start:Date, end:Date): Date {
+    return new Date(start.getTime() 
+            + Math.random() * (end.getTime() - start.getTime()));
+  }
+  genData() {    // Генерируем данные
+    // try{
+    //   console.log(ServerService.end.getTime());
+    //   console.log(ServerService.start.getTime());
+    //   const bn = this.server.getDataQuery(ServerService.start.getTime().toString(),ServerService.end.getTime().toString());
+    //   bn.then(b=>console.log(b));
+    // }
+    // catch{}
+    // this.multi = [];
+    // for (let i = 0; i < 15; i++) {
+    //   this.multi.push({
+    //     name: i + 1,
+    //     series: [
+    //       {
+    //         "name": "",
+    //         "value": (Math.random()*100).toFixed(2)
+    //       },
+    //       {
+    //         "name": ".",
+    //         "value": (Math.random()*100).toFixed(2)
+    //       }
+    //     ]
+    //   });
+    // }
+    // this.time_temp0[0].series.push({
+    //   "value": (Math.random()*1000).toFixed(2),
+    //   "name": AppComponent.randomDate(new Date(2012, 0, 1), new Date())
+    // });
+    // this.time_temp1[0].series.push({
+    //   "value": (Math.random()*1000).toFixed(2),
+    //   "name": AppComponent.randomDate(new Date(2012, 0, 1), new Date())
+    // });
+
+    // let buff0 = this.time_temp0[0];
+    // this.time_temp0 = [buff0];
+
+    // let buff1 = this.time_temp1[0];
+    // this.time_temp1 = [buff1];
+    this.addTimePointTime0();
+    this.addTimePointTime1();
+  }
+
+  addTimePointTime0(point = {
+    "value": (Math.random()*1000).toFixed(2),
+    "name": AppComponent.randomDate(new Date(2012, 0, 1), new Date())
+  }) {
+    this.time_temp0[0].series.push(point);
+    let buff = this.time_temp0[0];
+    this.time_temp0 = [buff];
+  }
+  addTimePointTime1(point = {
+    "value": (Math.random()*1000).toFixed(2),
+    "name": AppComponent.randomDate(new Date(2012, 0, 1), new Date())
+  }) {
+    this.time_temp1[0].series.push(point);
+    let buff = this.time_temp1[0];
+    this.time_temp1 = [buff];
+  }
+
+  
   constructor(public server: ServerService){
     //this.genData();
     //setInterval( () => {this.genData();}, 4000);
@@ -95,20 +140,19 @@ export class AppComponent implements OnInit {
     setInterval(() => { this.request(); } , 1000)
   }
 
-  request()  {
+  request()  {  
     this.server.getDataQuery()
       .then((data: totals[]) => {
         this.multi = [];
         this.single = [];
         let total_voltage_value = 0;
 
+
+
         let lastObj = data[data.length - 1];
         let lastDataset = lastObj.data[lastObj.data.length - 1];
 
         console.groupCollapsed('data from server -- app.component');
-
-        console.log('lastDataset :>> ', lastDataset);
-
         // Графикс c 30 батареями и total_voltage
         for (let j = 0; j < lastDataset.voltages.length; j+=2) {
           const battery1 = lastDataset.voltages[j]; // 1 батарейка
@@ -132,8 +176,30 @@ export class AppComponent implements OnInit {
           name: 'Заряд батареи',
           value: total_voltage_value / (1.05 * lastDataset.voltages.length) * 100
         });
-
-        console.groupEnd();
+      
+        for (let i = 0; i < data.length; i++) {
+          const element = data[i]; // 1 по Х
+          //console.log(element);
+          let temp0: number = element.data[0].temperatures[0].value;
+          let temp1: number = element.data[0].temperatures[0].value;
+          for (let j = 0; j < element.data.length; j++) {
+            const dataset = element.data[j];
+            // temp0 = dataset.temperatures[0].value;
+            // temp1 = dataset.temperatures[0].value;
+          }
+          console.log('temp0 :>> ', temp0);
+          this.addTimePointTime0({
+            "value": "" + temp0,
+            "name": new Date(element.timestamp)
+          });
+          this.addTimePointTime1({
+            "value": "" + temp1,
+            "name": new Date(element.timestamp)
+          }); 
+          
+          
+        }
+       console.groupEnd();
       })
   }
 
