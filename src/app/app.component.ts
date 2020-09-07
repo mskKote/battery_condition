@@ -8,6 +8,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  view: number[] = undefined;
   //multi: any[];
 
   // Главный график
