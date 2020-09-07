@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div class="grid">
-    <div class="item" style="max-height: 80vh;">
+    <div class="item" style="max-height: 83vh;">
         <ngx-charts-bar-vertical-2d 
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
@@ -17,7 +17,7 @@
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"  
             [showDataLabel]="showDataLabel"
-            [showGridLines]="true"
+            [showGridLines]="showGridLines"
             [roundDomains]="roundDomains"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
@@ -26,26 +26,31 @@
             (activate)="onActivate($event)" 
             (deactivate)="onDeactivate($event)">
         </ngx-charts-bar-vertical-2d>
+        <!-- <ngx-chart1></ngx-chart1> -->
     </div>
-    <div class="item" style="max-height: 80vh; max-width: 30vw; border: none">
-        <ngx-charts-gauge
-            [scheme]="{
-                domain: ['#00ff00']
-                }"
-            [startAngle]="-120"
-            [angleSpan]="240"
-            [results]="single"
-            [min]="0"
-            [max]="100"
-            [units]="'% Заряда батареи'"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-        >
-        </ngx-charts-gauge>
+    <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
+    <div class="item">
+        <div style="padding: 0; border: none;">
+            <!-- <div style="width: 100%; height: 100%;"> -->
+                <ngx-charts-gauge style="width: 100%; height: 100%;"
+                    [scheme]="{
+                        domain: ['#00ff00']
+                    }"
+                    [startAngle]="-120"
+                    [angleSpan]="240"
+                    [results]="single"
+                    [min]="0"
+                    [max]="100"
+                    [units]="'% Заряда батареи'"
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                    >
+                </ngx-charts-gauge>
+            <!-- </div> -->
+        </div>
     </div>
-
-    <div class="item" style="max-height: 33vh;">
+    <div class="item" >
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
@@ -61,7 +66,7 @@
             >
         </ngx-charts-line-chart>
     </div>
-    <div class="item" style="max-height: 33vh;">
+    <div class="item">
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
@@ -80,7 +85,7 @@
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </div>
-    <div class="item" style="max-height: 33vh;">
+    <div class="item">
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
@@ -100,7 +105,7 @@
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </div>
-    <div class="item" style="max-height: 33vh;">
+    <div class="item">
         <ngx-charts-line-chart
             [yAxisTickFormatting]="yAxisTickFormatting"
             [scheme]="colorScheme"
@@ -111,7 +116,7 @@
             [curve]="linearCurveStep"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
-            [yAxisTicks]="[0, 1]"
+            [yAxisTicks]="RightTickValues"
             [roundDomains]="false"
             [showGridLines]="false"
             [animations]="false"
@@ -121,18 +126,26 @@
             (deactivate)="onDeactivate($event)"
         ></ngx-charts-line-chart>
     </div>
-    
-</div>
-
-<div class="item" style="margin: 1rem 2rem; max-width: 100vw;">
-    <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" *ngFor="let battery of batteries; let i = index" 
-                (click)="changeBattery(i)" class="btn btn-secondary"
-                [ngClass]="{active: i == currentBattery}">
-                {{i + 1}}
-            </button>
+        <!-- [curve]="d3.shape.curveLinear" -->
+    <!-- <div class="item ">
+        <div class="box">
+            <button class="switchButton " [ngClass]="{switched: contractor} " >Свитчер</button>
         </div>
     </div>
+    <div class="item ">
+        <div class="box">
+            <button class="switchButton " [ngClass]="{switched: switcher} " >Контактор</button>
+        </div>
+    </div> -->
+    
 </div>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+      <button type="button" *ngFor="let battery of batteries; let i = index" class="btn btn-secondary">
+          {{i + 1}}
+        </button>
+    </div>
+  </div>
+<!-- <div *ngFor="let dataSource of server.datas ">
+  {{dataSource.data[0].voltages[0].index|json}}
+</div> -->
