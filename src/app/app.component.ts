@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   view: any[] = [700, 400];
 
   // options
+  yAxisTicks: any[] = this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
@@ -27,17 +28,17 @@ export class AppComponent implements OnInit {
     domain: ['#6391ef', 'deeppink']
   };
 
- onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+ onSelect(data: any): void {
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.genData();
   }
 
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  onActivate(data: any): void {
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  onDeactivate(data: any): void {
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   multi:any[];
@@ -66,14 +67,31 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setInterval(() => {
-      this.server.getDataQuery()
-        .then((d: totals[]) => {
-          console.groupCollapsed('data from server -- app.component');
-          console.log(d);
-          console.groupEnd();
-        })
-    }, 2000)
+    // setInterval(() => {
+    //   this.server.getDataQuery()
+    //     .then((d: totals[]) => {
+    //       console.groupCollapsed('data from server -- app.component');
+    //       console.log(d);
+    //       console.groupEnd();
+    //     })
+    // }, 2000)
+  }
+
+  getArrY(min: number, max: number, dist: number) {
+    let arr = [];
+    for (let i = 0, l = (max - min) / dist; i < l; i++) {
+      arr.push(min + i * dist)
+    }
+    arr.push(max)
+    return arr;
+  }
+
+  randomSeries() {
+    let arr = [];
+    for (let i = 0; i < 15; i++) {
+      arr.push((1.75 + Math.random() * (2.8 - 1.75)).toFixed(2));
+    }
+    return arr;
   }
 
   contractor: boolean = true;
