@@ -1,8 +1,8 @@
 <app-header></app-header>
 
 <div class="grid">
-    <div class="item">
-        <ngx-charts-bar-vertical-2d  
+    <div class="item" style="max-height: 83vh;">
+        <ngx-charts-bar-vertical-2d 
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
             [schemeType]="schemeType"
@@ -28,14 +28,13 @@
         </ngx-charts-bar-vertical-2d>
         <!-- <ngx-chart1></ngx-chart1> -->
     </div>
-    <div class="item">
-        <!-- <div class="box"> -->
+    <div class="item" style="max-height: 33vh;">
             <!-- <ngx-chart2></ngx-chart2> -->
             <ngx-charts-gauge
                 [scheme]="{
                     domain: ['#00ff00']
                   }"
-                  [startAngle]="-120"
+                [startAngle]="-120"
                 [angleSpan]="240"
                 [results]="single"
                 [min]="0"
@@ -46,10 +45,8 @@
                 (deactivate)="onDeactivate($event)"
             >
           </ngx-charts-gauge>
-        <!-- </div> -->
     </div>
     <div class="item " >
-            <!-- <ngx-chart3></ngx-chart3> -->
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
@@ -64,7 +61,6 @@
         </ngx-charts-line-chart>
     </div>
     <div class="item">
-            <!-- <ngx-chart4></ngx-chart4> -->
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"

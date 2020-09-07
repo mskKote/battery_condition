@@ -21,19 +21,19 @@
       "box4 box4";
   }
 
-  @media screen and (min-width: 800px) {
-    .grid {
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: auto;
-      grid-template-areas:
-        "box1 box1 box1 box2 box2"
-        "box1 box1 box1 box2 box2"
-        "box1 box1 box1 box2 box2"
-        "box5 box5 box6 box6 ."
-        "box3 box3 box4 box4 ."
-        "box3 box3 box4 box4 .";
-    }
-  }
+  // @media screen and (min-width: 800px) {
+  //   .grid {
+  //     grid-template-columns: repeat(5, 1fr);
+  //     grid-template-rows: auto;
+  //     grid-template-areas:
+  //       "box1 box1 box1 box2 box2"
+  //       "box1 box1 box1 box2 box2"
+  //       "box1 box1 box1 box2 box2"
+  //       "box5 box5 box6 box6 ."
+  //       "box3 box3 box4 box4 ."
+  //       "box3 box3 box4 box4 .";
+  //   }
+  // }
 
   @media screen and (min-width: 1500px) {
     .grid {

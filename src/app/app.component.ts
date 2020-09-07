@@ -88,9 +88,6 @@ export class AppComponent implements OnInit {
   }
 
   request()  {
-    //Создаём объекты с данными
-    let contractorArr = [];
-
     this.server.getDataQuery()
       .then((data: totals[]) => {
         this.multi = [];
@@ -102,7 +99,6 @@ export class AppComponent implements OnInit {
 
         console.groupCollapsed('data from server -- app.component');
 
-        let i = lastDataset.voltages.length - 1;
         console.log('lastDataset :>> ', lastDataset);
 
         // Графикс c 30 батареями и total_voltage
@@ -126,7 +122,7 @@ export class AppComponent implements OnInit {
 
         this.single.push({
           name: 'Заряд батареи',
-          value: total_voltage_value / (1.05 * lastDataset.voltages.length)
+          value: total_voltage_value / (1.05 * lastDataset.voltages.length) * 100
         });
         
         console.groupEnd();
