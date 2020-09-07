@@ -16,6 +16,9 @@ import { DateRangePickerModule } from '@uiowa/date-range-picker';
 import { SeriesPipe } from './charts/chart3/series.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,10 +32,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SeriesPipe
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     NgApexchartsModule,
     DateRangePickerModule,
+    NgxChartsModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,

@@ -1,54 +1,55 @@
 <app-header></app-header>
 <div class="grid">
     <div class="item">
-        <div class="box">
-            <ngx-chart1></ngx-chart1>
-        </div>
+        <ngx-charts-bar-vertical-2d [scheme]="colorScheme" [groupPadding]="0" [results]="multi" [gradient]="gradient " [xAxis]="showXAxis " [yAxis]="showYAxis " [showXAxisLabel]="showXAxisLabel " [showYAxisLabel]="showYAxisLabel
+            " [xAxisLabel]="xAxisLabel " [yAxisLabel]="yAxisLabel " [legendTitle]="legendTitle " (select)="onSelect($event) " (activate)="onActivate($event) " (deactivate)="onDeactivate($event) ">
+        </ngx-charts-bar-vertical-2d>
+        <!-- <ngx-chart1></ngx-chart1> -->
     </div>
-    <div class="item">
-        <div class="box">
+    <div class="item ">
+        <div class="box ">
             <ngx-chart2></ngx-chart2>
         </div>
     </div>
-    <div class="item">
-        <div class="box">
+    <div class="item ">
+        <div class="box ">
             <ngx-chart3></ngx-chart3>
         </div>
     </div>
-    <div class="item">
-        <div class="box">
+    <div class="item ">
+        <div class="box ">
             <ngx-chart4></ngx-chart4>
         </div>
     </div>
-    <div class="item">
-        <div class="box">
-            <div class="toggle">
-                <p style="left: -25px;">Балансировка</p>
-                <input type="checkbox" id="toggle-switcher" />
-                <label for="toggle-switcher"></label>
-              </div>
+    <div class="item ">
+        <div class="box ">
+            <div class="toggle ">
+                <p style="left: -25px; ">Балансировка</p>
+                <input type="checkbox " id="toggle-switcher " />
+                <label for="toggle-switcher "></label>
+            </div>
         </div>
     </div>
-    <div class="item">
-        <div class="box">
-            <div class="toggle">
-                <p style="left: -10px;">Контактор</p>
-                <input type="checkbox" id="toggle-contractor" />
-                <label for="toggle-contractor"></label>
-              </div>
+    <div class="item ">
+        <div class="box ">
+            <div class="toggle ">
+                <p style="left: -10px; ">Контактор</p>
+                <input type="checkbox " id="toggle-contractor " />
+                <label for="toggle-contractor "></label>
+            </div>
         </div>
     </div>
-    <!-- <div class="item">
-        <div class="box">
-            <button class="switchButton" [ngClass]="{switched: contractor}" >Свитчер</button>
+    <!-- <div class="item ">
+        <div class="box ">
+            <button class="switchButton " [ngClass]="{switched: contractor} " >Свитчер</button>
         </div>
     </div>
-    <div class="item">
-        <div class="box">
-            <button class="switchButton" [ngClass]="{switched: switcher}" >Контактор</button>
+    <div class="item ">
+        <div class="box ">
+            <button class="switchButton " [ngClass]="{switched: switcher} " >Контактор</button>
         </div>
     </div> -->
 </div>
-<!-- <div *ngFor="let dataSource of server.datas">
+<!-- <div *ngFor="let dataSource of server.datas ">
   {{dataSource.data[0].voltages[0].index|json}}
 </div> -->
