@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
   };
 
  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.genData();
+    //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    //this.genData();
   }
 
   onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    //console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.request();
-    //setInterval(() => { this.request(); } , 2000)
+    setInterval(() => { this.request(); } , 1000)
   }
 
   request()  {
@@ -86,34 +86,30 @@ export class AppComponent implements OnInit {
     this.server.getDataQuery()
       .then((data: totals[]) => {
         this.multi = [];
+        let lastObj = data[data.length - 1];
+        let lastDataset = lastObj.data[lastObj.data.length - 1];  
 
         console.groupCollapsed('data from server -- app.component');
-        for (let i = 0; i < data.length; i++) {
-          console.log(data[i]); // На этом уровне есть данные по таймстемпам
 
-          for (let u = 0; u < data[i].data.length; u++) { // По самим данным
-            const element = data[i].data[u];
-            //console.log(element);
-          }
+        let i = lastDataset.voltages.length - 1;
+        console.log('lastDataset :>> ', lastDataset);
 
-          for (let voltage = 0; voltage < data[i].data[data[i].data.length - 1].voltages.length; voltage+=2) {
-            const battery1 = data[i].data[data[i].data.length - 1].voltages[voltage];
-            const battery2 = data[i].data[data[i].data.length - 1].voltages[voltage + 1];
-            this.multi.push({
-              "name": voltage / 2,
-              "series": [
-                {
-                  "name": "",
-                  "value": battery1.value 
-                }, {
-                  "name": ".",
-                  "value": battery2.value
-                }
-              ]});
-          }
-          //this.multi =
+        for (let j = 0; j < lastDataset.voltages.length; j+=2) {
+          const battery1 = lastDataset.voltages[j]; // 1 батарейка
+          const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
+          this.multi.push({
+            "name": j / 2,
+            "series": [
+              {
+                "name": "",
+                "value": battery1.value 
+              }, {
+                "name": ".",
+                "value": battery2.value
+              }
+            ]});
         }
-         
+
         console.groupEnd();
       })
   }
