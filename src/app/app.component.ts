@@ -29,10 +29,14 @@ export class AppComponent implements OnInit {
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
 
-  // RightTickValues: string[] = ['Выкл','Вкл']
+  RightTickValues: string[] = ['0', '1']
 
   //Линиии
-  linearCurveCardinal= shape.curveCardinal;
+  yAxisTickFormatting(val: any) {
+    if(val == '0') { return 'Выкл'}
+    if(val == '1') { return 'Вкл'}
+}
+  linearCurveCardinal = shape.curveCardinal;
   linearCurveStep= shape.curveStep;
   amperTicks: any[] =  [0, 0.01, 0.02, 0.03, 0.04];
   xAxis: boolean = true;
