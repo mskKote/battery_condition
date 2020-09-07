@@ -5,30 +5,36 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   //multi: any[];
 
   // Главный график
-  yAxisTicks: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]//this.getArrY(1.75, 2.8, 0.05);
+  yAxisTicksArr: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; //this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
-  xAxisLabel: string = 'пары батарей';
+  xAxisLabel: string = 'Пары батарей';
   yAxisLabel: string = '% Заряда';
   animations: boolean = false;
+  showDataLabel: boolean = true;
+  showGridLines: boolean = false;
+  roundDomains: boolean = true;
+  noBarWhenZero: boolean = true;
+  rotateXAxisTicks: boolean = false;
 
   //Линиии
   xAxis: boolean = true;
   yAxis: boolean = true;
   timeline: boolean = true;
   colorScheme = {
-    domain: ['royalblue', 'deeppink']
+    domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
   };
+  schemeType: string = 'linear';
 
  onSelect(data: any): void {
     //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
@@ -43,13 +49,14 @@ export class AppComponent implements OnInit {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
-  multi:any[];
-  genData() {    // Генерируем данные
+  multi: any[];
+  genData() {
+    // Генерируем данные
     this.multi = [];
     for (let i = 0; i < 15; i++) {
       this.multi.push({
-        "name": i + 1,
-        "series": [
+        name: i + 1,
+        series: [
           {
             "name": "",
             "value": (Math.random()*100).toFixed(2)
@@ -62,10 +69,10 @@ export class AppComponent implements OnInit {
       });
     }
   }
-  single:any[] = [
+  single: any[] = [
     {
-      "name": "Заряд батареи",
-      "value": 50
+      name: 'Заряд батареи',
+      value: 50,
     },
   ];
 
@@ -98,14 +105,14 @@ export class AppComponent implements OnInit {
           const battery1 = lastDataset.voltages[j]; // 1 батарейка
           const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
           this.multi.push({
-            "name": j / 2,
+            "name": j / 2 + 1 ,
             "series": [
               {
                 "name": "",
-                "value": battery1.value 
+                "value": battery1.value / 2.8 * 100 
               }, {
                 "name": ".",
-                "value": battery2.value
+                "value": battery2.value / 2.8 * 100
               }
             ]});
         }
@@ -117,12 +124,11 @@ export class AppComponent implements OnInit {
   getArrY(min: number, max: number, dist: number) {
     let arr = [];
     for (let i = 0, l = (max - min) / dist; i < l; i++) {
-      arr.push(min + i * dist)
+      arr.push(min + i * dist);
     }
-    arr.push(max)
+    arr.push(max);
     return arr;
   }
-
 
   randomSeries() {
     let arr = [];
