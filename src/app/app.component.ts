@@ -70,19 +70,53 @@ export class AppComponent implements OnInit {
   ];
 
   constructor(public server: ServerService){
-    this.genData();
-    setInterval( () => {this.genData();}, 4000);
+    //this.genData();
+    //setInterval( () => {this.genData();}, 4000);
   }
 
   ngOnInit(): void {
-    // setInterval(() => {
-    //   this.server.getDataQuery()
-    //     .then((d: totals[]) => {
-    //       console.groupCollapsed('data from server -- app.component');
-    //       console.log(d);
-    //       console.groupEnd();
-    //     })
-    // }, 2000)
+    this.request();
+    //setInterval(() => { this.request(); } , 2000)
+  }
+
+  request()  {
+    //Создаём объекты с данными
+    let contractorArr = [];
+
+    this.server.getDataQuery()
+      .then((data: totals[]) => {
+        this.multi = [];
+
+        console.groupCollapsed('data from server -- app.component');
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]); // На этом уровне есть данные по таймстемпам
+
+          for (let u = 0; u < data[i].data.length; u++) { // По самим данным
+            const element = data[i].data[u];
+            //console.log(element);
+            for (let voltage = 0; voltage < data[i].data[u].voltages.length; voltage+=2) {
+              const battery1 = data[i].data[u].voltages[voltage];
+              const battery2 = data[i].data[u].voltages[voltage + 1];
+              this.multi.push({
+                "name": voltage / 2,
+                "series": [
+                  {
+                    "name": "",
+                    "value": battery1.value 
+                  }, {
+                    "name": ".",
+                    "value": battery2.value
+                  }
+                ]});
+            }
+
+          }
+          
+          //this.multi =
+        }
+         
+        console.groupEnd();
+      })
   }
 
   getArrY(min: number, max: number, dist: number) {
