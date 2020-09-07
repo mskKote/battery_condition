@@ -51,7 +51,7 @@
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [yAxisLabel]="'Градусы'"
+            [yAxisLabel]="'Температура, °C'"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [results]="time_temp0"
@@ -66,7 +66,7 @@
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [yAxisLabel]="'Ампер'"
+            [yAxisLabel]="'Сила тока, A'"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [roundDomains]="false"
@@ -76,25 +76,46 @@
             (activate)="onActivate($event)"
             (deactivate)="onDeactivate($event)"
         >
+        <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </div>
     <div class="item ">
-        <div class="box">
-            <div class="toggle ">
-                <p>Балансировка</p>
-                <input type="checkbox" id="toggle-switcher " />
-                <label for="toggle-switcher "></label>
-            </div>
-        </div>
+        <ngx-charts-line-chart
+            [scheme]="colorScheme"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisLabel]="'Сила тока, A'"            
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [roundDomains]="false"
+            [showGridLines]="false"
+            [animations]="false"
+            [results]="balance"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+        >
+        <!-- [curve]="d3.shape.curveLinear" -->
+        </ngx-charts-line-chart>
     </div>
     <div class="item ">
-        <div class="box">
-            <div class="toggle ">
-                <p>Контактор</p>
-                <input type="checkbox" id="toggle-contractor " />
-                <label for="toggle-contractor "></label>
-            </div>
-        </div>
+        <ngx-charts-line-chart
+            [scheme]="colorScheme"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisLabel]="'Сила тока, A'"            
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [roundDomains]="false"
+            [showGridLines]="false"
+            [animations]="false"
+            [results]="time_temp1"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+        >
+        <!-- [curve]="d3.shape.curveLinear" -->
+        </ngx-charts-line-chart>
     </div>
     <!-- <div class="item ">
         <div class="box">

@@ -1,6 +1,7 @@
 import { ServerService, totals } from './server.service';
 import { Component, OnInit } from '@angular/core';
 import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   rotateXAxisTicks: boolean = false;
 
   //Линиии
+  //linearCurve= shape.curveCardinal;
   amperTicks: any[] =  [0, 0.01, 0.02, 0.03, 0.04];
   xAxis: boolean = true;
   yAxis: boolean = true;
@@ -57,6 +59,10 @@ export class AppComponent implements OnInit {
   }];
   time_temp1: any[] = [{
     "name": "Сила тока",
+    "series": []
+  }];
+  balance: any[] = [{
+    "name": "Балансировка",
     "series": []
   }];
   multi:any[];
