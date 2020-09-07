@@ -5,11 +5,10 @@ import { Timestamp, Observable } from 'rxjs';
 ///MODELS
 export class totals {
   data: total[];
-  timestamp: number
 }
 export class total {
   total_voltage: val[];
-  total_amp: val;
+  total_amp: val[];
   temperatures: val[];
   voltages: val[];
   contractor: boolean;
@@ -26,7 +25,7 @@ export class val {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST = 'http://localhost:4200/api';
+  static HOST = 'http://80.89.235.39';
   public datas: totals[];
   constructor(public http: HttpClient) {}
   public static end:Date;
