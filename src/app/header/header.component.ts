@@ -1,7 +1,8 @@
 import { ServerService } from 'src/app/server.service';
 import { OnChanges, SimpleChanges } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { DateRange } from '@uiowa/date-range-picker';
+import { DateRange } from '@uiowa/date-range-picker';;
+import { platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 @Component({
   selector: 'app-header',
