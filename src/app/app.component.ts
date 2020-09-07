@@ -9,9 +9,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 })
 export class AppComponent implements OnInit {
   //multi: any[];
-  
+
   // Главный график
-  yAxisTicks: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]//this.getArrY(1.75, 2.8, 0.05);  
+  yAxisTicks: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]//this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
   };
 
  onSelect(data: any): void {
-    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.genData();
   }
 
   onActivate(data: any): void {
-    // console.log('Activate', JSON.parse(JSON.stringify(data)));
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
@@ -52,11 +52,11 @@ export class AppComponent implements OnInit {
         "series": [
           {
             "name": "",
-            "value": (Math.random()*100).toFixed(2) 
+            "value": (Math.random()*100).toFixed(2)
           },
           {
             "name": ".",
-            "value": (Math.random()*100).toFixed(2) 
+            "value": (Math.random()*100).toFixed(2)
           }
         ]
       });
