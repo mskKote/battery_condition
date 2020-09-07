@@ -1,6 +1,6 @@
 import { ServerService, totals } from './server.service';
 import { Component, OnInit } from '@angular/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   rotateXAxisTicks: boolean = false;
 
   //Линиии
+  amperTicks: any[] =  [0, 0.01, 0.02, 0.03, 0.04];
   xAxis: boolean = true;
   yAxis: boolean = true;
   timeline: boolean = true;
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit {
   };
   schemeType: string = 'linear';
 
- onSelect(data: any): void {
+  onSelect(data: any): void {
     //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.genData();
   }
@@ -51,11 +52,11 @@ export class AppComponent implements OnInit {
   }
 
   time_temp0: any[] = [{
-    "name": "Батарея 1",
+    "name": "Температура",
     "series": []
   }];
   time_temp1: any[] = [{
-    "name": "Батарея 2",
+    "name": "Сила тока",
     "series": []
   }];
   multi:any[];
@@ -181,22 +182,24 @@ export class AppComponent implements OnInit {
           const element = data[i]; // 1 по Х
           //console.log(element);
           let temp0: number = element.data[0].temperatures[0].value;
-          let temp1: number = element.data[0].temperatures[0].value;
           for (let j = 0; j < element.data.length; j++) {
             const dataset = element.data[j];
+            //console.log('dataset :>> ', dataset);
             // temp0 = dataset.temperatures[0].value;
-            // temp1 = dataset.temperatures[0].value;
+            console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
+            if (dataset.total_amp.value > 100) {
+              continue;              
+            }
+            this.addTimePointTime1({
+              "value": (dataset.total_amp.value).toFixed(2),
+              "name": new Date(element.timestamp)
+            }); 
           }
-          console.log('temp0 :>> ', temp0);
+          //console.log('temp0 :>> ', temp0);
           this.addTimePointTime0({
             "value": "" + temp0,
             "name": new Date(element.timestamp)
-          });
-          this.addTimePointTime1({
-            "value": "" + temp1,
-            "name": new Date(element.timestamp)
-          }); 
-          
+          });          
           
         }
        console.groupEnd();
