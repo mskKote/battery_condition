@@ -79,12 +79,12 @@
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </div>
-    <div class="item ">
+    <div class="item">
         <ngx-charts-line-chart
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [yAxisLabel]="'Сила тока, A'"      
+            [yAxisLabel]="'Балансировка'"      
             [curve]="linearCurveStep"                  
             [xAxis]="xAxis"
             [yAxis]="yAxis"
@@ -108,6 +108,7 @@
             [curve]="linearCurveStep"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
+            [yAxisTicks]="[0, 1]"
             [roundDomains]="false"
             [showGridLines]="false"
             [animations]="false"
