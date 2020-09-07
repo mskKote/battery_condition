@@ -207,7 +207,7 @@ export class AppComponent implements OnInit {
             //console.log('dataset :>> ', dataset);
             // temp0 = dataset.temperatures[0].value;
             //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
-            console.log('contractor :>> ', dataset.contractor ? "1" : "0");
+            console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
 
             if (dataset.total_amp.value > 100) {
               continue;              
@@ -241,14 +241,8 @@ export class AppComponent implements OnInit {
     return arr;
   }
 
-  randomSeries() {
-    let arr = [];
-    for (let i = 0; i < 15; i++) {
-      arr.push((1.75 + Math.random() * (2.8 - 1.75)).toFixed(2));
-    }
-    return arr;
-  }
 
+  batteries: any[] = new Array(30);
   // contractor: boolean = true;
   // switcher: boolean = false;
   // clickContractor() {
