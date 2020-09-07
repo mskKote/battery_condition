@@ -1,40 +1,46 @@
 <app-header></app-header>
 
 <div class="grid">
-    <div class="item" style="max-height: 83vh;">
+    <div class="item">
         <ngx-charts-bar-vertical-2d  
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
-            [barPadding]="0" 
-            [groupPadding]="10" 
+            [schemeType]="schemeType"
+            [noBarWhenZero]="noBarWhenZero"
+            [barPadding]="2" 
+            [groupPadding]="8" 
             [results]="multi" 
             [gradient]="gradient" 
             [xAxis]="showXAxis" 
             [yAxis]="showYAxis"
-            [yAxisTicks]="yAxisTicks"
+            [yAxisTicks]="yAxisTicksArr"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"  
-            [roundDomains]="true"
+            [showDataLabel]="showDataLabel"
+            [showGridLines]="showGridLines"
+            [roundDomains]="roundDomains"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
+            [rotateXAxisTicks]="rotateXAxisTicks"
             (select)="onSelect($event)" 
             (activate)="onActivate($event)" 
             (deactivate)="onDeactivate($event)">
         </ngx-charts-bar-vertical-2d>
         <!-- <ngx-chart1></ngx-chart1> -->
     </div>
-    <div class="item" style="min-height: 83vh; max-height: 83vh; min-width: 30vw">
+    <div class="item">
         <!-- <div class="box"> -->
             <!-- <ngx-chart2></ngx-chart2> -->
             <ngx-charts-gauge
                 [scheme]="{
-                    domain: ['orange', 'white']
+                    domain: ['#00ff00']
                   }"
-                [angleSpan]="180"
+                  [startAngle]="-120"
+                [angleSpan]="240"
                 [results]="single"
                 [min]="0"
                 [max]="100"
-                [units]="'уровень заряда'"
+                [units]="'% Заряда батареи'"
                 (select)="onSelect($event)"
                 (activate)="onActivate($event)"
                 (deactivate)="onDeactivate($event)"
@@ -42,7 +48,7 @@
           </ngx-charts-gauge>
         <!-- </div> -->
     </div>
-    <div class="item " style="min-height: 30vh;">
+    <div class="item " >
             <!-- <ngx-chart3></ngx-chart3> -->
         <ngx-charts-line-chart
             [scheme]="colorScheme"
@@ -75,7 +81,7 @@
     <div class="item ">
         <div class="box">
             <div class="toggle ">
-                <p style="left: -25px; ">Балансировка</p>
+                <p>Балансировка</p>
                 <input type="checkbox" id="toggle-switcher " />
                 <label for="toggle-switcher "></label>
             </div>
@@ -84,7 +90,7 @@
     <div class="item ">
         <div class="box">
             <div class="toggle ">
-                <p style="left: -10px; ">Контактор</p>
+                <p>Контактор</p>
                 <input type="checkbox" id="toggle-contractor " />
                 <label for="toggle-contractor "></label>
             </div>
