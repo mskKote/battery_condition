@@ -5,8 +5,10 @@
         <ngx-charts-bar-vertical-2d  
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
-            [barPadding]="0" 
-            [groupPadding]="10" 
+            [schemeType]="schemeType"
+            [noBarWhenZero]="noBarWhenZero"
+            [barPadding]="2" 
+            [groupPadding]="8" 
             [results]="multi" 
             [gradient]="gradient" 
             [xAxis]="showXAxis" 
@@ -14,9 +16,12 @@
             [yAxisTicks]="yAxisTicks"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"  
-            [roundDomains]="true"
+            [showDataLabel]="showDataLabel"
+            [showGridLines]="showGridLines"
+            [roundDomains]="roundDomains"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
+            [rotateXAxisTicks]="rotateXAxisTicks"
             (select)="onSelect($event)" 
             (activate)="onActivate($event)" 
             (deactivate)="onDeactivate($event)">
@@ -28,13 +33,14 @@
             <!-- <ngx-chart2></ngx-chart2> -->
             <ngx-charts-gauge
                 [scheme]="{
-                    domain: ['orange', 'white']
+                    domain: ['#00ff00']
                   }"
-                [angleSpan]="180"
+                  [startAngle]="-120"
+                [angleSpan]="240"
                 [results]="single"
                 [min]="0"
                 [max]="100"
-                [units]="'уровень заряда'"
+                [units]="'% Заряда батареи'"
                 (select)="onSelect($event)"
                 (activate)="onActivate($event)"
                 (deactivate)="onDeactivate($event)"
