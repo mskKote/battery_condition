@@ -17,14 +17,14 @@ export class AppComponent implements OnInit {
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Country';
+  xAxisLabel: string = 'пары батарей';
   showYAxisLabel: boolean = true;
   yAxisLabel: string = 'Population';
   legendTitle: string = 'Заряд От Всех Батареек';
   animations: boolean = false;
 
   colorScheme = {
-    domain: ['#6391ef', 'deeppink']
+    domain: ['royalblue', 'deeppink']
   };
 
  onSelect(data): void {
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     this.multi = [];
     for (let i = 0; i < 15; i++) {
       this.multi.push(    {
-        "name": "USA" + i,
+        "name": i,
         "series": [
           {
             "name": "2010",
