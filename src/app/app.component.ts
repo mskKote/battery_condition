@@ -93,6 +93,9 @@ export class AppComponent implements OnInit {
     this.server.getDataQuery()
       .then((data: totals[]) => {
         this.multi = [];
+        this.single = [];
+        let total_voltage_value = 0;
+
         let lastObj = data[data.length - 1];
         let lastDataset = lastObj.data[lastObj.data.length - 1];  
 
@@ -101,6 +104,7 @@ export class AppComponent implements OnInit {
         let i = lastDataset.voltages.length - 1;
         console.log('lastDataset :>> ', lastDataset);
 
+        // Графикс c 30 батареями и total_voltage
         for (let j = 0; j < lastDataset.voltages.length; j+=2) {
           const battery1 = lastDataset.voltages[j]; // 1 батарейка
           const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
@@ -114,9 +118,16 @@ export class AppComponent implements OnInit {
                 "name": ".",
                 "value": battery2.value / 2.8 * 100
               }
-            ]});
+          ]});
+          total_voltage_value += battery1.value + battery2.value;
+          
         }
 
+        this.single.push({
+          name: 'Заряд батареи',
+          value: total_voltage_value / (1.05 * lastDataset.voltages.length)
+        });
+        
         console.groupEnd();
       })
   }
