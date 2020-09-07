@@ -9,9 +9,6 @@ import * as shape from 'd3-shape';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  view: number[] = undefined;
-  //multi: any[];
-
   // Главный график
   yAxisTicksArr: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; //this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
@@ -234,7 +231,7 @@ export class AppComponent implements OnInit {
         // Line charts
         for (let i = 0; i < data.length; i++) {
           const element = data[i]; // 1 по Х
-          console.log(element);
+          //console.log(element);
           for (let j = 0; j < element.data.length; j++) {
             const dataset = element.data[j];
             //console.log('dataset :>> ', dataset);
