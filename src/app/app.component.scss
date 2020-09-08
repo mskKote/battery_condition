@@ -13,9 +13,9 @@
       "box2 box2"
       "box1 box1"
       "box1 box1"
-      "box7 box7"
       "box5 box5"
       "box6 box6"
+      "box7 box7"
       "box3 box3"
       "box3 box3"
       "box4 box4"
@@ -37,8 +37,8 @@
         "box1 box1 box1 box2 box2"
         "box1 box1 box1 box2 box2"
         "box1 box1 box1 box2 box2"
-        "box7 box7 box7 box7 box7"
         "box5 box5 box6 box6 box6"
+        "box7 box7 box7 box7 box7"
         "box3 box3 box4 box4 box4"
         "box3 box3 box4 box4 box4";
 
@@ -60,8 +60,8 @@
       "box1 box1 box1 box1 box2 box2"
       "box1 box1 box1 box1 box2 box2"
       "box1 box1 box1 box1 box2 box2"
-      "box7 box7 box7 box7 box7 box7"
       "box5 box5 box5 box6 box6 box6"
+      "box7 box7 box7 box7 box7 box7"
       "box3 box3 box3 box4 box4 box4"
       "box3 box3 box3 box4 box4 box4"
       "box3 box3 box3 box4 box4 box4";
@@ -295,6 +295,8 @@ body {
 }
 
 .btn-group{
+  padding: 4px 4px;
+  overflow-x: auto;
   button{
     border-radius: 10px !important;
   }
