@@ -1,9 +1,6 @@
 import { ServerService } from 'src/app/server.service';
-import { OnChanges, SimpleChanges } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { DateRange } from '@uiowa/date-range-picker';;
-import { platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-
+import { DateRange } from '@uiowa/date-range-picker';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -47,9 +44,16 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-    let pickerInput = document.querySelector('input');
-    pickerInput.style.maxWidth = '';
+    // let pickerInput = document.querySelector('input');
+    // pickerInput.style.maxWidth = '';
+    window.addEventListener('resize', () => { 
+      this.smartphone = screen.width < 800;
+
+      let pickerInput = document.querySelector('input');
+      pickerInput.style.maxWidth = '';
+    });
   }
+  smartphone: boolean = false;
 
   timeRange = [
     new Date().getTime() - 600000,              // 10 минут
