@@ -10,7 +10,16 @@ import * as shape from 'd3-shape';
 })
 export class AppComponent implements OnInit {
   // Главный график
-  yAxisTicksArr: any[] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; //this.getArrY(1.75, 2.8, 0.05);
+  // yAxisTicksArr: any[] = [
+  //   0   , 0.05, 0.10, 
+  //   0.15, 0.20, 0.25, 
+  //   0.30, 0.35, 0.40, 
+  //   0.45, 0.50, 0.55,
+  //   0.60, 0.65, 0.70,
+  //   0.75, 0.80, 0.85,
+  //   0.90, 0.95, 1.00,
+  //   1.05 ];
+  //this.getArrY(1.75, 2.8, 0.05);
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
@@ -25,11 +34,13 @@ export class AppComponent implements OnInit {
   roundDomains: boolean = true;
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
-
+  yAxisTickFormattingMulti(val: any) {
+    return val + 1.75
+  }
   RightTickValues: string[] = ['0', '1']
 
   //Линиии
-  yAxisTickFormatting(val: any) {
+  yAxisTickFormattingLine(val: any) {
     if(val == '0') { return 'Выкл'}
     if(val == '1') { return 'Вкл'}
   }
@@ -75,10 +86,10 @@ export class AppComponent implements OnInit {
   }];
   multi:any[];
   single: any[] = [
-    {
-      name: 'Заряд батареи',
-      value: 50,
-    },
+    // {
+    //   name: 'Заряд батареи',
+    //   value: 80,
+    // },
   ];
   batteries: any[] = new Array(30);
   
@@ -105,7 +116,7 @@ export class AppComponent implements OnInit {
 
   static randomDate(start:Date, end:Date): Date {
     return new Date(start.getTime() 
-            + Math.random() * (end.getTime() - start.getTime()));
+      + Math.random() * (end.getTime() - start.getTime()));
   }
   genData() {    // Генерируем данные
     // try{
@@ -213,11 +224,11 @@ export class AppComponent implements OnInit {
             "name": j / 2 + 1 ,
             "series": [
               {
-                "name": "",
-                "value": battery1.value / 2.8 * 100
+                "name": "Battery1",
+                "value": battery1.value - 1.75
               }, {
-                "name": ".",
-                "value": battery2.value / 2.8 * 100
+                "name": "Battery2",
+                "value": battery2.value - 1.75
               }
           ]});
           total_voltage_value += battery1.value + battery2.value;

@@ -2,7 +2,10 @@
 
 <div class="grid">
     <div class="item" style="max-height: 83vh;">
-        <ngx-charts-bar-vertical-2d 
+        <ngx-charts-bar-vertical-2d
+            [tooltipDisabled]="false"
+            
+            [yAxisTickFormatting]="yAxisTickFormattingMulti"
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
             [schemeType]="schemeType"
@@ -24,6 +27,10 @@
             (select)="onSelect($event)" 
             (activate)="onActivate($event)" 
             (deactivate)="onDeactivate($event)">
+            <ng-template #tooltipTemplate let-model="model">
+                Заряд
+                <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)|json}}</pre>
+            </ng-template>
         </ngx-charts-bar-vertical-2d>
         <!-- <ngx-chart1></ngx-chart1> -->
     </div>
@@ -40,7 +47,7 @@
                     [results]="single"
                     [min]="0"
                     [max]="100"
-                    [units]="'% Заряда батареи'"
+                    [units]="'Заряда батареи'"
                     (select)="onSelect($event)"
                     (activate)="onActivate($event)"
                     (deactivate)="onDeactivate($event)"
@@ -106,7 +113,7 @@
     </div>
     <div class="item">
         <ngx-charts-line-chart
-            [yAxisTickFormatting]="yAxisTickFormatting"
+            [yAxisTickFormatting]="yAxisTickFormattingLine"
             [scheme]="colorScheme"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
@@ -137,7 +144,7 @@
         </div>
     </div> -->
     
-    <div class="item">
+    <!-- <div class="item">
         <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -148,10 +155,12 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
-
+<ng-template #tooltipTemplate >
+    This is the single point tooltip template
+</ng-template>
 <!-- <div *ngFor="let dataSource of server.datas ">
   {{dataSource.data[0].voltages[0].index|json}}
 </div> -->
