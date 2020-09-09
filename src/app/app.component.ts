@@ -214,7 +214,6 @@ export class AppComponent implements OnInit {
           lastDataset = lastObj.data[lastObj.data.length - 1];
         }
 
-
         console.groupCollapsed('data from server -- app.component');
         // Графикс c 30 батареями и total_voltage
         for (let j = 0; j < lastDataset.voltages.length; j+=2) {
