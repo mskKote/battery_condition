@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   yAxisLabel: string = '';
   animations: boolean = false;
   showDataLabel: boolean = true;
-  showGridLines: boolean = false;
+  showGridLines: boolean = true;
   roundDomains: boolean = true;
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
@@ -237,25 +237,35 @@ export class AppComponent implements OnInit {
   }
 
 
-
+  tooltipText = 'Баттарея №'
   constructor(public server: ServerService,private breakpointObserver:BreakpointObserver){
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     let total_voltage = 0;
-    for (let j = 0; j < 30; j+=2) {
+    for (let j = 0; j < 30; j++) {
       const battery1 = AppComponent.randomNumber(1.75, 2.8);
       const battery2 = AppComponent.randomNumber(1.75, 2.8);
+      let value: number;
+      if(j % 2 == 0){
+        value = battery2 - 1.75
+      } else {
+        value = battery1 - 1.75
+      }
       this.multi.push({
-        "name": j / 2 + 1,
-        "series": [
-          {
-            "name": "Battery №" + j,
-            "value": battery1 - 1.75
-          }, {
-            "name": "Battery №" + j + 1,
-            "value": battery2 - 1.75
-          }
-      ]});
+        name: j + 1,
+        value: value
+      });
+      // this.multi.push({
+      //   "name": j + 1,
+      //   "series": [
+      //     {
+      //       "name": "Battery №" + j,
+      //       "value": battery1 - 1.75
+      //     }, {
+      //       "name": "Battery №" + j + 1,
+      //       "value": battery2 - 1.75
+      //     }
+      // ]});
       total_voltage += battery1 + battery2;
     }
     let total_voltage_percent =

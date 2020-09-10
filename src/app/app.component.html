@@ -13,7 +13,7 @@
 
   <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="5">
     <!-- пары батареек -->
-        <ngx-charts-bar-vertical-2d
+        <ngx-charts-bar-vertical
             [tooltipDisabled]="false"
             [roundDomains]="true"
             [yAxisTicks]="yAxisTicksArr"
@@ -22,8 +22,7 @@
             [scheme]="colorScheme"
             [schemeType]="schemeType"
             [noBarWhenZero]="noBarWhenZero"
-            [barPadding]="0"
-            [groupPadding]="0"
+            [barPadding]="8"
             [results]="multi"
             [gradient]="gradient"
             [xAxis]="showXAxis"
@@ -39,10 +38,10 @@
             (activate)="onActivate($event)"
             (deactivate)="onDeactivate($event)">
             <ng-template #tooltipTemplate let-model="model">
-                Заряд
+                {{tooltipText}}
                 <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}}</pre>
             </ng-template>
-        </ngx-charts-bar-vertical-2d>
+        </ngx-charts-bar-vertical>
 
 
         <!-- <ngx-chart1></ngx-chart1> -->
