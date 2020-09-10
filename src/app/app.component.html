@@ -13,44 +13,42 @@
 <mat-grid-list gutterSize='15px' cols="6" rowHeight="3:1">
   <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="5">
     <!-- пары батареек -->
-    <ngx-charts-bar-vertical
-        [tooltipDisabled]="false"
-        [roundDomains]="true"
-        [yAxisTicks]="yAxisTicksArr"
-        [yAxisTickFormatting]="yAxisTickFormattingMulti"
-        [trimYAxisTicks]="false"
-        [scheme]="colorScheme"
-        [schemeType]="schemeType"
-        [noBarWhenZero]="noBarWhenZero"
-        [barPadding]="8"
-        [results]="multi"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [showGridLines]="showGridLines"
-        [roundDomains]="roundDomains"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        [rotateXAxisTicks]="rotateXAxisTicks"
-        (select)="onSelect($event)"
-        (activate)="onActivate($event)"
-        (deactivate)="onDeactivate($event)">
-        <ng-template #tooltipTemplate let-model="model">
-          {{tooltipText + model.name}}
-          <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}}</pre>
-        </ng-template>
-    </ngx-charts-bar-vertical>
-    <div class="gridYLines"></div>
+        <ngx-charts-bar-vertical
+            [tooltipDisabled]="false"
+            [roundDomains]="true"
+            [yAxisTicks]="yAxisTicksArr"
+            [yAxisTickFormatting]="yAxisTickFormattingMulti"
+            [trimYAxisTicks]="false"
+            [scheme]="colorScheme"
+            [schemeType]="schemeType"
+            [noBarWhenZero]="noBarWhenZero"
+            [barPadding]="8"
+            [results]="multi"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [showGridLines]="showGridLines"
+            [roundDomains]="roundDomains"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [rotateXAxisTicks]="rotateXAxisTicks"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)">
+            <ng-template #tooltipTemplate let-model="model">
+              <p style="margin-top: 1rem;">{{tooltipText + model.name}}</p>
+                <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
+            </ng-template>
+        </ngx-charts-bar-vertical>
+
+
         <!-- <ngx-chart1></ngx-chart1> -->
   </mat-grid-tile>
     <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
-    <mat-grid-tile 
-      [ngStyle]="{'box-shadow':'2px 2px 2px 2px '+ colorChange_Total.domain.toString()}" 
-      class="item" 
-      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2" 
-      [rowspan]='4' >
+    <mat-grid-tile [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}" class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
+
             <!-- <div style="width: 100%; height: 100%;"> -->
       <ngx-charts-gauge style="width: 100%; height: 80%;"
         [valueFormatting]="yAxisTickFormattingMulti2"
@@ -160,7 +158,7 @@
             </div>
         </div>
     </div> -->
-  </mat-grid-list>
+</mat-grid-list>
 
 <ng-template #tooltipTemplate>
     This is the single point tooltip template
