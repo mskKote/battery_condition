@@ -39,10 +39,12 @@ export class AppComponent implements OnInit {
     return val + 1.75 +'v'
   }
   yAxisTickFormattingMulti2(val: any) {
-    return val +'V'
+    return 52.5+(84-52.5)* Math.floor(val/100) +'V'
   }
 
-
+batteryCharge(charge){
+  return charge +'%'
+}
   //Линиии
   yAxisTickFormattingLine(val: any) {
     if(val == '0') { return 'Выкл'}
@@ -291,8 +293,11 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-ChangeTemp(){
-  
+ChangeTemp(temp){
+  return temp+"°C";
+}
+ChangeAmper(amper){
+  return amper +'A';
 }
   request()  {
     this.server.getDataQuery()
