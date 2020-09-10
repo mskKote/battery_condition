@@ -47,28 +47,28 @@
         <!-- <ngx-chart1></ngx-chart1> -->
       </mat-grid-tile>
     <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
-    <mat-grid-tile [ngStyle]="{'box-shadow':'2px 2px 2px 2px '+ colorChange_Total.domain.toStr}" class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
+    <mat-grid-tile [ngStyle]="{'box-shadow':'2px 2px 2px 2px '+ colorChange_Total.domain.toString()}" class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
 
             <!-- <div style="width: 100%; height: 100%;"> -->
                 <ngx-charts-gauge style="width: 100%; height: 80%;"
                   [valueFormatting]="yAxisTickFormattingMulti2"
                   [axisTickFormatting] = "batteryCharge"
-                    [scheme]="colorChange_Total"
-                    [startAngle]="-120"
-                    [angleSpan]="240"
-                    [results]="single"
-                    [min]="0"
-                    [max]="100"
-                    [units]="'Заряда батарей'"
-                    (select)="onSelect($event)"
-                    (activate)="onActivate($event)"
-                    (deactivate)="onDeactivate($event)"
-                    >
+                  [scheme]="colorChange_Total"
+                  [startAngle]="-120"
+                  [angleSpan]="240"
+                  [results]="single"
+                  [min]="0"
+                  [max]="100"
+                  [units]="'Заряда батарей'"
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                  (deactivate)="onDeactivate($event)"
+                >
                 </ngx-charts-gauge>
             <!-- </div> -->
 
       </mat-grid-tile >
-      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='2' >
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]='2' >
         <ngx-charts-line-chart
             [yAxisTickFormatting]="yAxisTickFormattingLine"
             [scheme]="colorChange"

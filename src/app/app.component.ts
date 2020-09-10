@@ -273,19 +273,18 @@ batteryCharge(charge){
     let total_voltage_percent =
     this.single.push({
       name: 'Заряд батареи',
-      value: Math.floor((total_voltage - 30*1.75) / (30 * 1.05) * 100)
+      value: Math.floor((total_voltage - 30 * 1.75) / (30 * 1.05) * 100)
     });
 
     this.colorChange_Total.domain = [
       ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
-      [Math.round(((total_voltage - 30*1.75) / (30 * 1.05) * 100 + 1)/20)]
+      [Math.round(((total_voltage - 30 * 1.75) / (30 * 1.05) * 100 + 1) / 20)]
     ];
-
+    
     // Данные для остальных графиков
     for (let i = 10; i > 0; i--) {
       this.genData(+Date.now() - 1000 * 60 * i);
     }
-
 
     // setInterval( () => {
     //   for (let i = 10; i > 0; i--) {
