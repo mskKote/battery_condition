@@ -17,7 +17,33 @@ export class AppComponent implements OnInit {
   dateRange: any
   receiveDateRange($event: any){
     this.dateRange = $event;
-    console.log(this.dateRange);
+    // Вызывать обнуление
+    this.time_temp0 = [
+      {
+        name: 'Температура',
+        series: [],
+      },
+    ];
+    this.time_temp1 = [
+      {
+        name: 'Сила тока',
+        series: [],
+      },
+    ];
+    this.balance = [
+      {
+        name: 'Балансировка',
+        series: [],
+      },
+    ];
+    this.contractor = [
+      {
+        name: 'Балансировка',
+        series: [],
+      },
+    ];
+    // Генерим новое
+    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
   
   // Главный график
@@ -40,7 +66,7 @@ export class AppComponent implements OnInit {
     return val + 1.75 + 'V';
   }
   yAxisTickFormattingMulti2(val: any) {
-    return 52.5 + (84 - 52.5) * Math.floor(val / 100) + 'V';
+    return 52.5 + (84 - 52.5) * (val / 100) + 'V';
   }
 
   batteryCharge(charge: any) {
