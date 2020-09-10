@@ -84,7 +84,7 @@
           [results]="contractor">
         </ngx-charts-line-chart>
       </mat-grid-tile>
-      <mat-grid-tile class="item" style="padding-left: -40px;" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
+      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
         <ngx-charts-line-chart
           [scheme]="colorChange_Temperature"
           [yAxisTickFormatting]="ChangeTemp"

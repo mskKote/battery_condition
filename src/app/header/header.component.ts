@@ -45,6 +45,4 @@ export class HeaderComponent implements OnInit {
     new Date().getTime() - 600000 * 6 * 24, // 1 день
     new Date().getTime() - 600000 * 6 * 24 * 7, // 1 неделя
   ];
-
-
 }

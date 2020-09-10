@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     return 52.5 + (84 - 52.5) * Math.floor(val / 100) + 'V';
   }
 
-  batteryCharge(charge) {
+  batteryCharge(charge: any) {
     return charge + '%';
   }
   //Линиии
