@@ -179,7 +179,7 @@ export class AppComponent implements OnInit {
       "name": new Date(timestamp)
     });
 
-    // Меняем цвета
+    // Меняем цвета -- он вроде бы не обновляет значения...
     this.colorChange.domain = [
       ['#ff0000']
     ];
@@ -187,6 +187,10 @@ export class AppComponent implements OnInit {
       ['#18D8FF', '#AFDAFC', '#1F75FE','#0000FF', '#CC0605', '#C10020']
       [Math.round(Math.abs((this.temperature_gen + 20) / 20))]
     ];
+    let buff = this.colorChange_Temperature;
+    this.colorChange_Temperature = buff;
+
+
     this.colorChange_ACDC.domain = [
       ['#000000',  '#011465', '#1F75FE','#1845FF', '#1888FF', '#18D8FF']
       [Math.round((this.ACDC_gen / 2000 * 100 + 1) / 20)]
