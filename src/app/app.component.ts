@@ -18,7 +18,6 @@ export interface Tile {
 })
 export class AppComponent implements OnInit {
 
-
   // Главный график
    yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  showYAxisLabel: boolean = true;
+  showYAxisLabel: boolean = false;
   xAxisLabel: string = 'Пары батарей';
   yAxisLabel: string = '';
   animations: boolean = false;
@@ -39,17 +38,19 @@ export class AppComponent implements OnInit {
     return val + 1.75 +'V'
   }
   yAxisTickFormattingMulti2(val: any) {
-    return 52.5+(84-52.5)* Math.floor(val/100) +'V'
+    console.log('yAxisTickFormattingMulti2', this.total_voltage);
+    return  val + this.total_voltage + ' V'//52.5+(84-52.5)* Math.floor(val/100) +'V'
   }
 
-batteryCharge(charge){
-  return charge +'%'
-}
+  batteryCharge(charge){
+    return charge +'%'
+  }
   //Линиии
   yAxisTickFormattingLine(val: any) {
     if(val == '0') { return 'Выкл'}
     if(val == '1') { return 'Вкл'}
   }
+
   linearCurveCardinal = shape.curveCardinal;
   linearCurveStep= shape.curveStepAfter;
   amperTicks: any[] =  [0, 0.01, 0.02, 0.03, 0.04];
@@ -158,7 +159,6 @@ batteryCharge(charge){
 
     return prev;
   }
-  //---------------------------------------------------
   // Генерит 1 партию данных с указанным timestamp
   contactor_gen: boolean;
   balance_gen: boolean;
@@ -166,13 +166,14 @@ batteryCharge(charge){
   ACDC_gen: number =        AppComponent.randomNumber(0, 1000);
 
   genData(timestamp: number) { // Генерит и рисует данные
-    // Значения на контактор и балансировку
+
     this.contactor_gen = AppComponent.genBoolByPrevious(0.4);//Значение изменится с 40% вероятностью
     this.balance_gen =   AppComponent.genBoolByPrevious(0.4);
     this.temperature_gen = AppComponent.getNumByPrevious(this.temperature_gen, 0.4, 5, -40, 60)
-    this.ACDC_gen =        AppComponent.getNumByPrevious(this.ACDC_gen, 0.6, 100, 0, 2000);
-
-
+    this.ACDC_gen =        AppComponent.getNumByPrevious(this.ACDC_gen, 0.6, 100, 15, 40);
+    
+    
+    // Закидываем значения на график
     this.addTimePointContractor({
       "value": this.contactor_gen ? "1" : "0",
       "name": new Date(timestamp)
@@ -181,13 +182,10 @@ batteryCharge(charge){
       "value": this.balance_gen ? "1" : "0",
       "name": new Date(timestamp)
     });
-    // Значения на температуру
     this.addTimePointTime0({
       "value": `${this.temperature_gen}`,
       "name": new Date(timestamp)
     });
-    //this.colorChange_Temperature.domain = [this.temperature_gen > 0 ? 'red' : 'blue']
-    // Значения на силу тока
     this.addTimePointTime1({
       "value": `${this.ACDC_gen}`,
       "name": new Date(timestamp)
@@ -204,12 +202,41 @@ batteryCharge(charge){
     let buff = this.colorChange_Temperature;
     this.colorChange_Temperature = buff;
 
-
     this.colorChange_ACDC.domain = [
       ['#000000',  '#011465', '#1F75FE','#1845FF', '#1888FF', '#18D8FF']
       [Math.round((this.ACDC_gen / 2000 * 100 + 1) / 20)]
     ];
   }
+  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
+    // Генерируем данные для 30 батарей --> общее
+    // Графикс c 30 батареями и total_voltage
+    this.total_voltage = 0;
+    for (let j = 0; j < 30; j++) {
+      const battery1 = AppComponent.randomNumber(1.75, 2.8);
+
+      this.multi.push({
+        name: j + 1,
+        value: battery1 - 1.75
+      });
+
+      this.total_voltage += battery1;// + battery2;
+    }
+    this.single.push({
+      name: 'Заряд батареи',
+      value: Math.floor((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100)
+    });
+    // Цвет графика 
+    this.colorChange_Total.domain = [
+      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
+      [Math.round(((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100 + 1) / 20)]
+    ];
+    
+    // Данные для остальных графиков
+    for (let i = amount; i > 0; i--) {
+      this.genData(end - (end - start) / amount * i);
+    }
+  }
+  //---------------------------------------------------
 
   addTimePointTime0(point = {
     "value": (Math.random()*1000).toFixed(2),
@@ -239,59 +266,12 @@ batteryCharge(charge){
   }
 
 
-  tooltipText = 'Баттарея №'
-  constructor(public server: ServerService,private breakpointObserver:BreakpointObserver){
-    // Генерируем данные для 30 батарей --> общее
-    // Графикс c 30 батареями и total_voltage
-    let total_voltage = 0;
-    for (let j = 0; j < 30; j++) {
-      const battery1 = AppComponent.randomNumber(1.75, 2.8);
-      const battery2 = AppComponent.randomNumber(1.75, 2.8);
-      let value: number;
-      if(j % 2 == 0){
-        value = battery2 - 1.75
-      } else {
-        value = battery1 - 1.75
-      }
-      this.multi.push({
-        name: j + 1,
-        value: value
-      });
-      // this.multi.push({
-      //   "name": j + 1,
-      //   "series": [
-      //     {
-      //       "name": "Battery №" + j,
-      //       "value": battery1 - 1.75
-      //     }, {
-      //       "name": "Battery №" + j + 1,
-      //       "value": battery2 - 1.75
-      //     }
-      // ]});
-      total_voltage += battery1 + battery2;
-    }
-    let total_voltage_percent =
-    this.single.push({
-      name: 'Заряд батареи',
-      value: Math.floor((total_voltage - 30 * 1.75) / (30 * 1.05) * 100)
-    });
-
-    this.colorChange_Total.domain = [
-      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
-      [Math.round(((total_voltage - 30 * 1.75) / (30 * 1.05) * 100 + 1) / 20)]
-    ];
-    
-    // Данные для остальных графиков
-    for (let i = 10; i > 0; i--) {
-      this.genData(+Date.now() - 1000 * 60 * i);
-    }
-
-    // setInterval( () => {
-    //   for (let i = 10; i > 0; i--) {
-    //     this.genData(+Date.now() - 1000 * 60 * i);
-    //   }
-    // }, 1000);
+  total_voltage: number = 52.5;
+  tooltipText = 'Баттарея №';
+  constructor(public server: ServerService, private breakpointObserver:BreakpointObserver){
+    this.genGlobalCharts();
   }
+
   isTabletScreen;
   isSmallScreen;
   isXSmallScreen;
@@ -302,12 +282,13 @@ batteryCharge(charge){
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-ChangeTemp(temp){
-  return temp+"°C";
-}
-ChangeAmper(amper){
-  return amper +'A';
-}
+  ChangeTemp(temp){
+    return temp+"°C";
+  }
+  ChangeAmper(amper){
+    return amper +'A';
+  }
+
   request()  {
     this.server.getDataQuery()
       .then((data: totals[]) => {
@@ -375,7 +356,7 @@ ChangeAmper(amper){
             "name": new Date(element.timestamp)
           });
         }
-       console.groupEnd();
+        console.groupEnd();
       })
   }
 
