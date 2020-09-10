@@ -10,6 +10,9 @@ import { DateRangePickerModule } from '@uiowa/date-range-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
   ],
   imports: [
+  
+    MatCardModule,
+    MatGridListModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,

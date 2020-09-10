@@ -3,14 +3,22 @@ import { ServerService, totals } from './server.service';
 import { Component, OnInit } from '@angular/core';
 import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
 import * as shape from 'd3-shape';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { ClassMethod } from '@angular/compiler';
-
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
+
   // Главный график
    yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -20,7 +28,7 @@ export class AppComponent implements OnInit {
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
   xAxisLabel: string = 'Пары батарей';
-  yAxisLabel: string = '<';
+  yAxisLabel: string = '';
   animations: boolean = false;
   showDataLabel: boolean = true;
   showGridLines: boolean = false;
@@ -28,8 +36,12 @@ export class AppComponent implements OnInit {
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
   yAxisTickFormattingMulti(val: any) {
-    return val + 1.75
+    return val + 1.75 +'v'
   }
+  yAxisTickFormattingMulti2(val: any) {
+    return val +'V'
+  }
+
 
   //Линиии
   yAxisTickFormattingLine(val: any) {
@@ -91,7 +103,7 @@ export class AppComponent implements OnInit {
   multi:any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
-  
+
   currentBattery: number = 0;
   changeBattery(target){
     this.time_temp0 = [{
@@ -115,30 +127,30 @@ export class AppComponent implements OnInit {
 
   //---------------------------------------------------Раздел генерации значениц
   static randomDate(start:Date, end:Date): Date {
-    return new Date(start.getTime() 
+    return new Date(start.getTime()
       + Math.random() * (end.getTime() - start.getTime()));
   }
-  
+
   static randomNumber(start: number, end:number): number {
     return start + Math.random()*(end - start)
   }
   // Изменяю значения, расчётом на прежнее
   // volatile -- вероятность смены значения
   static genBoolByPrevious(volatile): boolean {
-    return Math.random() > volatile; 
+    return Math.random() > volatile;
   }
-  
+
   // Изменяем значения, НО с сохранением тренда с вероятностью volatile
   // Может изменяться на variability
   // Разворачивается при min и max
   // @ Изменяем volatile и variability, чтобы сделать график более спокойным/буйным
   static getNumByPrevious(prev: number, volatile: number, variability: number, min: number, max: number): number {
-    // Предыдущее += знак*(изменяемость) 
+    // Предыдущее += знак*(изменяемость)
     prev += (Math.random() > volatile ? 1 : -1)*(Math.random()*variability);
     // Мы достигли дна. Принудительно останавливаем падение/рост
     if      (prev < min) { prev = min; }
     else if (prev > max) { prev = max; }
-    // Приступаем к развороту тренда, когда будет 10% до минимума или максимума 
+    // Приступаем к развороту тренда, когда будет 10% до минимума или максимума
     if      (prev < min + (max - min) * 0.1) { prev += (max - min) * AppComponent.randomNumber(0.03, 0.07); } // Прибавляем от 3% до 7%
     else if (prev > max - (max - min) * 0.1) { prev -= (max - min) * AppComponent.randomNumber(0.03, 0.07); }
 
@@ -225,8 +237,8 @@ export class AppComponent implements OnInit {
   }
 
 
-  
-  constructor(public server: ServerService){
+
+  constructor(public server: ServerService,private breakpointObserver:BreakpointObserver){
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     let total_voltage = 0;
@@ -246,7 +258,7 @@ export class AppComponent implements OnInit {
       ]});
       total_voltage += battery1 + battery2;
     }
-    let total_voltage_percent = 
+    let total_voltage_percent =
     this.single.push({
       name: 'Заряд батареи',
       value: Math.floor((total_voltage - 30*1.75) / (30 * 1.05) * 100)
@@ -261,7 +273,7 @@ export class AppComponent implements OnInit {
     for (let i = 10; i > 0; i--) {
       this.genData(+Date.now() - 1000 * 60 * i);
     }
-      
+
 
     // setInterval( () => {
     //   for (let i = 10; i > 0; i--) {
@@ -269,13 +281,20 @@ export class AppComponent implements OnInit {
     //   }
     // }, 1000);
   }
-
+  isTabletScreen;
+  isSmallScreen;
+  isXSmallScreen;
   ngOnInit(): void {
+     this.breakpointObserver.observe(Breakpoints.Small).subscribe((resp)=>this.isSmallScreen=resp.matches);
+     this.breakpointObserver.observe(Breakpoints.Medium).subscribe((resp)=>this.isTabletScreen=resp.matches);
+     this.breakpointObserver.observe(Breakpoints.XSmall).subscribe((resp)=>this.isXSmallScreen=resp.matches);
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-
-  request()  {  
+ChangeTemp(){
+  
+}
+  request()  {
     this.server.getDataQuery()
       .then((data: totals[]) => {
         this.multi = [];
@@ -313,7 +332,7 @@ export class AppComponent implements OnInit {
           name: 'Заряд батареи',
           value: total_voltage_value / (1.05 * lastDataset.voltages.length) * 100
         });
-      
+
         // Line charts
         for (let i = 0; i < data.length; i++) {
           const element = data[i]; // 1 по Х
@@ -325,22 +344,22 @@ export class AppComponent implements OnInit {
             //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
             //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
             if (dataset.total_amp.value > 100)
-              continue;              
+              continue;
 
             this.addTimePointTime1({
               "value": (dataset.total_amp.value).toFixed(2),
               "name": new Date(element.timestamp)
-            }); 
+            });
 
             this.addTimePointContractor({
               "value":  dataset.contractor ? "1" : "0",
               "name": new Date(element.timestamp)
-            }); 
+            });
           }
           this.addTimePointTime0({
             "value": "" + element.data[0].temperatures[this.currentBattery].value,
             "name": new Date(element.timestamp)
-          });                  
+          });
         }
        console.groupEnd();
       })

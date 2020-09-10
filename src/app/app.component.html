@@ -1,7 +1,18 @@
-<app-header></app-header>
 
-<div class="grid">
-    <div class="item" style="max-height: 83vh;">
+<!-- <mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-tile
+      ..*ngFor="let tile of tiles"
+      [colspan]="tile.cols"
+      [rowspan]="tile.rows"
+      [style.background]="tile.color">
+    {{tile.text}}
+  </mat-grid-tile>
+</mat-grid-list> -->
+
+<mat-grid-list gutterSize='15px' cols="6" rowHeight="3:1">
+
+  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="5">
+    <!-- пары батареек -->
         <ngx-charts-bar-vertical-2d
             [tooltipDisabled]="false"
             [roundDomains]="true"
@@ -11,11 +22,11 @@
             [scheme]="colorScheme"
             [schemeType]="schemeType"
             [noBarWhenZero]="noBarWhenZero"
-            [barPadding]="0" 
-            [groupPadding]="0" 
-            [results]="multi" 
-            [gradient]="gradient" 
-            [xAxis]="showXAxis" 
+            [barPadding]="0"
+            [groupPadding]="0"
+            [results]="multi"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
             [yAxis]="showYAxis"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
@@ -24,21 +35,24 @@
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
             [rotateXAxisTicks]="rotateXAxisTicks"
-            (select)="onSelect($event)" 
-            (activate)="onActivate($event)" 
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
             (deactivate)="onDeactivate($event)">
             <ng-template #tooltipTemplate let-model="model">
                 Заряд
                 <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}}</pre>
             </ng-template>
         </ngx-charts-bar-vertical-2d>
+
+
         <!-- <ngx-chart1></ngx-chart1> -->
-    </div>
+      </mat-grid-tile>
     <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
-    <div class="item" style="position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0">
+    <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
+
             <!-- <div style="width: 100%; height: 100%;"> -->
-                <ngx-charts-gauge
+                <ngx-charts-gauge style="width: 100%; height: 80%;"
+                [valueFormatting]="yAxisTickFormattingMulti2"
                     [scheme]="colorChange_Total"
                     [startAngle]="-120"
                     [angleSpan]="240"
@@ -52,35 +66,54 @@
                     >
                 </ngx-charts-gauge>
             <!-- </div> -->
-        </div>
-    </div>
-    <div class="item" >
+
+      </mat-grid-tile >
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='2' >
+        <ngx-charts-line-chart
+            [yAxisTickFormatting]="yAxisTickFormattingLine"
+            [scheme]="colorChange"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="timeframe"
+            [yAxisLabel]="'Контактор'"
+            [curve]="linearCurveStep"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [roundDomains]="false"
+            [showGridLines]="false"
+            [animations]="false"
+            [results]="contractor"
+        ></ngx-charts-line-chart>
+
+      </mat-grid-tile >
+      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4' >
         <ngx-charts-line-chart
             [scheme]="colorChange_Temperature"
+            [yAxisTickFormatting]= ""
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="timeframe"
             [yAxisLabel]="'Температура, °C'"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
-            [curve]="linearCurveCardinal" 
+            [curve]="linearCurveCardinal"
             [results]="time_temp0"
             (select)="onSelect($event)"
             (activate)="onActivate($event)"
             (deactivate)="onDeactivate($event)"
             >
         </ngx-charts-line-chart>
-    </div>
-    <div class="item">
+      </mat-grid-tile >
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
         <ngx-charts-line-chart
             [scheme]="colorChange_ACDC"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="timeframe"
-            [yAxisLabel]="'Сила тока, A'"            
+            [yAxisLabel]="'Сила тока, A'"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
-            [curve]="linearCurveCardinal" 
+            [curve]="linearCurveCardinal"
             [roundDomains]="false"
             [animations]="false"
             [results]="time_temp1"
@@ -90,16 +123,18 @@
         >
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
-    </div>
-    <div class="item">
+    </mat-grid-tile >
+
+
+      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='2' >
         <ngx-charts-line-chart
             [yAxisTickFormatting]="yAxisTickFormattingLine"
             [scheme]="colorChange"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="timeframe"
-            [yAxisLabel]="'Балансировка'"      
-            [curve]="linearCurveStep"                  
+            [yAxisLabel]="'Балансировка'"
+            [curve]="linearCurveStep"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [roundDomains]="false"
@@ -109,24 +144,7 @@
         >
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
-    </div>
-    <div class="item">
-        <ngx-charts-line-chart
-            [yAxisTickFormatting]="yAxisTickFormattingLine"
-            [scheme]="colorChange"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="timeframe"
-            [yAxisLabel]="'Контактор'"
-            [curve]="linearCurveStep"            
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [roundDomains]="false"
-            [showGridLines]="false"
-            [animations]="false"
-            [results]="contractor"
-        ></ngx-charts-line-chart>
-    </div>
+      </mat-grid-tile >
         <!-- [curve]="d3.shape.curveLinear" -->
     <!-- <div class="item ">
         <div class="box">
@@ -138,12 +156,12 @@
             <button class="switchButton " [ngClass]="{switched: switcher} " >Контактор</button>
         </div>
     </div> -->
-    
+
     <!-- <div class="item">
         <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" *ngFor="let battery of batteries; let i = index" 
+                <button type="button" *ngFor="let battery of batteries; let i = index"
                     (click)="changeBattery(i)" class="btn btn-secondary"
                     [ngClass]="{active: i == currentBattery}">
                     {{i + 1}}
@@ -151,11 +169,12 @@
             </div>
         </div>
     </div> -->
-</div>
+  </mat-grid-list>
 
 <ng-template #tooltipTemplate >
     This is the single point tooltip template
 </ng-template>
+
 <!-- <div *ngFor="let dataSource of server.datas ">
   {{dataSource.data[0].voltages[0].index|json}}
 </div> -->

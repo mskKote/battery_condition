@@ -42,7 +42,7 @@ export class ServerService {
       '\&data=' +
       data;
       let response = await fetch(str, {
-        keepalive: true,
+        keepalive: false,
       });
       let res: totals[] = await response.json();
       return res;
