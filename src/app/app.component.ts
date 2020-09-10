@@ -18,10 +18,10 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  DateRange: any
+  dateRange: any
   receiveDateRange($event: any){
-    this.DateRange = $event;
-    console.log(this.DateRange);
+    this.dateRange = $event;
+    console.log(this.dateRange);
   }
 
 
