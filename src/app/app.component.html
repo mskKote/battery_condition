@@ -47,18 +47,19 @@
         <!-- <ngx-chart1></ngx-chart1> -->
       </mat-grid-tile>
     <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
-    <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
+    <mat-grid-tile [ngStyle]="{'box-shadow':'2px 2px 2px 2px '+ colorChange_Total.domain.toStr}" class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen ?6:2" [rowspan]='4' >
 
             <!-- <div style="width: 100%; height: 100%;"> -->
                 <ngx-charts-gauge style="width: 100%; height: 80%;"
-                [valueFormatting]="yAxisTickFormattingMulti2"
+                  [valueFormatting]="yAxisTickFormattingMulti2"
+                  [axisTickFormatting] = "batteryCharge"
                     [scheme]="colorChange_Total"
                     [startAngle]="-120"
                     [angleSpan]="240"
                     [results]="single"
                     [min]="0"
                     [max]="100"
-                    [units]="'Заряда батареи'"
+                    [units]="'Заряда батарей'"
                     (select)="onSelect($event)"
                     (activate)="onActivate($event)"
                     (deactivate)="onDeactivate($event)"
@@ -85,21 +86,18 @@
         ></ngx-charts-line-chart>
 
       </mat-grid-tile >
-      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4' >
+      <mat-grid-tile class="item" style="padding-left: -40px;" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
         <ngx-charts-line-chart
             [scheme]="colorChange_Temperature"
-            [yAxisTickFormatting]= ""
+            [yAxisTickFormatting]= "ChangeTemp"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="timeframe"
-            [yAxisLabel]="'Температура, °C'"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [curve]="linearCurveCardinal"
             [results]="time_temp0"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
+
             >
         </ngx-charts-line-chart>
       </mat-grid-tile >
@@ -109,12 +107,13 @@
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="timeframe"
-            [yAxisLabel]="'Сила тока, A'"
+
             [xAxis]="xAxis"
             [yAxis]="yAxis"
             [curve]="linearCurveCardinal"
             [roundDomains]="false"
             [animations]="false"
+           [yAxisTickFormatting] ="ChangeAmper"
             [results]="time_temp1"
             (select)="onSelect($event)"
             (activate)="onActivate($event)"
