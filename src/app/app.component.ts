@@ -18,10 +18,14 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-<<<<<<< HEAD
+  DateRange: any
+  receiveDateRange($event: any){
+    this.DateRange = $event;
+    console.log(this.DateRange);
+  }
 
-=======
->>>>>>> 61346d18bbd3de1dc4910110257a103dc369bd01
+
+
   // Главный график
   yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -39,7 +43,7 @@ export class AppComponent implements OnInit {
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
   yAxisTickFormattingMulti(val: any) {
-    return val + 1.75 +'V'
+    return val + 1.75 + 'V';
   }
   yAxisTickFormattingMulti2(val: any) {
     return 52.5 + (84 - 52.5) * Math.floor(val / 100) + 'V';
@@ -92,25 +96,6 @@ export class AppComponent implements OnInit {
   onDeactivate(data: any): void {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-<<<<<<< HEAD
-  time_temp0: any[] = [{
-    "name": "Температура",
-    "series": []
-  }];
-  time_temp1: any[] = [{
-    "name": "Сила тока",
-    "series": []
-  }];
-  balance: any[] = [{
-    "name": "Балансировка",
-    "series": []
-  }];
-  contractor: any[] = [{
-    "name": "Контактор",
-    "series": []
-  }];
-  multi:any[] = [];
-=======
 
   time_temp0: any[] = [
     {
@@ -137,7 +122,6 @@ export class AppComponent implements OnInit {
     },
   ];
   multi: any[] = [];
->>>>>>> 61346d18bbd3de1dc4910110257a103dc369bd01
   single: any[] = [];
   batteries: any[] = new Array(30);
 
@@ -387,12 +371,12 @@ export class AppComponent implements OnInit {
     // divYLines.style.height  = '2px';
     // divYLines.style.outline = 'dashed 2px violet';
 
-    let svgBarsGroup = document.querySelector('.ng-tns-c161-5');
-    for (let i = 0, l = svgBarsGroup.children.length; i < l; i++) {
-      if (i % 2 == 0)
-        (svgBarsGroup.children[i] as HTMLElement).style.boxShadow =
-          '5px 0 2px 2px black';
-    }
+    // let svgBarsGroup = document.querySelector('.ng-tns-c161-5');
+    // for (let i = 0, l = svgBarsGroup.children.length; i < l; i++) {
+    //   if (i % 2 == 0)
+    //     (svgBarsGroup.children[i] as HTMLElement).style.boxShadow =
+    //       '5px 0 2px 2px black';
+    // }
 
     // this.request();
     // setInterval(() => { this.request(); } , 1000)

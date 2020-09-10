@@ -9,8 +9,12 @@ import { DateRange } from '@uiowa/date-range-picker';
 export class HeaderComponent implements OnInit {
   constructor(private server: ServerService) {}
 
+  @Output() dateRangeEvent = new EventEmitter<any>()
+  sendDateRange() {
+    this.dateRangeEvent.emit(this.dateRange)
+  }
+  
   elClicked: any;
-
   clickFilter(e: any) {
     if (this.elClicked) {
       this.elClicked.classList.remove('clicked');
@@ -26,7 +30,6 @@ export class HeaderComponent implements OnInit {
   dateRange = new DateRange();
   maxDate = new Date();
   date: Date;
-  
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
     

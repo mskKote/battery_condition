@@ -1,8 +1,8 @@
 <div class="grid">
-    <button class="btn-filter clicked" (click)="clickFilter($event);" [value]="timeRange[0]">10 минут</button>
-    <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[1]">1 час</button>
-    <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[2]">1 день</button>
-    <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[3]">1 неделя</button>
+    <button class="btn-filter clicked" (click)="clickFilter($event); sendDateRange()" [value]="timeRange[0]">10 минут</button>
+    <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[1]">1 час</button>
+    <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[2]">1 день</button>
+    <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[3]">1 неделя</button>
     <date-range-picker 
         [(dateRange)]="dateRange" 
         [maxDate]="maxDate" 
@@ -13,10 +13,10 @@
 
 <ng-template #phoneGrid>
     <div class="grid">
-        <button class="btn-filter clicked" (click)="clickFilter($event);" [value]="timeRange[0]">10 минут</button>
-        <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[1]">1 час</button>
-        <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[2]">1 день</button>
-        <button class="btn-filter" (onClick)="clickFilter($event);" [value]="timeRange[3]">1 неделя</button>
+        <button class="btn-filter clicked" (click)="clickFilter($event); sendDateRange()" [value]="timeRange[0]">10 минут</button>
+        <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[1]">1 час</button>
+        <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[2]">1 день</button>
+        <button class="btn-filter"         (click)="clickFilter($event); sendDateRange()" [value]="timeRange[3]">1 неделя</button>
     </div>
     <date-range-picker 
         [(dateRange)]="dateRange" 
