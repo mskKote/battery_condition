@@ -1,5 +1,5 @@
 import { ServerService } from 'src/app/server.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateRange } from '@uiowa/date-range-picker';
 @Component({
   selector: 'app-header',
@@ -9,8 +9,12 @@ import { DateRange } from '@uiowa/date-range-picker';
 export class HeaderComponent implements OnInit {
   constructor(private server: ServerService) {}
 
+  @Output() dateRangeEvent = new EventEmitter<any>()
+  sendDateRange() {
+    this.dateRangeEvent.emit(this.dateRange)
+  }
+  
   elClicked: any;
-
   clickFilter(e: any) {
     if (this.elClicked) {
       this.elClicked.classList.remove('clicked');
@@ -27,17 +31,11 @@ export class HeaderComponent implements OnInit {
   maxDate = new Date();
   date: Date;
   ngOnInit(): void {
-    this.maxDate.setDate(this.maxDate.getDate() - 10);
-
+    this.maxDate.setDate(this.maxDate.getDate());
+    
     // let pickerInput = document.querySelector('input');
     // pickerInput.style.maxWidth = '';
-    window.addEventListener('resize', () => {
-      this.smartphone = screen.width < 800;
-      let pickerInput = document.querySelector('input');
-      pickerInput.style.maxWidth = '';
-    });
   }
-  smartphone: boolean = false;
 
   timeRange = [
     new Date().getTime() - 600000, // 10 минут
@@ -45,6 +43,4 @@ export class HeaderComponent implements OnInit {
     new Date().getTime() - 600000 * 6 * 24, // 1 день
     new Date().getTime() - 600000 * 6 * 24 * 7, // 1 неделя
   ];
-
-
 }
