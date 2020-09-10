@@ -1,6 +1,7 @@
+import { DateRange } from '@uiowa/date-range-picker';
 import { Timestamp } from 'rxjs';
 import { ServerService, totals } from './server.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
 import * as shape from 'd3-shape';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
@@ -17,7 +18,6 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
 
   // Главный график
    yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
@@ -85,7 +85,6 @@ batteryCharge(charge){
   onDeactivate(data: any): void {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-
   time_temp0: any[] = [{
     "name": "Температура",
     "series": []
