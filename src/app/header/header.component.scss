@@ -53,8 +53,10 @@
 
 .btn-filter:hover,
 .clicked {
-  background-color: #e1ecfe;
+  background-color: #e1ecfe !important;
 }
+
+
 
 .btn-filter {
   white-space: nowrap;

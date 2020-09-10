@@ -4,14 +4,15 @@
     <div class="item" style="max-height: 83vh;">
         <ngx-charts-bar-vertical-2d
             [tooltipDisabled]="false"
-            
+            [roundDomains]="true"
+            [yAxisTicks]="yAxisTicksArr"
             [yAxisTickFormatting]="yAxisTickFormattingMulti"
             [trimYAxisTicks]="false"
             [scheme]="colorScheme"
             [schemeType]="schemeType"
             [noBarWhenZero]="noBarWhenZero"
-            [barPadding]="2" 
-            [groupPadding]="16" 
+            [barPadding]="0" 
+            [groupPadding]="0" 
             [results]="multi" 
             [gradient]="gradient" 
             [xAxis]="showXAxis" 
@@ -38,9 +39,7 @@
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0">
             <!-- <div style="width: 100%; height: 100%;"> -->
                 <ngx-charts-gauge
-                    [scheme]="{
-                        domain: ['#00ff00']
-                    }"
+                    [scheme]="colorChange_Total"
                     [startAngle]="-120"
                     [angleSpan]="240"
                     [results]="single"
@@ -57,13 +56,14 @@
     </div>
     <div class="item" >
         <ngx-charts-line-chart
-            [scheme]="colorScheme"
+            [scheme]="colorChange_Temperature"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="'Время'"
+            [xAxisLabel]="timeframe"
             [yAxisLabel]="'Температура, °C'"
             [xAxis]="xAxis"
             [yAxis]="yAxis"
+            [curve]="linearCurveCardinal" 
             [results]="time_temp0"
             (select)="onSelect($event)"
             (activate)="onActivate($event)"
@@ -73,13 +73,14 @@
     </div>
     <div class="item">
         <ngx-charts-line-chart
-            [scheme]="colorScheme"
+            [scheme]="colorChange_ACDC"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="'Время'"
+            [xAxisLabel]="timeframe"
             [yAxisLabel]="'Сила тока, A'"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
+            [curve]="linearCurveCardinal" 
             [roundDomains]="false"
             [animations]="false"
             [results]="time_temp1"
@@ -92,9 +93,11 @@
     </div>
     <div class="item">
         <ngx-charts-line-chart
-            [scheme]="colorScheme"
+            [yAxisTickFormatting]="yAxisTickFormattingLine"
+            [scheme]="colorChange"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="timeframe"
             [yAxisLabel]="'Балансировка'"      
             [curve]="linearCurveStep"                  
             [xAxis]="xAxis"
@@ -103,9 +106,6 @@
             [showGridLines]="false"
             [animations]="false"
             [results]="balance"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
         >
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
@@ -113,22 +113,18 @@
     <div class="item">
         <ngx-charts-line-chart
             [yAxisTickFormatting]="yAxisTickFormattingLine"
-            [scheme]="colorScheme"
+            [scheme]="colorChange"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="'Время'"
+            [xAxisLabel]="timeframe"
             [yAxisLabel]="'Контактор'"
             [curve]="linearCurveStep"            
             [xAxis]="xAxis"
             [yAxis]="yAxis"
-            [yAxisTicks]="RightTickValues"
             [roundDomains]="false"
             [showGridLines]="false"
             [animations]="false"
             [results]="contractor"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
         ></ngx-charts-line-chart>
     </div>
         <!-- [curve]="d3.shape.curveLinear" -->
