@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
   yAxisTickFormattingMulti(val: any) {
-    return val + 1.75 + 'v';
+    return val + 1.75 +'V'
   }
   yAxisTickFormattingMulti2(val: any) {
     return 52.5 + (84 - 52.5) * Math.floor(val / 100) + 'V';
