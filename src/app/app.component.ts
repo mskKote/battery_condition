@@ -14,12 +14,12 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  DateRange: any
+  dateRange: any
   receiveDateRange($event: any){
-    this.DateRange = $event;
-    console.log(this.DateRange);
+    this.dateRange = $event;
+    console.log(this.dateRange)
   }
-  
+
   // Главный график
   yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  showYAxisLabel: boolean = false;
+  showYAxisLabel: boolean = true;
   xAxisLabel: string = 'Пары батарей';
   yAxisLabel: string = '';
   animations: boolean = false;
