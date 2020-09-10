@@ -5,3 +5,13 @@
   background-color: rgb(255, 255, 255);
 }
 
+// Скрыть Y линии сетки для линейных графиков
+// ::ng-deep .gridline-path-vertical {
+//   display: none;
+// }
+// .gridYLines{
+//   position: absolute;
+//   width: 2px;
+//   height: 2px;
+//   outline: dashed 2px violet
+// }
