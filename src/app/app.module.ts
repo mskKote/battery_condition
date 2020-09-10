@@ -1,4 +1,3 @@
-import { NgbdDropdownBasic } from './header/dropdown/dropdown.component';
 import { ServerService } from './server.service';import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -16,7 +15,6 @@ import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    NgbdDropdownBasic,
     AppComponent,
     HeaderComponent,
   ],

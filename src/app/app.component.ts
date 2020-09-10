@@ -1,6 +1,7 @@
+import { DateRange } from '@uiowa/date-range-picker';
 import { Timestamp } from 'rxjs';
 import { ServerService, totals } from './server.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -17,6 +18,10 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 61346d18bbd3de1dc4910110257a103dc369bd01
   // Главный график
   yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -87,6 +92,25 @@ export class AppComponent implements OnInit {
   onDeactivate(data: any): void {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
+<<<<<<< HEAD
+  time_temp0: any[] = [{
+    "name": "Температура",
+    "series": []
+  }];
+  time_temp1: any[] = [{
+    "name": "Сила тока",
+    "series": []
+  }];
+  balance: any[] = [{
+    "name": "Балансировка",
+    "series": []
+  }];
+  contractor: any[] = [{
+    "name": "Контактор",
+    "series": []
+  }];
+  multi:any[] = [];
+=======
 
   time_temp0: any[] = [
     {
@@ -113,6 +137,7 @@ export class AppComponent implements OnInit {
     },
   ];
   multi: any[] = [];
+>>>>>>> 61346d18bbd3de1dc4910110257a103dc369bd01
   single: any[] = [];
   batteries: any[] = new Array(30);
 

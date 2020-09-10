@@ -1,5 +1,5 @@
 import { ServerService } from 'src/app/server.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateRange } from '@uiowa/date-range-picker';
 @Component({
   selector: 'app-header',
@@ -26,18 +26,13 @@ export class HeaderComponent implements OnInit {
   dateRange = new DateRange();
   maxDate = new Date();
   date: Date;
+  
   ngOnInit(): void {
-    this.maxDate.setDate(this.maxDate.getDate() - 10);
-
+    this.maxDate.setDate(this.maxDate.getDate());
+    
     // let pickerInput = document.querySelector('input');
     // pickerInput.style.maxWidth = '';
-    window.addEventListener('resize', () => {
-      this.smartphone = screen.width < 800;
-      let pickerInput = document.querySelector('input');
-      pickerInput.style.maxWidth = '';
-    });
   }
-  smartphone: boolean = false;
 
   timeRange = [
     new Date().getTime() - 600000, // 10 минут
