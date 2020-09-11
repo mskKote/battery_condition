@@ -13,34 +13,59 @@
 <mat-grid-list gutterSize='15px' cols="6" rowHeight="3:1">
   <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="5">
     <!-- пары батареек -->
-        <ngx-charts-bar-vertical
-            [tooltipDisabled]="false"
-            [roundDomains]="true"
-            [yAxisTicks]="yAxisTicksArr"
-            [yAxisTickFormatting]="yAxisTickFormattingMulti"
-            [trimYAxisTicks]="false"
-            [scheme]="colorScheme"
-            [schemeType]="schemeType"
-            [noBarWhenZero]="noBarWhenZero"
-            [barPadding]="20"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [showGridLines]="showGridLines"
-            [roundDomains]="roundDomains"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [rotateXAxisTicks]="rotateXAxisTicks">
-            <ng-template #tooltipTemplate let-model="model">
-              <p style="margin-top: 1rem;">{{tooltipText + model.name}}</p>
-                <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
-            </ng-template>
-        </ngx-charts-bar-vertical>
-
-
+    <ngx-charts-bar-vertical-2d
+      [tooltipDisabled]="false"
+      [roundDomains]="true"
+      [yAxisTicks]="yAxisTicksArr"
+      [yAxisTickFormatting]="yAxisTickFormattingMulti"
+      [trimYAxisTicks]="false"
+      [scheme]="colorScheme"
+      [schemeType]="schemeType"
+      [noBarWhenZero]="noBarWhenZero"
+      [barPadding]="2"
+      [groupPadding]="4"
+      [results]="multi"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="false"
+      [showGridLines]="showGridLines"
+      [roundDomains]="roundDomains"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [rotateXAxisTicks]="rotateXAxisTicks">
+      <ng-template #tooltipTemplate let-model="model">
+        <p style="margin-top: 1rem;">{{tooltipText + model.number}}</p>
+        <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
+      </ng-template>
+    </ngx-charts-bar-vertical-2d>
+    <!-- <ngx-charts-bar-vertical
+      [tooltipDisabled]="false"
+      [roundDomains]="true"
+      [yAxisTicks]="yAxisTicksArr"
+      [yAxisTickFormatting]="yAxisTickFormattingMulti"
+      [trimYAxisTicks]="false"
+      [scheme]="colorScheme"
+      [schemeType]="schemeType"
+      [noBarWhenZero]="noBarWhenZero"
+      [barPadding]="20"
+      [results]="multi"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="false"
+      [showGridLines]="showGridLines"
+      [roundDomains]="roundDomains"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [rotateXAxisTicks]="rotateXAxisTicks">
+      <ng-template #tooltipTemplate let-model="model">
+        <p style="margin-top: 1rem;">{{tooltipText + model.name}}</p>
+        <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
+      </ng-template>
+    </ngx-charts-bar-vertical> -->
         <!-- <ngx-chart1></ngx-chart1> -->
   </mat-grid-tile>
     <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
@@ -83,7 +108,7 @@
           [roundDomains]="true"
           [yAxisTickFormatting]="ChangeTemp"
           [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
+          [showYAxisLabel]="false"
           [xAxisLabel]="timeframe"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
@@ -94,7 +119,7 @@
         <ngx-charts-line-chart
           [scheme]="colorChange_ACDC"
           [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
+          [showYAxisLabel]="false"
           [xAxisLabel]="timeframe"
           [roundDomains]="true"
           [xAxis]="xAxis"
