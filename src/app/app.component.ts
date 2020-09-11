@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
-  xAxisLabel: string = 'Пары батарей';
+  xAxisLabel: string = '';
   yAxisLabel: string = '';
   animations: boolean = false;
   showDataLabel: boolean = true;
@@ -351,15 +351,35 @@ export class AppComponent implements OnInit {
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
-    for (let j = 0; j < 30; j++) {
+      // Номера для батареек -- мне лень прописывать вручную так что сделал скрипт
+    let numbers = [[],[]];
+    for(let j = 1; j <= 30; j+=2) {
+      numbers[0].push(j)
+      numbers[1].push(j + 1)
+    }
+    for (let j = 0; j < 15; j++) {
       const battery1 = AppComponent.randomNumber(1.75, 2.8);
+      const battery2 = AppComponent.randomNumber(1.75, 2.8);
+      // this.multi.push({
+      //   name: j + 1,
+      //   value: battery1 - 1.75
+      // });
 
       this.multi.push({
         name: j + 1,
-        value: battery1 - 1.75
+        series: [{
+            name: 'first',
+            value: battery1 - 1.75,
+            number: numbers[0][j]
+          },{
+            name: 'second',
+            value: battery2 - 1.75,
+            number: numbers[1][j]
+          }
+        ]
       });
 
-      this.total_voltage += battery1;// + battery2;
+      this.total_voltage += battery1 + battery2;
     }
     this.single.push({
       name: 'Заряд батареи',
@@ -434,20 +454,6 @@ export class AppComponent implements OnInit {
     this.breakpointObserver
       .observe(Breakpoints.XSmall)
       .subscribe((resp) => (this.isXSmallScreen = resp.matches));
-
-    // Настройка вертикальных разделительных линий для главного графика
-    // let divYLines = document.querySelector('div.gridYLines') as HTMLElement;
-    // divYLines.style.position = 'absolute';
-    // divYLines.style.width   = '2px';
-    // divYLines.style.height  = '2px';
-    // divYLines.style.outline = 'dashed 2px violet';
-
-    // let svgBarsGroup = document.querySelector('.ng-tns-c161-5');
-    // for (let i = 0, l = svgBarsGroup.children.length; i < l; i++) {
-    //   if (i % 2 == 0)
-    //     (svgBarsGroup.children[i] as HTMLElement).style.boxShadow =
-    //       '5px 0 2px 2px black';
-    // }
 
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
