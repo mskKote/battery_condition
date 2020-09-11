@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange() {
-    this.dateRangeEvent.emit(this.range);
+    this.dateRangeEvent.emit(this.range.value);
   }
   start;
   end;

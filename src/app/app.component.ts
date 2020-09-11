@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     this.dateRange = $event;
     this.nullify();
     this.iter = 0;
-    this.genGlobalCharts(this.dateRange.value.start, this.dateRange.value.end);
+    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
   nullify() {
