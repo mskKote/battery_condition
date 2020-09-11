@@ -86,13 +86,13 @@
       <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
         <ngx-charts-line-chart
           [scheme]="colorChange_Temperature"
+          [roundDomains]="true"
           [yAxisTickFormatting]="ChangeTemp"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [xAxisLabel]="timeframe"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
-          [curve]="linearCurveCardinal"
           [results]="time_temp0">
         </ngx-charts-line-chart>
       </mat-grid-tile >
@@ -102,10 +102,9 @@
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [xAxisLabel]="timeframe"
-
+          [roundDomains]="true"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
-          [curve]="linearCurveCardinal"
           [roundDomains]="false"
           [animations]="false"
           [yAxisTickFormatting]="ChangeAmper"

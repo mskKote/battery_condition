@@ -18,9 +18,22 @@ export class AppComponent implements OnInit {
   receiveDateRange($event: any){
     this.dateRange = $event;
     // Вызывать обнуление
+    this.colorChange_Temperature.domain = [];
     this.time_temp0 = [
       {
-        name: 'Температура',
+        name: 'Температура 1',
+        series: [],
+      }, {
+        name: 'Температура 2',
+        series: [],
+      }, {
+        name: 'Температура 3',
+        series: [],
+      }, {
+        name: 'Температура 4',
+        series: [],
+      }, {
+        name: 'Температура 5',
         series: [],
       },
     ];
@@ -121,10 +134,21 @@ export class AppComponent implements OnInit {
 
   time_temp0: any[] = [
     {
-      name: 'Температура',
+      name: 'Температура 1',
+      series: [],
+    }, {
+      name: 'Температура 2',
+      series: [],
+    }, {
+      name: 'Температура 3',
+      series: [],
+    }, {
+      name: 'Температура 4',
+      series: [],
+    }, {
+      name: 'Температура 5',
       series: [],
     },
-    
   ];
   time_temp1: any[] = [
     {
@@ -152,7 +176,19 @@ export class AppComponent implements OnInit {
   changeBattery(target) {
     this.time_temp0 = [
       {
-        name: 'Температура',
+        name: 'Температура 1',
+        series: [],
+      }, {
+        name: 'Температура 2',
+        series: [],
+      }, {
+        name: 'Температура 3',
+        series: [],
+      }, {
+        name: 'Температура 4',
+        series: [],
+      }, {
+        name: 'Температура 5',
         series: [],
       },
     ];
@@ -224,7 +260,13 @@ export class AppComponent implements OnInit {
   // Генерит 1 партию данных с указанным timestamp
   contactor_gen: boolean;
   balance_gen: boolean;
-  temperature_gen: number = AppComponent.randomNumber(-40, 60);
+  temperature_gen: number[] = [ // Можно вручную задать стартовые значения
+    AppComponent.randomNumber(-40, 60),
+    AppComponent.randomNumber(-40, 60),
+    AppComponent.randomNumber(-40, 60),
+    AppComponent.randomNumber(-40, 60),
+    AppComponent.randomNumber(-40, 60)
+  ];
   ACDC_gen: number = AppComponent.randomNumber(0, 1000);
   // Итерация значений нужна, чтобы создавать кастомные изменения на графике
   iter: number = 0;
@@ -233,9 +275,6 @@ export class AppComponent implements OnInit {
 
     this.contactor_gen = AppComponent.genBoolByPrevious(0.4);//Значение изменится с 40% вероятностью
     this.balance_gen =   AppComponent.genBoolByPrevious(0.4);
-    this.temperature_gen = AppComponent.getNumByPrevious(this.temperature_gen, 0.4, 5, -40, 60)
-    this.ACDC_gen =        AppComponent.getNumByPrevious(this.ACDC_gen, 0.6, 100, 15, 40);
-    
     
     // Закидываем значения на график
     this.addTimePointContractor({
@@ -246,30 +285,59 @@ export class AppComponent implements OnInit {
       value: this.balance_gen ? '1' : '0',
       name: new Date(timestamp),
     });
-    this.addTimePointTime0({
-      value: `${this.temperature_gen}`,
-      name: new Date(timestamp),
-    });
+    
+    //---------Создаём параметры графиков
+    //3 примерно равных значения (+-1-3) + 1 сильный пик  
+    if (this.iter < 5) this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
+    else if (this.iter == 6) {
+      this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
+      if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
+      else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
+    } 
+    else if (this.iter == 8) {
+      this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
+      if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
+      else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
+    } 
+    else this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
+    
+    // Все равные значения (+-1)
+    this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
+    // Только пики +-30
+    this.temperature_gen[2] = AppComponent.getNumByPrevious(this.temperature_gen[2], 0.8, 30, -40, 60);
+    // Равномерно растущий и убывающий графики
+    this.temperature_gen[3] = AppComponent.getNumByPrevious(this.temperature_gen[3], 0.3, 5, -40, 60);
+    this.temperature_gen[4] = AppComponent.getNumByPrevious(this.temperature_gen[4], 0.3, 5, -40, 60);
+
+    for (let i = 0; i < this.time_temp0.length; i++) {
+      //this.temperature_gen[i] = AppComponent.getNumByPrevious(this.temperature_gen[i], 0.4, 5, -40, 60);
+      this.time_temp0[i].series.push({
+        value: `${Math.round(this.temperature_gen[i] * 100) / 100}`,
+        name: new Date(timestamp),
+      });
+      this.colorChange_Temperature.domain.push([
+        ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']
+        [Math.round(Math.abs((this.temperature_gen[i]) / 20))],
+      ]);
+    }
+
+
+    if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);      
+    else               this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
+  
     this.addTimePointTime1({
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
     });
 
     // Меняем цвета -- он вроде бы не обновляет значения...
-    this.colorChange.domain = [['#ff0000']];
-    this.colorChange_Temperature.domain = [
-      ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020'][
-        Math.round(Math.abs((this.temperature_gen + 20) / 20))
-      ],
-    ];
-    let buff = this.colorChange_Temperature;
-    this.colorChange_Temperature = buff;
+    this.colorChange.domain = ['#ff0000'];
 
-    this.colorChange_ACDC.domain = [
-      ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF'][
-        Math.round(((this.ACDC_gen / 2000) * 100 + 1) / 20)
-      ],
-    ];
+    this.colorChange_ACDC.domain = [];
+    this.colorChange_ACDC.domain.push([
+      ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
+      [Math.round((this.ACDC_gen - 15) / 5)],
+    ]);
     this.iter++;
   }
   genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
@@ -307,11 +375,11 @@ export class AppComponent implements OnInit {
     point = {
       value: (Math.random() * 1000).toFixed(2),
       name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
-    }
+    }, index = 0
   ) {
-    this.time_temp0[0].series.push(point);
-    let buff = this.time_temp0[0];
-    this.time_temp0 = [buff];
+    this.time_temp0[index].series.push(point);
+    let buff = this.time_temp0;
+    this.time_temp0 = buff;
   }
   addTimePointTime1(
     point = {
@@ -373,10 +441,10 @@ export class AppComponent implements OnInit {
     // setInterval(() => { this.request(); } , 1000)
   }
   ChangeTemp(temp){
-    return temp+"°C";
+    return temp + "°C";
   }
   ChangeAmper(amper){
-    return amper +'A';
+    return amper + 'A';
   }
 
   request()  {
