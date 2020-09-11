@@ -1,6 +1,6 @@
 
-  <mat-form-field appearance="fill" >
-<mat-label>Реальное время</mat-label>
+<mat-form-field style="margin-right: 1rem;">
+  <mat-label>За последние...</mat-label>
     <mat-select  >
       <mat-option value="10 минут">
         <option (click)="clickFilter($event); sendDateRange()"  [value]="timeRange[0]"> 10 минут</option>
@@ -16,7 +16,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill" >
+  <mat-form-field>
     <mat-label>Диапазон</mat-label>
     <mat-date-range-input [formGroup]='range' [rangePicker]="picker">
       <input (dateChange)="addEvent($event)"  matStartDate formControlName='start' placeholder="Start date">
@@ -24,5 +24,5 @@
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
+</mat-form-field>
 

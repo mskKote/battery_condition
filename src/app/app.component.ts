@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     this.dateRange = $event;
     this.nullify();
     this.iter = 0;
-    this.genGlobalCharts(this.dateRange.value.start, this.dateRange.value.end);
+    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
   nullify() {
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
         series: [],
     }];
     this.contractor = [{
-        name: 'Балансировка',
+        name: 'Контактор',
         series: [],
     }];
   }
@@ -235,11 +235,7 @@ export class AppComponent implements OnInit {
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
-    // let numbers = [[],[]];
-    // for(let j = 1; j <= 30; j+=2) {
-    //   numbers[0].push(j)
-    //   numbers[1].push(j + 1)
-    // }
+
     for (let j = 0; j < 15; j++) {
       const battery1 = AppComponent.randomNumber(1.75, 2.8);
       const battery2 = AppComponent.randomNumber(1.75, 2.8);
@@ -249,11 +245,11 @@ export class AppComponent implements OnInit {
         series: [{
             name: 'first',
             value: battery1 - 1.75,
-            number: j//numbers[0][j]
+            number: j
           },{
             name: 'second',
             value: battery2 - 1.75,
-            number: j + 1//numbers[1][j]
+            number: j + 1
           }
         ]
       });
