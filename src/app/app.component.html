@@ -1,7 +1,7 @@
-<mat-grid-list gutterSize='20px' cols="6" rowHeight="3:1">
+<mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
   <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?5:1">
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
-  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?12:5">
+  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?12:6">
     <!-- пары батареек -->
     <ngx-charts-bar-vertical-2d
       [tooltipDisabled]="false"
@@ -49,7 +49,7 @@
         [units]="'Заряд батареи'">
       </ngx-charts-gauge>
       </mat-grid-tile >
-      <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?8:2" >
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?8:3" >
         <ngx-charts-line-chart
           [yAxisTickFormatting]="yAxisTickFormattingLine"
           [scheme]="colorChange"
@@ -67,7 +67,7 @@
           [results]="contractor">
         </ngx-charts-line-chart>
       </mat-grid-tile>
-      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:4">
+      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:5">
         <ngx-charts-line-chart
           [roundDomains]="true"
           [yAxisTickFormatting]="ChangeTemp"
@@ -86,7 +86,7 @@
           [results]="time_temp0">
         </ngx-charts-line-chart>
       </mat-grid-tile >
-      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:4">
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:5">
         <ngx-charts-line-chart
           [scheme]="colorChange_ACDC"
           [showXAxisLabel]="showXAxisLabel"
@@ -108,7 +108,7 @@
           [results]="ACDC">
         </ngx-charts-line-chart>
     </mat-grid-tile >
-    <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:2" >
+    <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:3" >
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
