@@ -10,23 +10,35 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
-
-
+import {MatSelectModule} from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
   ],
   imports: [
-  
-    MatCardModule,
+MatSelectModule,  MatCardModule,
+MatIconModule,
     MatGridListModule,
+MatButtonToggleModule,
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatMenuModule,
     BrowserAnimationsModule,
     BrowserModule,
+    MatDatepickerModule,
     HttpClientModule,
     NgApexchartsModule,
     DateRangePickerModule,
+    MatButtonModule,
     NgxChartsModule,
     FormsModule,
     ReactiveFormsModule,
