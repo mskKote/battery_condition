@@ -16,6 +16,7 @@ export interface Tile {
 export class AppComponent implements OnInit {
   dateRange: any
   receiveDateRange($event: any){
+    console.log($event)
     this.dateRange = $event;
     // Вызывать обнуление
     this.colorChange_Temperature.domain = [];
@@ -267,7 +268,7 @@ export class AppComponent implements OnInit {
 
     this.contactor_gen = AppComponent.genBoolByPrevious(0.4);//Значение изменится с 40% вероятностью
     this.balance_gen =   AppComponent.genBoolByPrevious(0.4);
-    
+
     // Закидываем значения на график
     this.addTimePoint(this.contractor, {
       value: this.contactor_gen ? '1' : '0',
@@ -285,22 +286,22 @@ export class AppComponent implements OnInit {
     //   value: this.balance_gen ? '1' : '0',
     //   name: new Date(timestamp),
     // });
-    
+
     //---------Создаём параметры графиков
-    //3 примерно равных значения (+-1-3) + 1 сильный пик  
+    //3 примерно равных значения (+-1-3) + 1 сильный пик
     if (this.iter < 5) this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
     else if (this.iter == 6) {
       this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
       if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
       else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
-    } 
+    }
     else if (this.iter == 8) {
       this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
       if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
       else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
-    } 
+    }
     else this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
-    
+
     // Все равные значения (+-1)
     this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
     // Только пики +-30
@@ -322,9 +323,9 @@ export class AppComponent implements OnInit {
     }
 
 
-    if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);      
+    if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);
     else               this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
-  
+
     // this.addTimePointTime1({
     //   value: `${this.ACDC_gen}`,
     //   name: new Date(timestamp),
@@ -333,7 +334,7 @@ export class AppComponent implements OnInit {
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
     });
-    
+
     // Меняем цвета -- он вроде бы не обновляет значения...
     this.colorChange.domain = ['#ff0000'];
 
@@ -382,12 +383,12 @@ export class AppComponent implements OnInit {
       name: 'Заряд батареи',
       value: Math.floor((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100)
     });
-    // Цвет графика 
+    // Цвет графика
     this.colorChange_Total.domain = [
       ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
       [Math.round(((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100 + 1) / 20)]
     ];
-    
+
     // Данные для остальных графиков
     for (let i = amount; i > 0; i--) {
       this.genData(end - (end - start) / amount * i);
