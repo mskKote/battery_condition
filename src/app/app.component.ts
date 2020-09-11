@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         series: [],
       },
     ];
-    this.time_temp1 = [
+    this.ACDC = [
       {
         name: 'Сила тока',
         series: [],
@@ -120,17 +120,6 @@ export class AppComponent implements OnInit {
   schemeType: string = 'linear';
   timeframe: string = 'Время, мин'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
 
-  onSelect(data: any): void {
-    //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    //console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
 
   time_temp0: any[] = [
     {
@@ -150,7 +139,7 @@ export class AppComponent implements OnInit {
       series: [],
     },
   ];
-  time_temp1: any[] = [
+  ACDC: any[] = [
     {
       name: 'Сила тока',
       series: [],
@@ -192,7 +181,7 @@ export class AppComponent implements OnInit {
         series: [],
       },
     ];
-    this.time_temp1 = [
+    this.ACDC = [
       {
         name: 'Сила тока',
         series: [],
@@ -277,14 +266,22 @@ export class AppComponent implements OnInit {
     this.balance_gen =   AppComponent.genBoolByPrevious(0.4);
     
     // Закидываем значения на график
-    this.addTimePointContractor({
+    this.addTimePoint(this.contractor, {
       value: this.contactor_gen ? '1' : '0',
       name: new Date(timestamp),
     });
-    this.addTimePointBalance({
+    this.addTimePoint(this.balance, {
       value: this.balance_gen ? '1' : '0',
       name: new Date(timestamp),
     });
+    // this.addTimePointContractor({
+    //   value: this.contactor_gen ? '1' : '0',
+    //   name: new Date(timestamp),
+    // });
+    // this.addTimePointBalance({
+    //   value: this.balance_gen ? '1' : '0',
+    //   name: new Date(timestamp),
+    // });
     
     //---------Создаём параметры графиков
     //3 примерно равных значения (+-1-3) + 1 сильный пик  
@@ -325,11 +322,15 @@ export class AppComponent implements OnInit {
     if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);      
     else               this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
   
-    this.addTimePointTime1({
+    // this.addTimePointTime1({
+    //   value: `${this.ACDC_gen}`,
+    //   name: new Date(timestamp),
+    // });
+    this.addTimePoint(this.ACDC, {
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
     });
-
+    
     // Меняем цвета -- он вроде бы не обновляет значения...
     this.colorChange.domain = ['#ff0000'];
 
@@ -371,37 +372,42 @@ export class AppComponent implements OnInit {
   }
   //---------------------------------------------------
 
-  addTimePointTime0(
-    point = {
-      value: (Math.random() * 1000).toFixed(2),
-      name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
-    }, index = 0
-  ) {
-    this.time_temp0[index].series.push(point);
-    let buff = this.time_temp0;
-    this.time_temp0 = buff;
+  // addTimePointTime0(
+  //   point = {
+  //     value: (Math.random() * 1000).toFixed(2),
+  //     name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
+  //   }, index = 0
+  // ) {
+  //   this.time_temp0[index].series.push(point);
+  //   let buff = this.time_temp0;
+  //   this.time_temp0 = buff;
+  // }
+  // addTimePointTime1(
+  //   point = {
+  //     value: (Math.random() * 1000).toFixed(2),
+  //     name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
+  //   }
+  // ) {
+  //   this.ACDC[0].series.push(point);
+  //   let buff = this.ACDC[0];
+  //   this.ACDC = [buff];
+  // }
+  // addTimePointContractor(point) {
+  //   this.contractor[0].series.push(point);
+  //   let buff = this.contractor[0];
+  //   this.contractor = [buff];
+  // }
+  // addTimePointBalance(point) {
+  //   this.balance[0].series.push(point);
+  //   let buff = this.balance[0];
+  //   this.balance = [buff];
+  // }
+  addTimePoint(chart, point, index = 0)
+  {
+    chart[index].series.push(point);
+    let buff = chart;
+    chart = buff;
   }
-  addTimePointTime1(
-    point = {
-      value: (Math.random() * 1000).toFixed(2),
-      name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
-    }
-  ) {
-    this.time_temp1[0].series.push(point);
-    let buff = this.time_temp1[0];
-    this.time_temp1 = [buff];
-  }
-  addTimePointContractor(point) {
-    this.contractor[0].series.push(point);
-    let buff = this.contractor[0];
-    this.contractor = [buff];
-  }
-  addTimePointBalance(point) {
-    this.balance[0].series.push(point);
-    let buff = this.balance[0];
-    this.balance = [buff];
-  }
-
 
   total_voltage: number = 52.5;
   tooltipText = 'Баттарея №';
@@ -518,20 +524,32 @@ export class AppComponent implements OnInit {
           //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
           if (dataset.total_amp.value > 100) continue;
 
-          this.addTimePointTime1({
+          // this.addTimePointTime1({
+          //   value: dataset.total_amp.value.toFixed(2),
+          //   name: new Date(element.timestamp),
+          // });
+
+          // this.addTimePointContractor({
+          //   value: dataset.contractor ? '1' : '0',
+          //   name: new Date(element.timestamp),
+          // });
+          this.addTimePoint(this.ACDC, {
             value: dataset.total_amp.value.toFixed(2),
             name: new Date(element.timestamp),
           });
-
-          this.addTimePointContractor({
+          this.addTimePoint(this.contractor, {
             value: dataset.contractor ? '1' : '0',
             name: new Date(element.timestamp),
           });
         }
-        this.addTimePointTime0({
+        this.addTimePoint(this.time_temp0, {
           value: '' + element.data[0].temperatures[this.currentBattery].value,
           name: new Date(element.timestamp),
         });
+        // this.addTimePointTime0({
+        //   value: '' + element.data[0].temperatures[this.currentBattery].value,
+        //   name: new Date(element.timestamp),
+        // });
       }
       console.groupEnd();
     });
