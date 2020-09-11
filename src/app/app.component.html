@@ -1,15 +1,3 @@
-
-<!-- <mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-      ..*ngFor="let tile of tiles"
-      [colspan]="tile.cols"
-      [rowspan]="tile.rows"
-      [style.background]="tile.color">
-    {{tile.text}}
-  </mat-grid-tile>
-</mat-grid-list> -->
-
-
 <mat-grid-list gutterSize='15px' cols="6" rowHeight="3:1">
   <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="1">
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
@@ -44,13 +32,11 @@
       </ng-template>
     </ngx-charts-bar-vertical-2d>
   </mat-grid-tile>
-    <!-- style="padding: 0; border: none; max-height: 80vh; max-width: 30vw" -->
     <mat-grid-tile 
       [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}" 
       class="item" 
       [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2" 
       [rowspan]='4'>
-            <!-- <div style="width: 100%; height: 100%;"> -->
       <ngx-charts-gauge style="width: 100%; height: 80%;"
         [valueFormatting]="yAxisTickFormattingMulti2"
         [axisTickFormatting]="batteryCharge"
@@ -62,7 +48,6 @@
         [max]="100"
         [units]="'Заряд батареи'">
       </ngx-charts-gauge>
-            <!-- </div> -->
       </mat-grid-tile >
       <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]='2' >
         <ngx-charts-line-chart
@@ -107,7 +92,6 @@
           [animations]="false"
           [yAxisTickFormatting]="ChangeAmper"
           [results]="ACDC">
-        <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </mat-grid-tile >
     <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='2' >
@@ -125,39 +109,11 @@
         [showGridLines]="false"
         [animations]="false"
         [results]="balance">
-      <!-- [curve]="d3.shape.curveLinear" -->
       </ngx-charts-line-chart>
     </mat-grid-tile>
-        <!-- [curve]="d3.shape.curveLinear" -->
-    <!-- <div class="item ">
-        <div class="box">
-            <button class="switchButton " [ngClass]="{switched: contractor} " >Свитчер</button>
-        </div>
-    </div>
-    <div class="item ">
-        <div class="box">
-            <button class="switchButton " [ngClass]="{switched: switcher} " >Контактор</button>
-        </div>
-    </div> -->
 
-    <!-- <div class="item">
-        <h3 style="padding: 1rem 2rem;">Изменить батарею</h3>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" *ngFor="let battery of batteries; let i = index"
-                    (click)="changeBattery(i)" class="btn btn-secondary"
-                    [ngClass]="{active: i == currentBattery}">
-                    {{i + 1}}
-                </button>
-            </div>
-        </div>
-    </div> -->
 </mat-grid-list>
 
 <ng-template #tooltipTemplate>
     This is the single point tooltip template
 </ng-template>
-
-<!-- <div *ngFor="let dataSource of server.datas ">
-  {{dataSource.data[0].voltages[0].index|json}}
-</div> -->

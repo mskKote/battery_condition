@@ -17,18 +17,15 @@ export class AppComponent implements OnInit {
   dateRange: any
   receiveDateRange($event: any){
     this.dateRange = $event;
-    // Вызывать обнуление
-    console.log(this.dateRange);
+
     this.nullify();
-    // Генерим новое
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
   nullify() {
     this.colorChange_Temperature.domain = [];
-    this.time_temp0 = [
-      {
+    this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
       }, {
@@ -43,26 +40,19 @@ export class AppComponent implements OnInit {
       }, {
         name: 'Температура 5',
         series: [],
-      },
-    ];
-    this.ACDC = [
-      {
+      }];
+    this.ACDC = [{
         name: 'Сила тока',
         series: [],
-      },
-    ];
-    this.balance = [
-      {
+    }];
+    this.balance = [{
         name: 'Балансировка',
         series: [],
-      },
-    ];
-    this.contractor = [
-      {
+    }];
+    this.contractor = [{
         name: 'Балансировка',
         series: [],
-      },
-    ];
+    }];
   }
 
   // Главный график
@@ -93,12 +83,8 @@ export class AppComponent implements OnInit {
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    if (val == '0') {
-      return 'Выкл';
-    }
-    if (val == '1') {
-      return 'Вкл';
-    }
+    if (val == '0') { return 'Выкл'; } 
+    if (val == '1') { return 'Вкл'; }
   }
 
   linearCurveCardinal = shape.curveCardinal;
@@ -107,104 +93,25 @@ export class AppComponent implements OnInit {
   xAxis: boolean = true;
   yAxis: boolean = true;
   timeline: boolean = true;
-  colorChange = {
-    domain: [],
-  };
-  colorChange_Total = {
-    domain: [],
-  };
-  colorChange_Temperature = {
-    domain: [],
-  };
-  colorChange_ACDC = {
-    domain: [],
-  };
-  colorScheme = {
-    domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
-  };
+  colorChange = { domain: [] };
+  colorChange_Total = { domain: [] };
+  colorChange_Temperature = { domain: [] };
+  colorChange_ACDC = { domain: [] };
+  colorScheme = { domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'] };
   schemeType: string = 'linear';
   timeframe: string = 'Время'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
 
-
-
-  time_temp0: any[] = [
-    {
-      name: 'Температура 1',
-      series: [],
-    }, {
-      name: 'Температура 2',
-      series: [],
-    }, {
-      name: 'Температура 3',
-      series: [],
-    }, {
-      name: 'Температура 4',
-      series: [],
-    }, {
-      name: 'Температура 5',
-      series: [],
-    },
-  ];
-  ACDC: any[] = [
-    {
-      name: 'Сила тока',
-      series: [],
-    },
-  ];
-  balance: any[] = [
-    {
-      name: 'Балансировка',
-      series: [],
-    },
-  ];
-  contractor: any[] = [
-    {
-      name: 'Контактор',
-      series: [],
-    },
-  ];
+  time_temp0: any[];
+  ACDC: any[];
+  balance: any[];
+  contractor: any[];
   multi: any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
 
   currentBattery: number = 0;
   changeBattery(target) {
-    this.time_temp0 = [
-      {
-        name: 'Температура 1',
-        series: [],
-      }, {
-        name: 'Температура 2',
-        series: [],
-      }, {
-        name: 'Температура 3',
-        series: [],
-      }, {
-        name: 'Температура 4',
-        series: [],
-      }, {
-        name: 'Температура 5',
-        series: [],
-      },
-    ];
-    this.ACDC = [
-      {
-        name: 'Сила тока',
-        series: [],
-      },
-    ];
-    this.balance = [
-      {
-        name: 'Балансировка',
-        series: [],
-      },
-    ];
-    this.contractor = [
-      {
-        name: 'Балансировка',
-        series: [],
-      },
-    ];
+    this.nullify();
     this.currentBattery = target;
   }
 
@@ -253,8 +160,6 @@ export class AppComponent implements OnInit {
     return prev;
   }
   // Генерит 1 партию данных с указанным timestamp
-  contactor_gen: boolean;
-  balance_gen: boolean;
   temperature_gen: number[] = [ // Можно вручную задать стартовые значения
     AppComponent.randomNumber(-40, 60),
     AppComponent.randomNumber(-40, 60),
@@ -266,44 +171,30 @@ export class AppComponent implements OnInit {
   // Итерация значений нужна, чтобы создавать кастомные изменения на графике
   iter: number = 0;
 
+  total_voltage: number = 52.5;
+  tooltipText = 'Баттарея №';
+
   genData(timestamp: number) { // Генерит и рисует данные
 
-    this.contactor_gen = AppComponent.genBoolByPrevious(0.4);//Значение изменится с 40% вероятностью
-    this.balance_gen =   AppComponent.genBoolByPrevious(0.4);
-    
     // Закидываем значения на график
     this.addTimePoint(this.contractor, {
-      value: this.contactor_gen ? '1' : '0',
+      value: AppComponent.genBoolByPrevious(0.4) ? '1' : '0',
       name: new Date(timestamp),
     });
     this.addTimePoint(this.balance, {
-      value: this.balance_gen ? '1' : '0',
+      value: AppComponent.genBoolByPrevious(0.4) ? '1' : '0',
       name: new Date(timestamp),
     });
-    // this.addTimePointContractor({
-    //   value: this.contactor_gen ? '1' : '0',
-    //   name: new Date(timestamp),
-    // });
-    // this.addTimePointBalance({
-    //   value: this.balance_gen ? '1' : '0',
-    //   name: new Date(timestamp),
-    // });
     
     //---------Создаём параметры графиков
     //3 примерно равных значения (+-1-3) + 1 сильный пик  
     if (this.iter < 5) this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
-    else if (this.iter == 6) {
+    else if (this.iter == 6 || this.iter == 8) 
       this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
-      if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
-      else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
-    } 
-    else if (this.iter == 8) {
-      this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
-      if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
-      else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
-    } 
     else this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
     
+    if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
+    else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
     // Все равные значения (+-1)
     this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
     // Только пики +-30
@@ -313,7 +204,6 @@ export class AppComponent implements OnInit {
     this.temperature_gen[4] = AppComponent.getNumByPrevious(this.temperature_gen[4], 0.3, 5, -40, 60);
 
     for (let i = 0; i < this.time_temp0.length; i++) {
-      //this.temperature_gen[i] = AppComponent.getNumByPrevious(this.temperature_gen[i], 0.4, 5, -40, 60);
       this.time_temp0[i].series.push({
         value: `${Math.round(this.temperature_gen[i] * 100) / 100}`,
         name: new Date(timestamp),
@@ -328,10 +218,6 @@ export class AppComponent implements OnInit {
     if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);      
     else               this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
   
-    // this.addTimePointTime1({
-    //   value: `${this.ACDC_gen}`,
-    //   name: new Date(timestamp),
-    // });
     this.addTimePoint(this.ACDC, {
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
@@ -351,30 +237,25 @@ export class AppComponent implements OnInit {
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
-      // Номера для батареек -- мне лень прописывать вручную так что сделал скрипт
-    let numbers = [[],[]];
-    for(let j = 1; j <= 30; j+=2) {
-      numbers[0].push(j)
-      numbers[1].push(j + 1)
-    }
+    // let numbers = [[],[]];
+    // for(let j = 1; j <= 30; j+=2) {
+    //   numbers[0].push(j)
+    //   numbers[1].push(j + 1)
+    // }
     for (let j = 0; j < 15; j++) {
       const battery1 = AppComponent.randomNumber(1.75, 2.8);
       const battery2 = AppComponent.randomNumber(1.75, 2.8);
-      // this.multi.push({
-      //   name: j + 1,
-      //   value: battery1 - 1.75
-      // });
 
       this.multi.push({
         name: j + 1,
         series: [{
             name: 'first',
             value: battery1 - 1.75,
-            number: numbers[0][j]
+            number: j//numbers[0][j]
           },{
             name: 'second',
             value: battery2 - 1.75,
-            number: numbers[1][j]
+            number: j + 1//numbers[1][j]
           }
         ]
       });
@@ -398,36 +279,6 @@ export class AppComponent implements OnInit {
   }
   //---------------------------------------------------
 
-  // addTimePointTime0(
-  //   point = {
-  //     value: (Math.random() * 1000).toFixed(2),
-  //     name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
-  //   }, index = 0
-  // ) {
-  //   this.time_temp0[index].series.push(point);
-  //   let buff = this.time_temp0;
-  //   this.time_temp0 = buff;
-  // }
-  // addTimePointTime1(
-  //   point = {
-  //     value: (Math.random() * 1000).toFixed(2),
-  //     name: AppComponent.randomDate(new Date(2012, 0, 1), new Date()),
-  //   }
-  // ) {
-  //   this.ACDC[0].series.push(point);
-  //   let buff = this.ACDC[0];
-  //   this.ACDC = [buff];
-  // }
-  // addTimePointContractor(point) {
-  //   this.contractor[0].series.push(point);
-  //   let buff = this.contractor[0];
-  //   this.contractor = [buff];
-  // }
-  // addTimePointBalance(point) {
-  //   this.balance[0].series.push(point);
-  //   let buff = this.balance[0];
-  //   this.balance = [buff];
-  // }
   addTimePoint(chart, point, index = 0)
   {
     chart[index].series.push(point);
@@ -435,9 +286,8 @@ export class AppComponent implements OnInit {
     chart = buff;
   }
 
-  total_voltage: number = 52.5;
-  tooltipText = 'Баттарея №';
   constructor(public server: ServerService, private breakpointObserver:BreakpointObserver){
+    this.nullify();
     this.genGlobalCharts();
   }
 
@@ -536,15 +386,6 @@ export class AppComponent implements OnInit {
           //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
           if (dataset.total_amp.value > 100) continue;
 
-          // this.addTimePointTime1({
-          //   value: dataset.total_amp.value.toFixed(2),
-          //   name: new Date(element.timestamp),
-          // });
-
-          // this.addTimePointContractor({
-          //   value: dataset.contractor ? '1' : '0',
-          //   name: new Date(element.timestamp),
-          // });
           this.addTimePoint(this.ACDC, {
             value: dataset.total_amp.value.toFixed(2),
             name: new Date(element.timestamp),
@@ -558,10 +399,6 @@ export class AppComponent implements OnInit {
           value: '' + element.data[0].temperatures[this.currentBattery].value,
           name: new Date(element.timestamp),
         });
-        // this.addTimePointTime0({
-        //   value: '' + element.data[0].temperatures[this.currentBattery].value,
-        //   name: new Date(element.timestamp),
-        // });
       }
       console.groupEnd();
     });
@@ -569,9 +406,8 @@ export class AppComponent implements OnInit {
 
   getArrY(min: number, max: number, dist: number) {
     let arr = [];
-    for (let i = 0, l = (max - min) / dist; i < l; i++) {
+    for (let i = 0, l = (max - min) / dist; i < l; i++)
       arr.push(min + i * dist);
-    }
     arr.push(max);
     return arr;
   }
