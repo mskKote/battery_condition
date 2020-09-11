@@ -33,10 +33,7 @@
             [roundDomains]="roundDomains"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
-            [rotateXAxisTicks]="rotateXAxisTicks"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)">
+            [rotateXAxisTicks]="rotateXAxisTicks">
             <ng-template #tooltipTemplate let-model="model">
               <p style="margin-top: 1rem;">{{tooltipText + model.name}}</p>
                 <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
@@ -59,10 +56,7 @@
         [results]="single"
         [min]="0"
         [max]="100"
-        [units]="'Заряд батарей'"
-        (select)="onSelect($event)"
-        (activate)="onActivate($event)"
-        (deactivate)="onDeactivate($event)">
+        [units]="'Заряд батарей'">
       </ngx-charts-gauge>
             <!-- </div> -->
       </mat-grid-tile >
@@ -86,13 +80,13 @@
       <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]='4'>
         <ngx-charts-line-chart
           [scheme]="colorChange_Temperature"
+          [roundDomains]="true"
           [yAxisTickFormatting]="ChangeTemp"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [xAxisLabel]="timeframe"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
-          [curve]="linearCurveCardinal"
           [results]="time_temp0">
         </ngx-charts-line-chart>
       </mat-grid-tile >
@@ -102,17 +96,13 @@
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [xAxisLabel]="timeframe"
-
+          [roundDomains]="true"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
-          [curve]="linearCurveCardinal"
           [roundDomains]="false"
           [animations]="false"
           [yAxisTickFormatting]="ChangeAmper"
-          [results]="time_temp1"
-          (select)="onSelect($event)"
-          (activate)="onActivate($event)"
-          (deactivate)="onDeactivate($event)">
+          [results]="ACDC">
         <!-- [curve]="d3.shape.curveLinear" -->
         </ngx-charts-line-chart>
     </mat-grid-tile >
