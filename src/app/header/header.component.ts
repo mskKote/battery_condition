@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   date: Date;
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
-    
+
     // let pickerInput = document.querySelector('input');
     // pickerInput.style.maxWidth = '';
   }

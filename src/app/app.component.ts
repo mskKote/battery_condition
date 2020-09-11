@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
-  
+
   // Главный график
   yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
   showXAxis: boolean = true;
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  showYAxisLabel: boolean = false;
+  showYAxisLabel: boolean = true;
   xAxisLabel: string = 'Пары батарей';
   yAxisLabel: string = '';
   animations: boolean = false;
