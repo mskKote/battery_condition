@@ -235,7 +235,7 @@ export class AppComponent implements OnInit {
     ]);
     this.iter++;
   }
-  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
+  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 100){
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
