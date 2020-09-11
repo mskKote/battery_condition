@@ -121,6 +121,7 @@ export class AppComponent implements OnInit {
   timeframe: string = 'Время, мин'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
 
 
+
   time_temp0: any[] = [
     {
       name: 'Температура 1',
