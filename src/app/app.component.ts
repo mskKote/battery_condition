@@ -18,6 +18,14 @@ export class AppComponent implements OnInit {
   receiveDateRange($event: any){
     this.dateRange = $event;
     // Вызывать обнуление
+    console.log(this.dateRange);
+    this.nullify();
+    // Генерим новое
+    this.iter = 0;
+    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
+  }
+
+  nullify() {
     this.colorChange_Temperature.domain = [];
     this.time_temp0 = [
       {
@@ -55,9 +63,6 @@ export class AppComponent implements OnInit {
         series: [],
       },
     ];
-    // Генерим новое
-    this.iter = 0;
-    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
   // Главный график
