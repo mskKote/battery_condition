@@ -1,9 +1,9 @@
 {
   "targets": {
-    "mew2-ultra": {
+    "dashboard-32147": {
       "hosting": {
         "battery": [
-          "mew2-ultra"
+          "dashboard-32147"
         ]
       }
     }
