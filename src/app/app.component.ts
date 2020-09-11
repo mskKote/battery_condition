@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
   gradient: boolean = true;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  showYAxisLabel: boolean = true;
+  showYAxisLabel: boolean = false;
   xAxisLabel: string = '';
   yAxisLabel: string = '';
   animations: boolean = false;
