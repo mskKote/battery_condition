@@ -119,14 +119,11 @@ export class AppComponent implements OnInit {
   colorChange_ACDC = {
     domain: [],
   };
-  // colorSchemeMulti = {
-
-  // }
   colorScheme = {
     domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
   };
   schemeType: string = 'linear';
-  timeframe: string = 'Время, мин'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
+  timeframe: string = 'Время'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
 
 
 
