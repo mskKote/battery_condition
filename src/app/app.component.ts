@@ -15,9 +15,9 @@ export interface Tile {
 })
 export class AppComponent implements OnInit {
   dateRange: any
-  receiveDateRange($event: any){
-    console.log($event)
-    this.dateRange = $event;
+  receiveDateRange(event: any){
+    console.log('app',event)
+    this.dateRange = event;
     this.nullify();
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
