@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
         series: [],
     }];
     this.contractor = [{
-        name: 'Балансировка',
+        name: 'Контактор',
         series: [],
     }];
   }
