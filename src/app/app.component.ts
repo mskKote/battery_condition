@@ -114,9 +114,6 @@ export class AppComponent implements OnInit {
   colorChange_ACDC = {
     domain: [],
   };
-  // colorSchemeMulti = {
-
-  // }
   colorScheme = {
     domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
   };
