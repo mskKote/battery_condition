@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
       },
     ];
     // Генерим новое
+    this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
   
@@ -123,6 +124,7 @@ export class AppComponent implements OnInit {
       name: 'Температура',
       series: [],
     },
+    
   ];
   time_temp1: any[] = [
     {
@@ -175,13 +177,12 @@ export class AppComponent implements OnInit {
     this.currentBattery = target;
   }
 
-  //---------------------------------------------------Раздел генерации значениц
+  //---------------------------------------------------Раздел генерации значений
   static randomDate(start: Date, end: Date): Date {
     return new Date(
       start.getTime() + Math.random() * (end.getTime() - start.getTime())
     );
   }
-
   static randomNumber(start: number, end: number): number {
     return start + Math.random() * (end - start);
   }
@@ -225,6 +226,8 @@ export class AppComponent implements OnInit {
   balance_gen: boolean;
   temperature_gen: number = AppComponent.randomNumber(-40, 60);
   ACDC_gen: number = AppComponent.randomNumber(0, 1000);
+  // Итерация значений нужна, чтобы создавать кастомные изменения на графике
+  iter: number = 0;
 
   genData(timestamp: number) { // Генерит и рисует данные
 
@@ -267,6 +270,7 @@ export class AppComponent implements OnInit {
         Math.round(((this.ACDC_gen / 2000) * 100 + 1) / 20)
       ],
     ];
+    this.iter++;
   }
   genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
     // Генерируем данные для 30 батарей --> общее
