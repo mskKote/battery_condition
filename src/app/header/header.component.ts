@@ -18,23 +18,22 @@ export class HeaderComponent implements OnInit {
   sendDateRange() {
     this.dateRangeEvent.emit(this.range);
   }
-  start;
-  end;
-  obj;
+  start: any;
+  end: any;
+  obj: any;
   addEvent(event) {
     if(event.value!=null){
-
       if(event.target.ngControl.name=='start'){
         this.start = event.value;
-        console.log('object :>> ', event.target.ngControl.name);
-        console.log(' start' );
+        // console.log('object :>> ', event.target.ngControl.name);
+        // console.log(' start' );
       }
       if(event.target.ngControl.name=='end'){
         this.end = event.value;
-        console.log('object :>> ', event.value);
+        // console.log('object :>> ', event.value);
         this.obj ={start:this.start,end:this.end};
         this.sendDateRange();
-        console.log('end');
+        // console.log('end');
       }
     }
   }
@@ -58,9 +57,6 @@ export class HeaderComponent implements OnInit {
   date: Date;
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
-
-    // let pickerInput = document.querySelector('input');
-    // pickerInput.style.maxWidth = '';
   }
 
   timeRange = [
