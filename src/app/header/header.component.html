@@ -1,25 +1,31 @@
 
 <mat-form-field style="margin-right: 1rem;">
   <mat-label>За последние...</mat-label>
-    <mat-select  >
+    <mat-select>
+      <mat-option value="1 минута">
+        <option (click)="clickFilter($event); sendDateRange(timeRange[0]); " [value]="timeRange[0]"> 1 минута</option>
+      </mat-option>
       <mat-option value="10 минут">
-        <option (click)="clickFilter($event); sendDateRange()"  [value]="timeRange[0]"> 10 минут</option>
+        <option (click)="clickFilter($event); sendDateRange(timeRange[1]); " [value]="timeRange[1]"> 10 минут</option>
       </mat-option>
-      <mat-option value="1 час" >
-        <option (click)="clickFilter($event); sendDateRange()" [value]="timeRange[1]"> 1 час</option>
+      <mat-option value="1 час">
+        <option (click)="clickFilter($event); sendDateRange(timeRange[2]); " [value]="timeRange[2]"> 1 час</option>
       </mat-option>
-      <mat-option value="1 день" >
-        <option (click)="clickFilter($event); sendDateRange()" [value]="timeRange[2]"> 1 день </option>
+      <mat-option value="1 день">
+        <option (click)="clickFilter($event); sendDateRange(timeRange[3]); " [value]="timeRange[3]"> 1 день </option>
       </mat-option>
       <mat-option value="1 неделя">
-        <option (click)="clickFilter($event); sendDateRange()" [value]="timeRange[3]"> 1 неделя</option>
+        <option (click)="clickFilter($event); sendDateRange(timeRange[4]); " [value]="timeRange[4]"> 1 неделя</option>
+      </mat-option>
+      <mat-option value="1 месяц">
+        <option (click)="clickFilter($event); sendDateRange(timeRange[5]); " [value]="timeRange[5]"> 1 месяц</option>
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Диапазон</mat-label>
     <mat-date-range-input [formGroup]='range' [rangePicker]="picker">
-      <input (dateChange)="addEvent($event)"  matStartDate formControlName='start' placeholder="Start date">
+      <input (dateChange)="addEvent($event)" matStartDate formControlName='start' placeholder="Start date">
       <input   (dateChange)="addEvent($event)" matEndDate formControlName='end' placeholder="End date">
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

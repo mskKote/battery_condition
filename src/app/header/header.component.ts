@@ -15,26 +15,27 @@ export class HeaderComponent implements OnInit {
     end: new FormControl(),
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
-  sendDateRange() {
+  sendDateRange(tRange: number) {
+    if(tRange) {
+      this.dateRangeEvent.emit({
+        start: new Date(tRange),
+        end: new Date()
+      });
+    }
     this.dateRangeEvent.emit(this.range.value);
   }
-  start;
-  end;
-  obj;
-  addEvent(event) {
-    if(event.value!=null){
-
-      if(event.target.ngControl.name=='start'){
+  start: any;
+  end: any;
+  obj: any;
+  addEvent(event: any) {
+    if(event.value != null){
+      if(event.target.ngControl.name == 'start'){
         this.start = event.value;
-        console.log('object :>> ', event.target.ngControl.name);
-        console.log(' start' );
       }
-      if(event.target.ngControl.name=='end'){
+      if(event.target.ngControl.name == 'end'){
         this.end = event.value;
-        console.log('object :>> ', event.value);
-        this.obj ={start:this.start,end:this.end};
-        this.sendDateRange();
-        console.log('end');
+        this.obj = { start: this.start, end: this.end };
+        this.sendDateRange(0);
       }
     }
   }
@@ -47,8 +48,8 @@ export class HeaderComponent implements OnInit {
 
     this.elClicked = e.target;
     this.elClicked.classList.add('clicked');
-    this.dateRange.start = new Date(+e.target.value);
-    this.dateRange.end = new Date();
+    // this.dateRange.start = new Date(+e.target.value);
+    // this.dateRange.end   = new Date();
     // ServerService.start =this.dateRange.start;
     // ServerService.end = this.dateRange.end;
   }
@@ -58,15 +59,14 @@ export class HeaderComponent implements OnInit {
   date: Date;
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
-
-    // let pickerInput = document.querySelector('input');
-    // pickerInput.style.maxWidth = '';
   }
 
   timeRange = [
-    new Date().getTime() - 600000, // 10 минут
-    new Date().getTime() - 600000 * 6, // 1 час
-    new Date().getTime() - 600000 * 6 * 24, // 1 день
-    new Date().getTime() - 600000 * 6 * 24 * 7, // 1 неделя
+    new Date().getTime() - 60000, // 1 минута
+    new Date().getTime() - 60000 * 10, // 10 минут
+    new Date().getTime() - 60000 * 10 * 6, // 1 час
+    new Date().getTime() - 60000 * 10 * 6 * 24, // 1 день
+    new Date().getTime() - 60000 * 10 * 6 * 24 * 7, // 1 неделя
+    new Date().getTime() - 60000 * 10 * 6 * 24 * 7 * 4, // 1 месяц
   ];
 }
