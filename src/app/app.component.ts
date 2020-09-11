@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   }
 
   nullify() {
-    this.colorChange_Temperature.domain = [];
+    // this.colorChange_Temperature.domain = [];
     this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
   timeline: boolean = true;
   colorChange = { domain: [] };
   colorChange_Total = { domain: [] };
-  colorChange_Temperature = { domain: [] };
+  // colorChange_Temperature = { domain: [] };
   colorChange_ACDC = { domain: [] };
   colorScheme = { domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'] };
   schemeType: string = 'linear';
@@ -207,10 +207,10 @@ export class AppComponent implements OnInit {
         value: `${Math.round(this.temperature_gen[i] * 100) / 100}`,
         name: new Date(timestamp),
       });
-      this.colorChange_Temperature.domain.push([
-        ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']
-        [Math.round(Math.abs((this.temperature_gen[i]) / 20))],
-      ]);
+      // this.colorChange_Temperature.domain.push([
+      //   ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']
+      //   [Math.round(Math.abs((this.temperature_gen[i]) / 20))],
+      // ]);
     }
 
 
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit {
     // Цвет графика
     this.colorChange_Total.domain = [
       ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
-      [Math.round(((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100 + 1) / 20)]
+      [Math.round((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 5 - 1)]
     ];
 
     // Данные для остальных графиков

@@ -68,29 +68,40 @@
       </mat-grid-tile>
       <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:4">
         <ngx-charts-line-chart
-          [scheme]="colorChange_Temperature"
           [roundDomains]="true"
           [yAxisTickFormatting]="ChangeTemp"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [yAxisLabel]="'Температура'"
           [xAxisLabel]="'Температура'"
+          [animations]="false"
+          [timeline]="true"
+          [legend]="false"
+          [scheme]="{domain: ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']}"
+          [schemeType]="'linear'"
+          [gradient]="gradient"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
           [results]="time_temp0">
         </ngx-charts-line-chart>
       </mat-grid-tile >
       <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?10:4">
-        <ngx-charts-line-chart
+        <ngx-charts-line-chart 
           [scheme]="colorChange_ACDC"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [yAxisLabel]="'Сила тока'"
           [xAxisLabel]="'Сила тока'"
+          [legend]="false"
+          [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}"
+          [schemeType]="'linear'"
+          [gradient]="gradient"
+          [timeline]="true"
+          [animations]="false"
           [roundDomains]="true"
           [xAxis]="xAxis"
           [yAxis]="yAxis"
-          [roundDomains]="false"
+          [roundDomains]="true"
           [animations]="false"
           [yAxisTickFormatting]="ChangeAmper"
           [results]="ACDC">
