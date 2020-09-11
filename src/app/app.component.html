@@ -1,7 +1,7 @@
 <mat-grid-list gutterSize='15px' cols="6" rowHeight="3:1">
-  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="1">
+  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?5:1">
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
-  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="5">
+  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?8:5">
     <!-- пары батареек -->
     <ngx-charts-bar-vertical-2d
       [tooltipDisabled]="false"
@@ -32,10 +32,10 @@
       </ng-template>
     </ngx-charts-bar-vertical-2d>
   </mat-grid-tile>
-    <mat-grid-tile 
-      [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}" 
-      class="item" 
-      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2" 
+    <mat-grid-tile
+      [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}"
+      class="item"
+      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2"
       [rowspan]='4'>
       <ngx-charts-gauge style="width: 100%; height: 80%;"
         [valueFormatting]="yAxisTickFormattingMulti2"

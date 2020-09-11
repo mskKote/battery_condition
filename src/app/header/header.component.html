@@ -17,7 +17,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill" >
-    <mat-label>Введите утку</mat-label>
+    <mat-label>Диапазон</mat-label>
     <mat-date-range-input [formGroup]='range' [rangePicker]="picker">
       <input (dateChange)="addEvent($event)"  matStartDate formControlName='start' placeholder="Start date">
       <input   (dateChange)="addEvent($event)" matEndDate formControlName='end' placeholder="End date">

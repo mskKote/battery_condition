@@ -18,10 +18,9 @@ export class AppComponent implements OnInit {
   receiveDateRange($event: any){
     console.log($event)
     this.dateRange = $event;
-
     this.nullify();
     this.iter = 0;
-    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
+    this.genGlobalCharts(this.dateRange.value.start, this.dateRange.value.end);
   }
 
   nullify() {
