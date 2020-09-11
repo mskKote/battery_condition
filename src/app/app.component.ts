@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
     return val + 1.75 + 'V';
   }
   yAxisTickFormattingMulti2(val: any) {
-    return 52.5 + (84 - 52.5) * (val / 100) + 'V';
+    return (52.5 + (84 - 52.5) * (val / 100)).toFixed(2) + 'V';
   }
 
   batteryCharge(charge: any) {
