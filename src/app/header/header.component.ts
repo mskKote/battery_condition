@@ -15,14 +15,18 @@ export class HeaderComponent implements OnInit {
     end: new FormControl(),
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
-  sendDateRange(tRange: number) {
-    if(tRange) {
+  sendDateRange(tRange: any) {
+    if(typeof tRange == 'object') {
+      this.dateRangeEvent.emit({
+        start: new Date(tRange.start),
+        end: new Date(tRange.end)
+      });
+    } else {
       this.dateRangeEvent.emit({
         start: new Date(tRange),
         end: new Date()
       });
     }
-    this.dateRangeEvent.emit(this.range.value);
   }
   start: any;
   end: any;
@@ -35,7 +39,7 @@ export class HeaderComponent implements OnInit {
       if(event.target.ngControl.name == 'end'){
         this.end = event.value;
         this.obj = { start: this.start, end: this.end };
-        this.sendDateRange(0);
+        this.sendDateRange(this.obj);
       }
     }
   }

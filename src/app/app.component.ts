@@ -16,11 +16,6 @@ export interface Tile {
 export class AppComponent implements OnInit {
   dateRange: any
   receiveDateRange(event: any){
-
-    // КОООСТЫЫЫЫЫЛЬ ПЕРЕДЕЛААААТЬ
-    if(!event.start || !event.end) { return }
-
-    console.log('app',event)
     this.dateRange = event;
     this.nullify();
     this.iter = 0;
