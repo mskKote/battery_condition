@@ -2,6 +2,7 @@ import { ServerService, totals } from './server.service';
 import { Component, OnInit, Input } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 export interface Tile {
   color: string;
   cols: number;
@@ -16,34 +17,11 @@ export interface Tile {
 export class AppComponent implements OnInit {
   dateRange: any
   receiveDateRange(event: any){
+    console.log('app.comp', event)
     this.dateRange = event;
     this.nullify();
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
-
-    // ПЫТАЮСЬ ПОПРАВИТЬ TIMELINE
-    setTimeout(() => {
-      // let selections = document.querySelectorAll('.selection')
-      // let handlers   = document.querySelectorAll('.handle')
-
-      // for(let i = 0; i < selections.length; i++){
-
-      // }
-
-      // let gTimeline = document.querySelectorAll('g[ngx-charts-timeline]')
-      // console.log(gTimeline)
-      // for(let i = 0, l = gTimeline.length; i < l; i++){
-      //   gTimeline[i].dispatchEvent('globalZoneAwareCallback')
-      // }
-
-      //   let brushes = document.querySelectorAll('.brush') as NodeListOf<Element>;
-      //   for(let i = 0; i < brushes.length; i++){
-      //     for(let j = 1; j < brushes[i].children.length; j++) {
-      //       let g = brushes[i].children[j] as HTMLElement;
-      //       g.style.display = 'none';
-      //     }
-      //   }
-    }, 500)
   }
 
   nullify() {
@@ -76,6 +54,8 @@ export class AppComponent implements OnInit {
         name: 'Контактор',
         series: [],
     }];
+    this.multi = [];
+    this.single = [];
   }
 
   // Главный график
@@ -279,6 +259,8 @@ export class AppComponent implements OnInit {
 
       this.total_voltage += battery1 + battery2;
     }
+    console.log(this.multi);
+    console.log(this.single);
     this.single.push({
       name: 'Заряд батареи',
       value: Math.floor((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100)

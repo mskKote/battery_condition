@@ -8,6 +8,11 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  timestart: any
+  receiveTimeStart(e: any) {
+    this.timestart = e;
+  }
+
   constructor(private server: ServerService) {}
 
   range = new FormGroup({
@@ -16,17 +21,21 @@ export class HeaderComponent implements OnInit {
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange(tRange: any) {
+    let obj = {};
     if(typeof tRange == 'object') {
-      this.dateRangeEvent.emit({
+      obj = {
         start: new Date(tRange.start),
-        end: new Date(tRange.end)
-      });
-    } else {
-      this.dateRangeEvent.emit({
+        end: new Date(tRange.end),
+        timeStart: this.timestart
+      }
+    } else if(typeof tRange == 'number') {
+      obj = {
         start: new Date(tRange),
-        end: new Date()
-      });
+        end: new Date(),
+        timeStart: this.timestart
+      }
     }
+    this.dateRangeEvent.emit(obj);
   }
   start: any;
   end: any;
