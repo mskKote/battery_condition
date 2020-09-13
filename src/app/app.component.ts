@@ -21,21 +21,28 @@ export class AppComponent implements OnInit {
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
 
-    // setTimeout(() => {
-    // let gTimeline = document.querySelectorAll('g[ngx-charts-timeline]')
-    // console.log(gTimeline)
-    // for(let i = 0, l = gTimeline.length; i < l; i++){
-    //   gTimeline[i].dispatchEvent('globalZoneAwareCallback')
-    // }
+    setTimeout(() => {
+      // let selections = document.querySelectorAll('.selection')
+      // let handlers   = document.querySelectorAll('.handle')
 
-    //   let brushes = document.querySelectorAll('.brush') as NodeListOf<Element>;
-    //   for(let i = 0; i < brushes.length; i++){
-    //     for(let j = 1; j < brushes[i].children.length; j++) {
-    //       let g = brushes[i].children[j] as HTMLElement;
-    //       g.style.display = 'none';
-    //     }
-    //   }
-    // }, 500)
+      // for(let i = 0; i < selections.length; i++){
+
+      // }
+
+      // let gTimeline = document.querySelectorAll('g[ngx-charts-timeline]')
+      // console.log(gTimeline)
+      // for(let i = 0, l = gTimeline.length; i < l; i++){
+      //   gTimeline[i].dispatchEvent('globalZoneAwareCallback')
+      // }
+
+      //   let brushes = document.querySelectorAll('.brush') as NodeListOf<Element>;
+      //   for(let i = 0; i < brushes.length; i++){
+      //     for(let j = 1; j < brushes[i].children.length; j++) {
+      //       let g = brushes[i].children[j] as HTMLElement;
+      //       g.style.display = 'none';
+      //     }
+      //   }
+    }, 500)
   }
 
   nullify() {
