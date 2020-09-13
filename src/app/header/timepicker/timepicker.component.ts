@@ -1,15 +1,23 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-timepicker',
-  templateUrl: './timepicker.component.html',
-  styleUrls: ['./timepicker.component.scss']
+  selector: 'app-timepicker-start',
+  template: `
+    <ngb-timepicker [(ngModel)]="time" [spinners]="spinners"></ngb-timepicker>
+  `
 })
-export class TimepickerComponent {
-  time = { hour: 13, minute: 30 };
+export class TimepickerStartComponent {
+  time = { hour: 13, minute: 0 };
   spinners = false;
+}
 
-  toggleSpinners() {
-      this.spinners = !this.spinners;
-  }
+@Component({
+  selector: 'app-timepicker-end',
+  template: `
+    <ngb-timepicker [(ngModel)]="time" [spinners]="spinners"></ngb-timepicker>
+  `
+})
+export class TimepickerEndComponent {
+  time = { hour: 14, minute: 0 };
+  spinners = false;
 }
