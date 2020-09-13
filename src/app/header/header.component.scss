@@ -9,11 +9,20 @@ mat-form-field{
 #end-time{
     margin-left: 1rem
 }
+.d-inline-block{
+  display: inline-block;
+  margin: 0 auto;
+}
+
 
 @media (max-width: 385px){
     mat-form-field{
         width: 80%;
         margin: 0 10%;
+    }
+    .d-inline-block{
+      display: inline-block;
+      margin: 0 5rem .7rem 5rem;
     }
     .timepicker{
         display: inline-block;
