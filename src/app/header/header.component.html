@@ -76,4 +76,4 @@
 </mat-form-field>
 <br>
 <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
-<app-timepicker-end    id="end-time"   class="timepicker"></app-timepicker-end>
+<app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>

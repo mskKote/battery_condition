@@ -259,8 +259,6 @@ export class AppComponent implements OnInit {
 
       this.total_voltage += battery1 + battery2;
     }
-    console.log(this.multi);
-    console.log(this.single);
     this.single.push({
       name: 'Заряд батареи',
       value: Math.floor((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100)

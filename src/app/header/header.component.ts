@@ -8,9 +8,15 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  timestart: any
+  timeStart: any
+  timeEnd: any
   receiveTimeStart(e: any) {
-    this.timestart = e;
+    this.timeStart = e;
+    // this.sendDateRange(this.timeStart)
+  }
+  receiveTimeEnd(e: any) {
+    this.timeEnd = e;
+    // this.sendDateRange(this.timeEnd)
   }
 
   constructor(private server: ServerService) {}
@@ -21,18 +27,24 @@ export class HeaderComponent implements OnInit {
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange(tRange: any) {
-    let obj = {};
+    // console.log('header.comp', );
+
+    let obj = { };
     if(typeof tRange == 'object') {
       obj = {
-        start: new Date(tRange.start),
-        end: new Date(tRange.end),
-        timeStart: this.timestart
+        start: new Date(tRange.start.toString()
+                .replace(/\d\d:\d\d:\d\d/, `${this.timeStart.hour}:${this.timeStart.minute}:00`)),
+        end: new Date(tRange.end.toString()
+                .replace(/\d\d:\d\d:\d\d/, `${this.timeEnd.hour}:${this.timeEnd.minute}:00`)),
+        // start: new Date(tRange.start),
+        // end: new Date(tRange.end),
+        timeStart: this.timeStart
       }
     } else if(typeof tRange == 'number') {
       obj = {
         start: new Date(tRange),
         end: new Date(),
-        timeStart: this.timestart
+        timeStart: this.timeStart
       }
     }
     this.dateRangeEvent.emit(obj);
