@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     this.iter = 0;
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
 
+    // ПЫТАЮСЬ ПОПРАВИТЬ TIMELINE
     setTimeout(() => {
       // let selections = document.querySelectorAll('.selection')
       // let handlers   = document.querySelectorAll('.handle')
