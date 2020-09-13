@@ -1,4 +1,4 @@
-<mat-form-field style="margin-left: 1rem;">
+<mat-form-field>
   <mat-label>За последние...</mat-label>
   <mat-select>
     <mat-option value="1 минута">
@@ -22,7 +22,7 @@
   </mat-select>
 </mat-form-field>
 <br>
-<mat-form-field style="margin-left: 1rem;">
+<mat-form-field>
   <mat-label>Диапазон</mat-label>
   <mat-date-range-input [formGroup]='range' [rangePicker]="picker">
     <input (dateChange)="addEvent($event)" matStartDate formControlName='start' placeholder="Start date">

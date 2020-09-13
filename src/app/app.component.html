@@ -1,7 +1,11 @@
 <mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
-  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:3">
+  <mat-grid-tile class="item" 
+    [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" 
+    [rowspan]="(isSmallScreen ? 10 : (isTabletScreen ? 6 : (isXSmallScreen ? 15 : 5)))">
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
-  <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?19:9">
+  <mat-grid-tile class="item" 
+    [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4" 
+    [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?19:9">
     <!-- пары батареек -->
     <ngx-charts-bar-vertical-2d
       [tooltipDisabled]="false"
