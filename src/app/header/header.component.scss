@@ -5,8 +5,21 @@ mat-form-field{
 .timepicker{
     display: inline-block;
     margin: 0 auto;
-    // margin: .5rem .5rem .5rem 3.5rem;
 }
 #end-time{
     margin-left: 1rem
+}
+
+@media (max-width: 385px){
+    mat-form-field{
+        width: 80%;
+        margin: 0 10%;
+    }
+    .timepicker{
+        display: inline-block;
+        margin: 0 5rem .7rem 5rem;
+    }
+    #end-time{
+        margin-left: 5rem
+    }
 }
