@@ -1,58 +1,52 @@
-<div ngbDropdown class="d-inline-block" container="body">
-  <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-    Выбрать время
-  </button>
-  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[0])"
-        [value]="timeRange[0]"
-      >
-        1 минута
-      </option>
+<mat-form-field>
+  <mat-label>За последние...</mat-label>
+  <mat-select>
+    <mat-option  value="1 минута">
+    <button  (click)="clickFilter($event); sendDateRange(timeRange[0]);" [value]="timeRange[0]" type="button" class="btn btn-link" value="1 минута">
+
+     1 минута
     </button>
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[1])"
-        [value]="timeRange[1]"
-      >
-        10 минут
-      </option>
+  </mat-option>
+  <mat-option  value="10 минут">
+    <button (click)="clickFilter($event); sendDateRange(timeRange[1]);" [value]="timeRange[1]" type="button" class="btn btn-link" value="10 минут">
+     10 минут
     </button>
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[2])"
-        [value]="timeRange[2]"
-      >
-        1 час
-      </option>
+  </mat-option>
+  <mat-option  value="1 час">
+
+    <button (click)="clickFilter($event); sendDateRange(timeRange[2]);" [value]="timeRange[2]" type="button" class="btn btn-link" value="1 час">
+     1 час
     </button>
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[3])"
-        [value]="timeRange[3]"
-      >
-        1 день
-      </option>
+  </mat-option>
+  <mat-option  value="1 день">
+    <button (click)="clickFilter($event); sendDateRange(timeRange[3]);" [value]="timeRange[3]" type="button" class="btn btn-link" value="1 день">
+     1 день
     </button>
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[4])"
-        [value]="timeRange[4]"
-      >
-        1 неделя
-      </option>
+  </mat-option>
+  <mat-option  value="1 неделя">
+    <button (click)="clickFilter($event); sendDateRange(timeRange[4]);" [value]="timeRange[4]" type="button" class="btn btn-link" value="1 неделя">
+     1 неделя
     </button>
-    <button ngbDropdownItem>
-      <option
-        (click)="clickFilter($event); sendDateRange(timeRange[5])"
-        [value]="timeRange[5]"
-      >
-        1 месяц
-      </option>
+  </mat-option>
+  <mat-option  value="1 месяц">
+    <button (click)="clickFilter($event); sendDateRange(timeRange[5]);" [value]="timeRange[5]" type="button" class="btn btn-link" value="1 месяц">
+     1 месяц
     </button>
-  </div>
-</div>
+  </mat-option>
+    <!-- <button type="button" class="btn btn-link" value="1 час">
+      <option (click)="clickFilter($event); sendDateRange(timeRange[2]);" [value]="timeRange[2]"> 1 час</option>
+    </button>
+    <button type="button" class="btn btn-link" value="1 день">
+      <option (click)="clickFilter($event); sendDateRange(timeRange[3]);" [value]="timeRange[3]"> 1 день </option>
+    </button>
+    <button type="button" class="btn btn-link" value="1 неделя">
+      <option (click)="clickFilter($event); sendDateRange(timeRange[4]);" [value]="timeRange[4]"> 1 неделя</option>
+    </button>
+    <button type="button" class="btn btn-link" value="1 месяц">
+      <option (click)="clickFilter($event); sendDateRange(timeRange[5]);" [value]="timeRange[5]"> 1 месяц</option>
+    </button> -->
+  </mat-select>
+</mat-form-field>
 
 <br />
 <mat-form-field>
