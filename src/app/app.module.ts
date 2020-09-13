@@ -19,12 +19,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
   ],
   imports: [
+    MatSlideToggleModule,
 MatSelectModule,  MatCardModule,
 MatIconModule,
     MatGridListModule,
