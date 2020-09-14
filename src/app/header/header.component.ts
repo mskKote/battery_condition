@@ -12,11 +12,24 @@ export class HeaderComponent implements OnInit {
   timeEnd: any
   receiveTimeStart(e: any) {
     this.timeStart = e;
-    // this.sendDateRange(this.timeStart)
+    if(this.timeEnd && this.timeStart) {
+      this.sendDateRange({
+        // new Date().getTime() - 60000
+        start: new Date(),
+        end: new Date()
+      })
+    }
   }
   receiveTimeEnd(e: any) {
     this.timeEnd = e;
-    // this.sendDateRange(this.timeEnd)
+    if(this.timeEnd && this.timeStart) {
+      
+      this.sendDateRange({
+        // new Date().getTime() - 60000
+        start: (this.obj ? this.obj.start : new Date()),
+        end: (this.obj ? this.obj.end : new Date())
+      })
+    }
   }
 
   constructor(private server: ServerService) {}
@@ -33,9 +46,11 @@ export class HeaderComponent implements OnInit {
     if(typeof tRange == 'object') {
       obj = {
         start: new Date(tRange.start.toString()
-                .replace(/\d\d:\d\d:\d\d/, `${this.timeStart.hour}:${this.timeStart.minute}:00`)),
+                .replace(/\d\d:\d\d:\d\d/, `${this.timeStart ? this.timeStart.hour   : '13'}:
+                                            ${this.timeStart ? this.timeStart.minute : '00'}:00`)),
         end: new Date(tRange.end.toString()
-                .replace(/\d\d:\d\d:\d\d/, `${this.timeEnd.hour}:${this.timeEnd.minute}:00`)),
+                .replace(/\d\d:\d\d:\d\d/, `${this.timeEnd ? this.timeEnd.hour   : '14'}:
+                                            ${this.timeEnd ? this.timeEnd.minute : '00'}:00`)),
         // start: new Date(tRange.start),
         // end: new Date(tRange.end),
         timeStart: this.timeStart
