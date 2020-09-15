@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
     if (val == '0') { return 'Выкл'; }
     if (val == '1') { return 'Вкл'; }
   }
-
+  showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
   linearCurveStep = shape.curveStepAfter;
   amperTicks: any[] = [0, 0.01, 0.02, 0.03, 0.04];
@@ -209,10 +209,6 @@ export class AppComponent implements OnInit {
         value: `${Math.round(this.temperature_gen[i] * 100) / 100}`,
         name: new Date(timestamp),
       });
-      // this.colorChange_Temperature.domain.push([
-      //   ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']
-      //   [Math.round(Math.abs((this.temperature_gen[i]) / 20))],
-      // ]);
     }
 
 
@@ -233,7 +229,7 @@ export class AppComponent implements OnInit {
     ]);
     this.iter++;
   }
-  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 100){
+  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
@@ -247,11 +243,11 @@ export class AppComponent implements OnInit {
         series: [{
             name: 'first',
             value: battery1 - 1.75,
-            number: j
+            number: j * 2
           },{
             name: 'second',
             value: battery2 - 1.75,
-            number: j + 1
+            number: j * 2 + 1
           }
         ]
       });
@@ -273,6 +269,7 @@ export class AppComponent implements OnInit {
       this.genData(end - (end - start) / amount * i);
     }
   }
+
   //---------------------------------------------------
 
   addTimePoint(chart, point, index = 0)
