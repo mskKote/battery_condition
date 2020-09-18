@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
         this.clickedBtnTurn.classList.remove('turnAutoOn');
         this.turnModeBalancing = !this.turnModeBalancing;
       } else {
-        console.log('2.1');
         this.clickedBtnTurn.classList.add('turnAutoOn');
         this.turnModeBalancing = !this.turnModeBalancing;
       }
