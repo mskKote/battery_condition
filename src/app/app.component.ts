@@ -23,28 +23,28 @@ export class AppComponent implements OnInit {
   contactor: boolean = false;
   balancing: boolean = false;
   turnModeContactor: boolean = false;
-  turnModeBalancing: boolean = true;
+  turnModeBalancing: boolean = false;
   turnMode(e: any) {
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
-        this.turnModeContactor = !this.turnModeContactor;
+        // this.turnModeContactor = !this.turnModeContactor;
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
-        this.turnModeContactor = !this.turnModeContactor;
       }
+      this.turnModeContactor = !this.turnModeContactor;
     }
 
     if(this.clickedBtnTurn.id == 'modeBalancing') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
-        this.turnModeBalancing = !this.turnModeBalancing;
+        // this.turnModeBalancing = !this.turnModeBalancing;
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
-        this.turnModeBalancing = !this.turnModeBalancing;
       }
+      this.turnModeBalancing = !this.turnModeBalancing;
     }
   }
   onSwitch(e: any) {

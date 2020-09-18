@@ -6,11 +6,13 @@
 
 #toggle_contactor, #toggle_balancing{
 	position: absolute;
-	bottom: 2.5%;
-	left: .8%;
+	bottom: 9px;
+	left: 4px;
+	// bottom: 2.5%;
+	// left: .8%;
 	width: 50px;
 	height: 30px;
-	border-radius: 20px;
+	border-radius: 10px;
 	border: solid 2px #A5A5A5;
 	background-color: #A5A5A5;
 	outline: none;
@@ -23,7 +25,7 @@
 		left: -2px;
 		width: 20px;
 		height: 20px;
-		border-radius: 20px;
+		border-radius: 7px;
 		background-color: #fff;
 		
 		transition: .2s;
@@ -41,10 +43,16 @@
 	border: none;
 	background-color: #29B5A8;
 	bottom: 40px;
-	left: 18px;
-	width: 25px;
-	height: 25px;
-	border-radius: 100%;
+	left: 4px;
+	width: 50px;
+	height: 20px;
+	border-radius: 20px;
+}
+.indicator::before{
+	content: 'A';
+	color: white;
+	font-weight: bold;
+	// font-size: ;
 }
 .turnAutoOn {
 	background-color: red;
