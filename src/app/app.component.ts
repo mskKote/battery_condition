@@ -27,26 +27,25 @@ export class AppComponent implements OnInit {
   turnMode(e: any) {
     this.clickedBtnTurn = e.target;
 
-    if (
-      e.target.classList.contains('turnAutoOn') &&
-      this.clickedBtnToggle.id == 'modeContactor'
-    ) {
-      this.clickedBtnTurn.classList.remove('turnAutoOn');
-      this.turnModeContactor = !this.turnModeContactor;
-    } else {
-      this.clickedBtnTurn.classList.add('turnAutoOn');
-      this.turnModeContactor = !this.turnModeContactor;
+    if (this.clickedBtnTurn.id == 'modeContactor') {
+      if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
+        this.clickedBtnTurn.classList.remove('turnAutoOn');
+        this.turnModeContactor = !this.turnModeContactor;
+      } else {
+        this.clickedBtnTurn.classList.add('turnAutoOn');
+        this.turnModeContactor = !this.turnModeContactor;
+      }
     }
 
-    if (
-      e.target.classList.contains('turnAutoOn') &&
-      this.clickedBtnToggle.id == 'modeBalancing'
-    ) {
-      this.clickedBtnTurn.classList.remove('turnAutoOn');
-      this.turnModeBalancing = !this.turnModeBalancing;
-    } else {
-      this.clickedBtnTurn.classList.add('turnAutoOn');
-      this.turnModeBalancing = !this.turnModeBalancing;
+    if(this.clickedBtnTurn.id == 'modeBalancing') {
+      if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
+        this.clickedBtnTurn.classList.remove('turnAutoOn');
+        this.turnModeBalancing = !this.turnModeBalancing;
+      } else {
+        console.log('2.1');
+        this.clickedBtnTurn.classList.add('turnAutoOn');
+        this.turnModeBalancing = !this.turnModeBalancing;
+      }
     }
   }
   onSwitch(e: any) {

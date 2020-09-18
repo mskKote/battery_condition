@@ -34,7 +34,7 @@
 	background-color: #29B5A8;
 	i{ left: 16px; }
 }
-
+// Индикация переключения авторежима
 .indicator {
 	position: absolute;
 	outline: none;
@@ -46,7 +46,6 @@
 	height: 25px;
 	border-radius: 100%;
 }
-
 .turnAutoOn {
 	background-color: red;
 }
