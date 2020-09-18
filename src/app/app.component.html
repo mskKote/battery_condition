@@ -97,7 +97,29 @@
         </ngx-charts-line-chart>
     </mat-grid-tile >
     <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
-      <input type="checkbox" id="switch_contactor" /><label for="switch_contactor" style="position: absolute; left: 5px; bottom: 3px;"></label>
+      <!-- Тогглер -->
+      <button id="toggle_contactor" 
+        (click)="onSwitch($event)">
+        <i></i>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="modal-contactor" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>Вы уверены?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" 
+                class="btn btn-primary contactor"
+                data-dismiss="modal"
+                (click)="confirmed($event)">Да</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
@@ -116,7 +138,31 @@
       </ngx-charts-line-chart>
     </mat-grid-tile>
     <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
-      <input type="checkbox" id="switch_balance" /><label for="switch_balance" style="position: absolute; left: 5px; bottom: 3px;"></label>
+      <!-- Тогглер -->
+      <button id="toggle_balancing" 
+        (click)="onSwitch($event)">
+        <i></i>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="modal-balancing" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>Вы уверены?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" 
+                class="btn btn-primary balancing"
+                data-dismiss="modal"
+                (click)="confirmed($event)">Да</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <input type="checkbox" id="switch_balance" class="switcher" />
+      <label for="switch_balance" style="position: absolute; left: 5px; bottom: 3px;"></label> -->
+
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"

@@ -1,8 +1,11 @@
 import { ServerService, totals } from './server.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+
+// Если сделать стандартный импорт - вылетит ошибка, поэтому так
+declare var jQuery: any;
+
 export interface Tile {
   color: string;
   cols: number;
@@ -15,6 +18,41 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  clickedBtnToggle: HTMLElement
+  contactor: boolean = false
+  balancing: boolean = false
+  onSwitch(e: any){
+    this.clickedBtnToggle = e.target;
+
+    // Проверка статуса контактора 
+    if(this.clickedBtnToggle.id == 'toggle_contactor'){
+      jQuery('#modal-contactor').modal('show')
+    }
+    
+    // Проверка статуса балансировки 
+    if(this.clickedBtnToggle.id == 'toggle_balancing'){
+      jQuery('#modal-balancing').modal('show')
+    }
+  }
+  confirmed(e: any){
+    if(e.target.classList.contains('contactor')){
+      if(this.contactor)
+        this.clickedBtnToggle.classList.remove('clicked')
+      else 
+        this.clickedBtnToggle.classList.add('clicked')
+
+      this.contactor = !this.contactor;
+    }
+    if(e.target.classList.contains('balancing')){
+      if(this.balancing)
+        this.clickedBtnToggle.classList.remove('clicked')
+      else
+        this.clickedBtnToggle.classList.add('clicked')
+
+      this.balancing = !this.balancing;
+    }
+  }
+
   dateRange: any
   receiveDateRange(event: any){
     this.dateRange = event;
