@@ -18,43 +18,73 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  clickedBtnToggle: HTMLElement
-  contactor: boolean = false
-  balancing: boolean = false
-  onSwitch(e: any){
-    this.clickedBtnToggle = e.target;
+  clickedBtnToggle: HTMLElement;
+  clickedBtnTurn: HTMLElement;
+  contactor: boolean = false;
+  balancing: boolean = false;
+  turnModeContactor: boolean = false;
+  turnModeBalancing: boolean = true;
+  turnMode(e: any) {
+    this.clickedBtnTurn = e.target;
 
-    // Проверка статуса контактора 
-    if(this.clickedBtnToggle.id == 'toggle_contactor'){
-      jQuery('#modal-contactor').modal('show')
+    if (
+      e.target.classList.contains('turnAutoOn') &&
+      this.clickedBtnToggle.id == 'modeContactor'
+    ) {
+      this.clickedBtnTurn.classList.remove('turnAutoOn');
+      this.turnModeContactor = !this.turnModeContactor;
+    } else {
+      this.clickedBtnTurn.classList.add('turnAutoOn');
+      this.turnModeContactor = !this.turnModeContactor;
     }
-    
-    // Проверка статуса балансировки 
-    if(this.clickedBtnToggle.id == 'toggle_balancing'){
-      jQuery('#modal-balancing').modal('show')
+
+    if (
+      e.target.classList.contains('turnAutoOn') &&
+      this.clickedBtnToggle.id == 'modeBalancing'
+    ) {
+      this.clickedBtnTurn.classList.remove('turnAutoOn');
+      this.turnModeBalancing = !this.turnModeBalancing;
+    } else {
+      this.clickedBtnTurn.classList.add('turnAutoOn');
+      this.turnModeBalancing = !this.turnModeBalancing;
     }
   }
-  confirmed(e: any){
-    if(e.target.classList.contains('contactor')){
-      if(this.contactor)
-        this.clickedBtnToggle.classList.remove('clicked')
-      else 
-        this.clickedBtnToggle.classList.add('clicked')
+  onSwitch(e: any) {
+    this.clickedBtnToggle = e.target;
+
+    // Проверка статуса контактора
+    if (
+      this.clickedBtnToggle.id == 'toggle_contactor' &&
+      this.turnModeContactor == false
+    ) {
+      jQuery('#modal-contactor').modal('show');
+    }
+
+    // Проверка статуса балансировки
+    if (
+      this.clickedBtnToggle.id == 'toggle_balancing' &&
+      this.turnModeBalancing == false
+    ) {
+      jQuery('#modal-balancing').modal('show');
+    }
+  }
+  confirmed(e: any) {
+    if (e.target.classList.contains('contactor')) {
+      if (this.contactor) this.clickedBtnToggle.classList.remove('clicked');
+      else this.clickedBtnToggle.classList.add('clicked');
 
       this.contactor = !this.contactor;
     }
-    if(e.target.classList.contains('balancing')){
-      if(this.balancing)
-        this.clickedBtnToggle.classList.remove('clicked')
-      else
-        this.clickedBtnToggle.classList.add('clicked')
+    if (e.target.classList.contains('balancing')) {
+      if (this.balancing) this.clickedBtnToggle.classList.remove('clicked');
+      else this.clickedBtnToggle.classList.add('clicked');
 
       this.balancing = !this.balancing;
     }
   }
 
-  dateRange: any
-  receiveDateRange(event: any){
+  dateRange: any;
+  receiveDateRange(event: any) {
     this.dateRange = event;
     this.nullify();
     this.iter = 0;
@@ -63,34 +93,46 @@ export class AppComponent implements OnInit {
 
   nullify() {
     // this.colorChange_Temperature.domain = [];
-    this.time_temp0 = [{
+    this.time_temp0 = [
+      {
         name: 'Температура 1',
         series: [],
-      }, {
+      },
+      {
         name: 'Температура 2',
         series: [],
-      }, {
+      },
+      {
         name: 'Температура 3',
         series: [],
-      }, {
+      },
+      {
         name: 'Температура 4',
         series: [],
-      }, {
+      },
+      {
         name: 'Температура 5',
         series: [],
-      }];
-    this.ACDC = [{
+      },
+    ];
+    this.ACDC = [
+      {
         name: 'Сила тока',
         series: [],
-    }];
-    this.balance = [{
+      },
+    ];
+    this.balance = [
+      {
         name: 'Балансировка',
         series: [],
-    }];
-    this.contractor = [{
+      },
+    ];
+    this.contractor = [
+      {
         name: 'Контактор',
         series: [],
-    }];
+      },
+    ];
     this.multi = [];
     this.single = [];
   }
@@ -123,8 +165,12 @@ export class AppComponent implements OnInit {
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    if (val == '0') { return 'Выкл'; }
-    if (val == '1') { return 'Вкл'; }
+    if (val == '0') {
+      return 'Выкл';
+    }
+    if (val == '1') {
+      return 'Вкл';
+    }
   }
   showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
@@ -137,7 +183,9 @@ export class AppComponent implements OnInit {
   colorChange_Total = { domain: [] };
   // colorChange_Temperature = { domain: [] };
   colorChange_ACDC = { domain: [] };
-  colorScheme = { domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'] };
+  colorScheme = {
+    domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
+  };
   schemeType: string = 'linear';
   timeframe: string = 'Время'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
 
@@ -200,12 +248,13 @@ export class AppComponent implements OnInit {
     return prev;
   }
   // Генерит 1 партию данных с указанным timestamp
-  temperature_gen: number[] = [ // Можно вручную задать стартовые значения
+  temperature_gen: number[] = [
+    // Можно вручную задать стартовые значения
     AppComponent.randomNumber(-40, 60),
     AppComponent.randomNumber(-40, 60),
     AppComponent.randomNumber(-40, 60),
     AppComponent.randomNumber(-40, 60),
-    AppComponent.randomNumber(-40, 60)
+    AppComponent.randomNumber(-40, 60),
   ];
   ACDC_gen: number = AppComponent.randomNumber(0, 1000);
   // Итерация значений нужна, чтобы создавать кастомные изменения на графике
@@ -214,7 +263,8 @@ export class AppComponent implements OnInit {
   total_voltage: number = 52.5;
   tooltipText = 'Баттарея №';
 
-  genData(timestamp: number) { // Генерит и рисует данные
+  genData(timestamp: number) {
+    // Генерит и рисует данные
 
     // Закидываем значения на график
     this.addTimePoint(this.contractor, {
@@ -227,20 +277,58 @@ export class AppComponent implements OnInit {
     });
     //---------Создаём параметры графиков
     //3 примерно равных значения (+-1-3) + 1 сильный пик
-    if (this.iter < 5) this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
+    if (this.iter < 5)
+      this.temperature_gen[0] = AppComponent.getNumByPrevious(
+        this.temperature_gen[0],
+        0.7,
+        4,
+        -40,
+        60
+      );
     else if (this.iter == 6 || this.iter == 8)
-      this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1)*40;
-    else this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
+      this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1) * 40;
+    else
+      this.temperature_gen[0] = AppComponent.getNumByPrevious(
+        this.temperature_gen[0],
+        0.5,
+        10,
+        -40,
+        60
+      );
 
     if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
-    else if (this.temperature_gen[0] > 60)  this.temperature_gen[0] = 60;
+    else if (this.temperature_gen[0] > 60) this.temperature_gen[0] = 60;
     // Все равные значения (+-1)
-    this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
+    this.temperature_gen[1] = AppComponent.getNumByPrevious(
+      this.temperature_gen[1],
+      0.75,
+      1.5,
+      -40,
+      60
+    );
     // Только пики +-30
-    this.temperature_gen[2] = AppComponent.getNumByPrevious(this.temperature_gen[2], 0.8, 30, -40, 60);
+    this.temperature_gen[2] = AppComponent.getNumByPrevious(
+      this.temperature_gen[2],
+      0.8,
+      30,
+      -40,
+      60
+    );
     // Равномерно растущий и убывающий графики
-    this.temperature_gen[3] = AppComponent.getNumByPrevious(this.temperature_gen[3], 0.3, 5, -40, 60);
-    this.temperature_gen[4] = AppComponent.getNumByPrevious(this.temperature_gen[4], 0.3, 5, -40, 60);
+    this.temperature_gen[3] = AppComponent.getNumByPrevious(
+      this.temperature_gen[3],
+      0.3,
+      5,
+      -40,
+      60
+    );
+    this.temperature_gen[4] = AppComponent.getNumByPrevious(
+      this.temperature_gen[4],
+      0.3,
+      5,
+      -40,
+      60
+    );
 
     for (let i = 0; i < this.time_temp0.length; i++) {
       this.time_temp0[i].series.push({
@@ -249,9 +337,22 @@ export class AppComponent implements OnInit {
       });
     }
 
-
-    if (this.iter < 6) this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);
-    else               this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
+    if (this.iter < 6)
+      this.ACDC_gen = AppComponent.getNumByPrevious(
+        this.ACDC_gen,
+        0.7,
+        10,
+        15,
+        40
+      );
+    else
+      this.ACDC_gen = AppComponent.getNumByPrevious(
+        this.ACDC_gen,
+        0.7,
+        10,
+        15,
+        25
+      );
     this.addTimePoint(this.ACDC, {
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
@@ -262,12 +363,17 @@ export class AppComponent implements OnInit {
 
     this.colorChange_ACDC.domain = [];
     this.colorChange_ACDC.domain.push([
-      ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
-      [Math.round((this.ACDC_gen - 15) / 5)],
+      ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF'][
+        Math.round((this.ACDC_gen - 15) / 5)
+      ],
     ]);
     this.iter++;
   }
-  genGlobalCharts(start = +Date.now() - 1000 * 60 * 10, end = Date.now(), amount = 10){
+  genGlobalCharts(
+    start = +Date.now() - 1000 * 60 * 10,
+    end = Date.now(),
+    amount = 10
+  ) {
     // Генерируем данные для 30 батарей --> общее
     // Графикс c 30 батареями и total_voltage
     this.total_voltage = 0;
@@ -278,46 +384,51 @@ export class AppComponent implements OnInit {
 
       this.multi.push({
         name: j + 1,
-        series: [{
+        series: [
+          {
             name: 'first',
             value: battery1 - 1.75,
-            number: j * 2
-          },{
+            number: j * 2,
+          },
+          {
             name: 'second',
             value: battery2 - 1.75,
-            number: j * 2 + 1
-          }
-        ]
+            number: j * 2 + 1,
+          },
+        ],
       });
 
       this.total_voltage += battery1 + battery2;
     }
     this.single.push({
       name: 'Заряд батареи',
-      value: Math.floor((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 100)
+      value: Math.floor(((this.total_voltage - 30 * 1.75) / (30 * 1.05)) * 100),
     });
     // Цвет графика
     this.colorChange_Total.domain = [
-      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
-      [Math.round((this.total_voltage - 30 * 1.75) / (30 * 1.05) * 5 - 1)]
+      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
+        Math.round(((this.total_voltage - 30 * 1.75) / (30 * 1.05)) * 5 - 1)
+      ],
     ];
 
     // Данные для остальных графиков
     for (let i = amount; i > 0; i--) {
-      this.genData(end - (end - start) / amount * i);
+      this.genData(end - ((end - start) / amount) * i);
     }
   }
 
   //---------------------------------------------------
 
-  addTimePoint(chart, point, index = 0)
-  {
+  addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
     chart = buff;
   }
 
-  constructor(public server: ServerService, private breakpointObserver:BreakpointObserver){
+  constructor(
+    public server: ServerService,
+    private breakpointObserver: BreakpointObserver
+  ) {
     this.nullify();
     this.genGlobalCharts();
   }
@@ -339,46 +450,47 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  ChangeTemp(temp){
-    return temp + "°C";
+  ChangeTemp(temp) {
+    return temp + '°C';
   }
-  ChangeAmper(amper){
+  ChangeAmper(amper) {
     return amper + 'A';
   }
 
-  request()  {
-    this.server.getDataQuery()
-      .then((data: totals[]) => {
-        this.multi = [];
-        this.single = [];
-        let total_voltage_value = 0;
-        let lastDataset;
-        try {
-          let lastObj = data[this.currentBattery];//data.length - 1];
-          lastDataset = lastObj.data[lastObj.data.length - 1];
-        } catch (error) {
-          let lastObj = data[data.length - 1];
-          lastDataset = lastObj.data[lastObj.data.length - 1];
-        }
+  request() {
+    this.server.getDataQuery().then((data: totals[]) => {
+      this.multi = [];
+      this.single = [];
+      let total_voltage_value = 0;
+      let lastDataset;
+      try {
+        let lastObj = data[this.currentBattery]; //data.length - 1];
+        lastDataset = lastObj.data[lastObj.data.length - 1];
+      } catch (error) {
+        let lastObj = data[data.length - 1];
+        lastDataset = lastObj.data[lastObj.data.length - 1];
+      }
 
-        console.groupCollapsed('data from server -- app.component');
-        // Графикс c 30 батареями и total_voltage
-        for (let j = 0; j < lastDataset.voltages.length; j+=2) {
-          const battery1 = lastDataset.voltages[j]; // 1 батарейка
-          const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
-          this.multi.push({
-            "name": j / 2 + 1 ,
-            "series": [
-              {
-                "name": "Battery1",
-                "value": battery1.value - 1.75
-              }, {
-                "name": "Battery2",
-                "value": battery2.value - 1.75
-              }
-          ]});
-          total_voltage_value += battery1.value + battery2.value;
-        }
+      console.groupCollapsed('data from server -- app.component');
+      // Графикс c 30 батареями и total_voltage
+      for (let j = 0; j < lastDataset.voltages.length; j += 2) {
+        const battery1 = lastDataset.voltages[j]; // 1 батарейка
+        const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
+        this.multi.push({
+          name: j / 2 + 1,
+          series: [
+            {
+              name: 'Battery1',
+              value: battery1.value - 1.75,
+            },
+            {
+              name: 'Battery2',
+              value: battery2.value - 1.75,
+            },
+          ],
+        });
+        total_voltage_value += battery1.value + battery2.value;
+      }
       console.groupCollapsed('data from server -- app.component');
       // Графикс c 30 батареями и total_voltage
       for (let j = 0; j < lastDataset.voltages.length; j += 2) {

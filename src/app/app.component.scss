@@ -3,47 +3,11 @@
   box-shadow: -10px 10px 10px 0 lightgray;
   background-color: rgb(255, 255, 255);
 }
-// тогглер -- начало
-// input[type=checkbox]{
-// 	height: 0;
-// 	width: 0;
-// 	visibility: hidden;
-// }
-// label {
-// 	cursor: pointer;
-// 	width: 50px;
-// 	height: 30px;
-// 	background:#a5a5a5;
-// 	display: block;
-// 	border-radius: 100px;
-// 	position: relative;
-// }
-// label:after {
-// 	content: '';
-// 	position: absolute;
-// 	top: 5px;
-// 	left: 5px;
-// 	width: 20px;
-// 	height: 20px;
-// 	background: #fff;
-// 	border-radius: 20px;
-// 	transition: 0.3s;
-// }
-// input:checked + label {
-// 	background:#4cb626;
-// }
-// input:checked + label:after {
-// 	left: calc(100% - 5px);
-// 	transform: translateX(-100%);
-// }
-// label:active:after {
-// 	width: 30px;
-// }
-// тогглер -- конец
+
 #toggle_contactor, #toggle_balancing{
 	position: absolute;
 	bottom: 2.5%;
-	left: .6%;
+	left: .8%;
 	width: 50px;
 	height: 30px;
 	border-radius: 20px;
@@ -69,4 +33,20 @@
 	border-color: #29B5A8;
 	background-color: #29B5A8;
 	i{ left: 16px; }
+}
+
+.indicator {
+	position: absolute;
+	outline: none;
+	border: none;
+	background-color: #29B5A8;
+	bottom: 40px;
+	left: 18px;
+	width: 25px;
+	height: 25px;
+	border-radius: 100%;
+}
+
+.turnAutoOn {
+	background-color: red;
 }
