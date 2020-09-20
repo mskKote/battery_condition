@@ -1,7 +1,52 @@
+
+<div *ngIf="!IsAuthored" class="container ">
+  <div class="row justify-content-center">
+    <div class=" col-md-6 col-sm-12 align-self-center">
+      <h1 class="page-title">Login</h1>
+      <form (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email"
+                 class="form-control"
+                 formControlName="email">
+        </div>
+        <div *ngIf="isValidInput('email')"
+          class="alert alert-danger">
+          <div *ngIf="loginForm.controls['email'].errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="loginForm.controls['email'].errors.pattern">
+            Must be a valid email format.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password"
+                 class="form-control"
+                 formControlName ="password">
+        </div>
+        <div *ngIf="isValidInput('password')"
+          class="alert alert-danger">
+          <div *ngIf="loginForm.controls['password'].errors.required">
+            Password is required.
+          </div>
+        </div>
+
+        <button
+        [disabled]="!loginForm.valid"
+        type="submit" 
+        class="btn btn-primary"
+        >Sign In</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngIf="IsAuthored">
 <mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
-    [rowspan]="(isSmallScreen ? 10 : (isTabletScreen ? 6 : (isXSmallScreen ? 20 : 5)))">
+    [rowspan]="(isSmallScreen ? 13 : (isTabletScreen ? 6 : (isXSmallScreen ? 20 : 5)))">
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4"
@@ -99,7 +144,7 @@
     <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
       <!-- Тогглер -->
       <button id='modeContactor' class="indicator" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)"></button>
-      <button id="toggle_contactor" 
+      <button id="toggle_contactor"
         (click)="onSwitch($event)">
         <i></i>
       </button>
@@ -111,7 +156,7 @@
               <p>Вы уверены?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" 
+              <button type="button"
                 class="btn btn-primary contactor"
                 data-dismiss="modal"
                 (click)="confirmed($event)">Да</button>
@@ -141,7 +186,7 @@
     <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
       <!-- Тогглер -->
       <button id='modeBalancing' class="indicator" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)"></button>
-      <button id="toggle_balancing" 
+      <button id="toggle_balancing"
         (click)="onSwitch($event)">
         <i></i>
       </button>
@@ -153,7 +198,7 @@
               <p>Вы уверены?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" 
+              <button type="button"
                 class="btn btn-primary balancing"
                 data-dismiss="modal"
                 (click)="confirmed($event)">Да</button>
@@ -184,4 +229,4 @@
 
 <ng-template #tooltipTemplate>
     This is the single point tooltip template
-</ng-template>
+</ng-template></div>

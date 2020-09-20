@@ -2,7 +2,7 @@ import { ServerService, totals } from './server.service';
 import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -18,12 +18,17 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  
+  loginForm: FormGroup;
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactor: boolean = false;
   balancing: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
+  TryAuth($event){
+    console.log('object :>> ', $event);
+  }
   turnMode(e: any) {
     this.clickedBtnTurn = e.target;
 
@@ -422,11 +427,34 @@ export class AppComponent implements OnInit {
     let buff = chart;
     chart = buff;
   }
+  initForm(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required,
+      Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')]],
+      password: ['', Validators.required]
+    });
+  }
 
-  constructor(
+  isValidInput(fieldName): boolean {
+    return this.loginForm.controls[fieldName].invalid &&
+      (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched);
+  }
+
+  IsAuthored;
+  IsWrong = false;
+  login(): void {
+    if(this.loginForm.value.email=="battery@condition.ru"&& this.loginForm.value.password=="12354"){
+      this.server.IsAuthored.next(true);
+      this.IsWrong = false;
+    }else{
+      this.IsWrong = true;
+    }
+  }
+  constructor(private fb: FormBuilder,
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
+    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp)
     this.nullify();
     this.genGlobalCharts();
   }
@@ -435,6 +463,7 @@ export class AppComponent implements OnInit {
   isSmallScreen;
   isXSmallScreen;
   ngOnInit(): void {
+    this.initForm();
     this.breakpointObserver
       .observe(Breakpoints.Small)
       .subscribe((resp) => (this.isSmallScreen = resp.matches));

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Timestamp, Observable } from 'rxjs';
+import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
 ///MODELS
 export class totals {
   data: total[];
@@ -28,7 +28,10 @@ export class val {
 export class ServerService {
   static HOST = 'http://80.89.235.39';
   public datas: totals[];
-  constructor(public http: HttpClient) {}
+  public IsAuthored ;
+  constructor(public http: HttpClient) {
+    this.IsAuthored = new BehaviorSubject(false);
+  }
   public static end:Date;
   public static start:Date;
   async getDataQuery(start_time = '1000', end_time = '4999999000', data = '10'){
