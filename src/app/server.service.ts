@@ -35,19 +35,21 @@ export class ServerService {
   public static end:Date;
   public static start:Date;
   async getDataQuery(start_time = '1000', end_time = '4999999000', data = '10'){
-    const str:string =
-    ServerService.HOST +
-      '/api/bms?' +
-      '\&start\_time=' +
-      start_time +
-      '\&end\_time=' +
-      end_time +
-      '\&data=' +
-      data;
+    // const str:string =
+    // ServerService.HOST +
+    //   '/api/bms?' +
+    //   '\&start\_time=' +
+    //   start_time +
+    //   '\&end\_time=' +
+    //   end_time +
+    //   '\&data=' +
+    //   data;
+    const str: string = 'http://80.89.235.39/api/bms/last';
       let response = await fetch(str, {
         keepalive: false,
       });
-      let res: totals[] = await response.json();
+      let res = await response.json();
+      // let res: totals[] = await response.json();
       return res;
   }
 }
