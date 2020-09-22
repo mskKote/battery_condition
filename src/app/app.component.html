@@ -1,5 +1,5 @@
 
-<div *ngIf="!IsAuthored" class="container ">
+<div *ngIf="IsAuthored" class="container ">
   <div class="row justify-content-center">
     <div class=" col-md-6 col-sm-12 align-self-center">
       <h1 class="page-title">Login</h1>
@@ -35,14 +35,14 @@
 
         <button
         [disabled]="!loginForm.valid"
-        type="submit" 
+        type="submit"
         class="btn btn-primary"
         >Sign In</button>
       </form>
     </div>
   </div>
 </div>
-<div *ngIf="IsAuthored">
+<div *ngIf="!IsAuthored">
 <mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
