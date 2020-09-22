@@ -16,7 +16,7 @@ export class TimepickerStartComponent implements OnInit {
   spinners = false;
 
   ngOnInit() {
-    // this.timeStartEvent.emit(this.time);
+    this.timeStartEvent.emit(this.time);
   }
 
   getTimeStart() {
@@ -40,7 +40,7 @@ export class TimepickerEndComponent {
   spinners = false;
 
   ngOnInit() {
-    // this.timeEndEvent.emit(this.time);
+    this.timeEndEvent.emit(this.time);
   }
 
   getTimeEnd() {

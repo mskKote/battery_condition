@@ -21,6 +21,7 @@ export interface Tile {
 export class AppComponent implements OnInit {
 
   loginForm: FormGroup;
+
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactor: boolean = false;
@@ -36,7 +37,6 @@ export class AppComponent implements OnInit {
     if (this.clickedBtnTurn.id == 'modeContactor') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
-        // this.turnModeContactor = !this.turnModeContactor;
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
       }
@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
     if(this.clickedBtnTurn.id == 'modeBalancing') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
-        // this.turnModeBalancing = !this.turnModeBalancing;
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
       }
@@ -488,8 +487,6 @@ export class AppComponent implements OnInit {
   ChangeAmper(amper) {
     return amper + 'A';
   }
-
-
 
   getArrY(min: number, max: number, dist: number) {
     let arr = [];
