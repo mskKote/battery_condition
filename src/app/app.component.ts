@@ -32,6 +32,8 @@ export class AppComponent implements OnInit {
     console.log('object :>> ', $event);
   }
   turnMode(e: any) {
+    e.preventDefault()
+
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
@@ -53,6 +55,8 @@ export class AppComponent implements OnInit {
     }
   }
   onSwitch(e: any) {
+    e.preventDefault()
+
     this.clickedBtnToggle = e.target;
 
     // Проверка статуса контактора
