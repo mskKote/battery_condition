@@ -532,7 +532,7 @@ export class AppComponent implements OnInit {
         ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
         [Math.floor((newACDC - 15) / 5)],
       ]);
-      console.log('boardsTemp >> ', boardsTemp);	
+      // console.log('boardsTemp >> ', boardsTemp);	
 
       //------------------Температуры
       for (let i = 0; i < boardsTemp.length; i++) {
