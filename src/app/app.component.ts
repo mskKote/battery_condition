@@ -196,6 +196,7 @@ export class AppComponent implements OnInit {
   colorChange_ACDC = { domain: [] };
   colorScheme = {
     domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
+    // domain: ['#ff615e', '#ffc13b', '#e0e356', '#c1ff38', '#61ff61'], // Более тусклая гамма
   };
   schemeType: string = 'linear';
   timeframe: string = 'Время'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
@@ -527,8 +528,8 @@ export class AppComponent implements OnInit {
       // Десереализация -- конец	
 
       this.multi = [];	
-      // this.single = [];	
-      // let total_voltage_value = 0;	
+      this.single = [];	
+      let total_voltage_value = 0;	
       // let lastDataset;	
       // try {	
       //   let lastObj = data[this.currentBattery]; //data.length - 1];	
@@ -545,19 +546,31 @@ export class AppComponent implements OnInit {
         const battery2 = voltages[j + 1]; // 2 батарейка	
 
         this.multi.push({	
-          name: j/2 + 1,	
+          name: j / 2 + 1,	
           series: [{	
               name: 'first',	
               value: battery1 - 1.75,	
-              number: j + 1,	
+              number: j + 1	
             }, {	
               name: 'second',	
               value: battery2 - 1.75,	
-              number: j + 2,	
-            },	
-          ],	
+              number: j + 2	
+            }]	
         });	
+        total_voltage_value += battery1 + battery2;
       }
+
+
+      //------------------График с зарядом батареи
+      this.single.push({//Значение
+        name: 'Заряд батареи',
+        value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
+      });
+      this.colorChange_Total.domain = [// Цвет графика
+        ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
+          Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
+        ],
+      ];
 
       // for(let i = 0, l = voltages.length; i < l; i++){	
       //   let battery1: number = 0	
@@ -575,7 +588,7 @@ export class AppComponent implements OnInit {
       //   }	
       // }	
 
-      
+
         // this.multi.push({	
         //   name: j / 2 + 1,	
         //   series: [	
