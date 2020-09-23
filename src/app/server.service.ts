@@ -78,11 +78,6 @@ export class ServerService {
       end_time +
       '&data=' +
       data;
-    let response = await fetch(str, {
-      keepalive: false,
-    });
-    let res = await response.json();
-    // let res: totals[] = await response.json();
-    return res;
+      return this.http.get<board>(str);
   }
 }
