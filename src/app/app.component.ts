@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Timestamp } from 'rxjs';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -19,14 +19,14 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  
+
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactor: boolean = false;
   balancing: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
-  
+
   //---------------------------------------------------Переключение тоглеров
   turnMode(e: any) {
     e.preventDefault()
@@ -90,6 +90,8 @@ export class AppComponent implements OnInit {
   dateRange: any;
   receiveDateRange(event: any) {
     this.dateRange = event;
+    let timeStart=  +this.dateRange['start'];
+    this.server.getDataQuery(`${timeStart}`,"","60")
     this.nullify();
     this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
@@ -100,7 +102,7 @@ export class AppComponent implements OnInit {
     this.batteryIndex = index;
     console.log(this.batteryIndex);
   }
-  
+
 
   nullify() {
     // this.colorChange_Temperature.domain = [];
@@ -421,7 +423,7 @@ export class AppComponent implements OnInit {
       this.genData(end - ((end - start) / amount) * i);
     }
   }
-  
+
   addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
@@ -467,7 +469,7 @@ export class AppComponent implements OnInit {
     this.nullify();
     // this.genGlobalCharts();
   }
-  
+
   BoardLast:Observable<board>;
   isTabletScreen;
   isSmallScreen;
@@ -492,74 +494,77 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-
-  contactorOverride: boolean
-  balancingOverride: boolean
+  contactorOverrideComp: boolean
+  balancingOverrideComp: boolean
   drawServerData(data: board) {
-    // this.server.getDataQuery().then((data) => {	
-      // Десереализация -- начало	
-      console.groupCollapsed('data from JSON')	
-      let dataArray: data[] = data.data;	
+    // this.server.getDataQuery().then((data) => {
+      // Десереализация -- начало
+      console.groupCollapsed('data from JSON')
+      let dataArray: data[] = data.data;
       let voltages: number[] = [];
-      let contactor: boolean = data.contactor0_closed;	
-      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение	
-      this.contactorOverride = data.contactor_override;	
-      this.balancingOverride = data.balancer_override;	
-      
-      let boardsTemp: number[] = [];	
-      let timestamp = data.timestamp;	
-      
-      for(let i = 0; i < dataArray.length; i++){	
+      let contactor: boolean = data.contactor0_closed;
+      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
+      let contactorOverride: boolean = data.contactor_override;
+      let balancingOverride: boolean = data.balancer_override;
+
+      // записываю значения в перменные компонента чтобы брать их в HTML
+      this.contactorOverrideComp = contactorOverride
+      this.balancingOverrideComp = balancingOverride
+
+      let boardsTemp: number[] = [];
+      let timestamp = data.timestamp;
+
+      for(let i = 0; i < dataArray.length; i++){
         // Берём 30 вольтажей
         for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
-          voltages.push(dataArray[i].voltages[j]);	
+          voltages.push(dataArray[i].voltages[j]);
         // Берём температру
-        boardsTemp.push(dataArray[i].board_temperature);	
-      }	
+        boardsTemp.push(dataArray[i].board_temperature);
+      }
 
 
-      console.log('dataArray >> ', dataArray);	
-      console.log('voltages :>> ', voltages);	
+      console.log('dataArray >> ', dataArray);
+      console.log('voltages :>> ', voltages);
 
-      console.log('contactor >> ', contactor);	
-      console.log('balancing >> ', balancing);	
-      console.log('contactorOverride >> ', this.contactorOverride);	
-      console.log('balancingOverride >> ', this.balancingOverride);	
-      console.log('boardsTemp >> ', boardsTemp);	
-      console.log('timestamp >> ', timestamp);	
-      console.groupEnd()	
-      // Десереализация -- конец	
+      console.log('contactor >> ', contactor);
+      console.log('balancing >> ', balancing);
+      console.log('contactorOverride >> ', contactorOverride);
+      console.log('balancingOverride >> ', balancingOverride);
+      console.log('boardsTemp >> ', boardsTemp);
+      console.log('timestamp >> ', timestamp);
+      console.groupEnd()
+      // Десереализация -- конец
 
-      this.multi = [];	
-      this.single = [];	
+      this.multi = [];
+      this.single = [];
       let total_voltage_value = 0;
-      // let lastDataset;	
+      // let lastDataset;
       // try {
-      //   let lastObj = data[this.currentBattery]; //data.length - 1];	
-      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
-      // } catch (error) {	
-      //   let lastObj = data[data.length - 1];	
-      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
-      // }	
+      //   let lastObj = data[this.currentBattery]; //data.length - 1];
+      //   lastDataset = lastObj.data[lastObj.data.length - 1];
+      // } catch (error) {
+      //   let lastObj = data[data.length - 1];
+      //   lastDataset = lastObj.data[lastObj.data.length - 1];
+      // }
 
-      // console.groupCollapsed('data from server -- app.component');	
-      // Графикс c 30 батареями и total_voltage	
-      for (let j = 0; j < voltages.length; j += 2) {	
-        const battery1 = voltages[j]; // 1 батарейка	
-        const battery2 = voltages[j + 1]; // 2 батарейка	
+      // console.groupCollapsed('data from server -- app.component');
+      // Графикс c 30 батареями и total_voltage
+      for (let j = 0; j < voltages.length; j += 2) {
+        const battery1 = voltages[j]; // 1 батарейка
+        const battery2 = voltages[j + 1]; // 2 батарейка
 
-        this.multi.push({	
-          name: j / 2 + 1,	
-          series: [{	
-              name: 'first',	
-              value: battery1 - 1.75,	
-              number: j + 1	
-            }, {	
-              name: 'second',	
-              value: battery2 - 1.75,	
-              number: j + 2	
-            }]	
-        });	
+        this.multi.push({
+          name: j / 2 + 1,
+          series: [{
+              name: 'first',
+              value: battery1 - 1.75,
+              number: j + 1
+            }, {
+              name: 'second',
+              value: battery2 - 1.75,
+              number: j + 2
+            }]
+        });
         total_voltage_value += battery1 + battery2;
       }
 
@@ -575,92 +580,92 @@ export class AppComponent implements OnInit {
         ],
       ];
 
-      // for(let i = 0, l = voltages.length; i < l; i++){	
-      //   let battery1: number = 0	
-      //     , battery2: number = 0;	
-      //   for(let j = i; j < voltages[i].length / 2; j++){	
-      //     j % 2 == 0 ? 	
-      //       battery2 = voltages[i][j]: 	
-      //       battery1 = voltages[i][j];	
+      // for(let i = 0, l = voltages.length; i < l; i++){
+      //   let battery1: number = 0
+      //     , battery2: number = 0;
+      //   for(let j = i; j < voltages[i].length / 2; j++){
+      //     j % 2 == 0 ?
+      //       battery2 = voltages[i][j]:
+      //       battery1 = voltages[i][j];
 
-      //     // this.multi.push({	
-      //     //   name: iter,	
+      //     // this.multi.push({
+      //     //   name: iter,
 
-      //     // })	
+      //     // })
 
-      //   }	
-      // }	
+      //   }
+      // }
 
 
-        // this.multi.push({	
-        //   name: j / 2 + 1,	
-        //   series: [	
-        //     {	
-        //       name: 'Battery1',	
-        //       value: battery1.value - 1.75,	
-        //     },	
-        //     {	
-        //       name: 'Battery2',	
-        //       value: battery2.value - 1.75,	
-        //     },	
-        //   ],	
-        // });	
-    //     total_voltage_value += battery1.value + battery2.value;	
-    //   }	
-    //   console.groupCollapsed('data from server -- app.component');	
-    //   // Графикс c 30 батареями и total_voltage	
-    //   for (let j = 0; j < lastDataset.voltages.length; j += 2) {	
-    //     const battery1 = lastDataset.voltages[j]; // 1 батарейка	
-    //     const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка	
-    //     this.multi.push({	
-    //       name: j / 2 + 1,	
-    //       series: [	
-    //         {	
-    //           name: 'Battery1',	
-    //           value: battery1.value - 1.75,	
-    //         },	
-    //         {	
-    //           name: 'Battery2',	
-    //           value: battery2.value - 1.75,	
-    //         },	
-    //       ],	
-    //     });	
-    //     total_voltage_value += battery1.value + battery2.value;	
-    //   }	
-    //   this.single.push({	
-    //     name: 'Заряд батареи',	
-    //     value:	
-    //       (total_voltage_value / (1.05 * lastDataset.voltages.length)) * 100,	
-    //   });	
+        // this.multi.push({
+        //   name: j / 2 + 1,
+        //   series: [
+        //     {
+        //       name: 'Battery1',
+        //       value: battery1.value - 1.75,
+        //     },
+        //     {
+        //       name: 'Battery2',
+        //       value: battery2.value - 1.75,
+        //     },
+        //   ],
+        // });
+    //     total_voltage_value += battery1.value + battery2.value;
+    //   }
+    //   console.groupCollapsed('data from server -- app.component');
+    //   // Графикс c 30 батареями и total_voltage
+    //   for (let j = 0; j < lastDataset.voltages.length; j += 2) {
+    //     const battery1 = lastDataset.voltages[j]; // 1 батарейка
+    //     const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка
+    //     this.multi.push({
+    //       name: j / 2 + 1,
+    //       series: [
+    //         {
+    //           name: 'Battery1',
+    //           value: battery1.value - 1.75,
+    //         },
+    //         {
+    //           name: 'Battery2',
+    //           value: battery2.value - 1.75,
+    //         },
+    //       ],
+    //     });
+    //     total_voltage_value += battery1.value + battery2.value;
+    //   }
+    //   this.single.push({
+    //     name: 'Заряд батареи',
+    //     value:
+    //       (total_voltage_value / (1.05 * lastDataset.voltages.length)) * 100,
+    //   });
 
-    //   // Line charts	
-    //   for (let i = 0; i < data.length; i++) {	
-    //     const element = data[i]; // 1 по Х	
-    //     //console.log(element);	
-    //     for (let j = 0; j < element.data.length; j++) {	
-    //       const dataset = element.data[j];	
-    //       //console.log('dataset :>> ', dataset);	
-    //       // temp0 = dataset.temperatures[0].value;	
-    //       //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));	
-    //       //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");	
-    //       if (dataset.total_amp.value > 100) continue;	
+    //   // Line charts
+    //   for (let i = 0; i < data.length; i++) {
+    //     const element = data[i]; // 1 по Х
+    //     //console.log(element);
+    //     for (let j = 0; j < element.data.length; j++) {
+    //       const dataset = element.data[j];
+    //       //console.log('dataset :>> ', dataset);
+    //       // temp0 = dataset.temperatures[0].value;
+    //       //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));
+    //       //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");
+    //       if (dataset.total_amp.value > 100) continue;
 
-    //       this.addTimePoint(this.ACDC, {	
-    //         value: dataset.total_amp.value.toFixed(2),	
-    //         name: new Date(element.timestamp),	
-    //       });	
-    //       this.addTimePoint(this.contractor, {	
-    //         value: dataset.contractor ? '1' : '0',	
-    //         name: new Date(element.timestamp),	
-    //       });	
-    //     }	
-    //     this.addTimePoint(this.time_temp0, {	
-    //       value: '' + element.data[0].temperatures[this.currentBattery].value,	
-    //       name: new Date(element.timestamp),	
-    //     });	
-    //   }	
-    //   console.groupEnd();	
-    // });	
+    //       this.addTimePoint(this.ACDC, {
+    //         value: dataset.total_amp.value.toFixed(2),
+    //         name: new Date(element.timestamp),
+    //       });
+    //       this.addTimePoint(this.contractor, {
+    //         value: dataset.contractor ? '1' : '0',
+    //         name: new Date(element.timestamp),
+    //       });
+    //     }
+    //     this.addTimePoint(this.time_temp0, {
+    //       value: '' + element.data[0].temperatures[this.currentBattery].value,
+    //       name: new Date(element.timestamp),
+    //     });
+    //   }
+    //   console.groupEnd();
+    // });
   }
 
   getArrY(min: number, max: number, dist: number) {
