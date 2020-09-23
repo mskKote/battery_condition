@@ -1,4 +1,28 @@
 <mat-form-field>
+  <mat-label>Батарея №</mat-label>
+  <mat-select>
+
+  <mat-option  value="1">
+    <button (click)="clickFilter($event);sendBatteryIndex(batteryIndex[0]);" type="button" class="btn btn-link" value="1">
+    Батарея №1
+    </button>
+  </mat-option>
+  <mat-option  value="2">
+    <button (click)="clickFilter($event); sendBatteryIndex(batteryIndex[1]);" type="button" class="btn btn-link" value="2">
+    Батарея №2
+    </button>
+  </mat-option>
+  <mat-option  value="3">
+    <button (click)="clickFilter($event); sendBatteryIndex(batteryIndex[2]);" type="button" class="btn btn-link" value="3">
+    Батарея №3
+    </button>
+  </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<br />
+
+<mat-form-field>
   <mat-label>За последние...</mat-label>
   <mat-select>
     <mat-option  value="1 минута">
@@ -68,6 +92,8 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
+
 <br>
+
 <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
 <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
