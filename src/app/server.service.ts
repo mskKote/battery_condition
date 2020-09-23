@@ -15,7 +15,7 @@ export interface board {
   // created_at: string;
   current_ma: number;
   data: data[];
-  timestamp: Timestamp<number>;
+  timestamp: number;
   // v_bat_mv: number;
 }
 export interface data {

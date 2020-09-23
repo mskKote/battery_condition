@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
   
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
-  contactor: boolean = false;
-  balancing: boolean = false;
+  contactorTog: boolean = false;
+  balancingTog: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
   
@@ -74,16 +74,16 @@ export class AppComponent implements OnInit {
   }
   confirmed(e: any) {
     if (e.target.classList.contains('contactor')) {
-      if (this.contactor) this.clickedBtnToggle.classList.remove('clicked');
+      if (this.contactorTog) this.clickedBtnToggle.classList.remove('clicked');
       else this.clickedBtnToggle.classList.add('clicked');
 
-      this.contactor = !this.contactor;
+      this.contactorTog = !this.contactorTog;
     }
     if (e.target.classList.contains('balancing')) {
-      if (this.balancing) this.clickedBtnToggle.classList.remove('clicked');
+      if (this.balancingTog) this.clickedBtnToggle.classList.remove('clicked');
       else this.clickedBtnToggle.classList.add('clicked');
 
-      this.balancing = !this.balancing;
+      this.balancingTog = !this.balancingTog;
     }
   }
 
@@ -113,13 +113,7 @@ export class AppComponent implements OnInit {
       }, {
         name: 'Температура 3',
         series: [],
-      }, {
-        name: 'Температура 4',
-        series: [],
-      }, {
-        name: 'Температура 5',
-        series: [],
-      },
+      }
     ];
     this.ACDC = [{
         name: 'Сила тока',
@@ -131,7 +125,7 @@ export class AppComponent implements OnInit {
         series: [],
       },
     ];
-    this.contractor = [{
+    this.contactor = [{
         name: 'Контактор',
         series: [],
       },
@@ -176,13 +170,12 @@ export class AppComponent implements OnInit {
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    return val == '0' ? 'Выкл' : 'Вкл';
-    // if (val == '0') {
-    //   return 'Выкл';
-    // }
-    // if (val == '1') {
-    //   return 'Вкл';
-    // }
+    if (val == '0') {
+      return 'Выкл';
+    }
+    if (val == '1') {
+      return 'Вкл';
+    }
   }
   showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
@@ -204,7 +197,7 @@ export class AppComponent implements OnInit {
   time_temp0: any[];
   ACDC: any[];
   balance: any[];
-  contractor: any[];
+  contactor: any[];
   multi: any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
@@ -272,7 +265,7 @@ export class AppComponent implements OnInit {
   genData(timestamp: number) {
 
     // Закидываем значения на график
-    this.addTimePoint(this.contractor, {
+    this.addTimePoint(this.contactor, {
       value: AppComponent.genBoolByPrevious(0.4) ? '1' : '0',
       name: new Date(timestamp),
     });
@@ -283,57 +276,21 @@ export class AppComponent implements OnInit {
     //---------Создаём параметры графиков
     //3 примерно равных значения (+-1-3) + 1 сильный пик
     if (this.iter < 5)
-      this.temperature_gen[0] = AppComponent.getNumByPrevious(
-        this.temperature_gen[0],
-        0.7,
-        4,
-        -40,
-        60
-      );
+      this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
     else if (this.iter == 6 || this.iter == 8)
       this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1) * 40;
     else
-      this.temperature_gen[0] = AppComponent.getNumByPrevious(
-        this.temperature_gen[0],
-        0.5,
-        10,
-        -40,
-        60
-      );
+      this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
 
     if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
     else if (this.temperature_gen[0] > 60) this.temperature_gen[0] = 60;
     // Все равные значения (+-1)
-    this.temperature_gen[1] = AppComponent.getNumByPrevious(
-      this.temperature_gen[1],
-      0.75,
-      1.5,
-      -40,
-      60
-    );
+    this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
     // Только пики +-30
-    this.temperature_gen[2] = AppComponent.getNumByPrevious(
-      this.temperature_gen[2],
-      0.8,
-      30,
-      -40,
-      60
-    );
+    this.temperature_gen[2] = AppComponent.getNumByPrevious(this.temperature_gen[2], 0.8, 30, -40, 60);
     // Равномерно растущий и убывающий графики
-    this.temperature_gen[3] = AppComponent.getNumByPrevious(
-      this.temperature_gen[3],
-      0.3,
-      5,
-      -40,
-      60
-    );
-    this.temperature_gen[4] = AppComponent.getNumByPrevious(
-      this.temperature_gen[4],
-      0.3,
-      5,
-      -40,
-      60
-    );
+    this.temperature_gen[3] = AppComponent.getNumByPrevious(this.temperature_gen[3], 0.3, 5, -40, 60);
+    this.temperature_gen[4] = AppComponent.getNumByPrevious(this.temperature_gen[4], 0.3, 5, -40, 60);
 
     for (let i = 0; i < this.time_temp0.length; i++) {
       this.time_temp0[i].series.push({
@@ -343,21 +300,9 @@ export class AppComponent implements OnInit {
     }
 
     if (this.iter < 6)
-      this.ACDC_gen = AppComponent.getNumByPrevious(
-        this.ACDC_gen,
-        0.7,
-        10,
-        15,
-        40
-      );
+      this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);
     else
-      this.ACDC_gen = AppComponent.getNumByPrevious(
-        this.ACDC_gen,
-        0.7,
-        10,
-        15,
-        25
-      );
+      this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
     this.addTimePoint(this.ACDC, {
       value: `${this.ACDC_gen}`,
       name: new Date(timestamp),
@@ -464,7 +409,7 @@ export class AppComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) {
     server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp);
-    this.nullify();
+    // this.nullify();
     // this.genGlobalCharts();
   }
   
@@ -476,7 +421,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
-    this.BoardLast.subscribe((resp)=> this.drawServerData(resp));//console.log(resp)
+    this.BoardLast.subscribe(resp => this.drawServerData(resp));
     // Запрос -- ТЕСТ -- конец
     this.initForm();
     this.breakpointObserver
@@ -495,7 +440,7 @@ export class AppComponent implements OnInit {
   drawServerData(data: board) {	
     // this.server.getDataQuery().then((data) => {	
       // Десереализация -- начало	
-      console.groupCollapsed('data from JSON')	
+      let newACDC = data.current_ma;	
       let dataArray: data[] = data.data;	
       let voltages: number[] = [];
       let contactor: boolean = data.contactor0_closed;	
@@ -504,7 +449,7 @@ export class AppComponent implements OnInit {
       let balancingOverride: boolean = data.balancer_override;	
       
       let boardsTemp: number[] = [];	
-      let timestamp = data.timestamp;	
+      let timestamp: number = data.timestamp;	
       
       for(let i = 0; i < dataArray.length; i++){	
         // Берём 30 вольтажей
@@ -514,32 +459,24 @@ export class AppComponent implements OnInit {
         boardsTemp.push(dataArray[i].board_temperature);	
       }	
 
+      // console.groupCollapsed('data from JSON')
 
-      console.log('dataArray >> ', dataArray);	
-      console.log('voltages :>> ', voltages);	
+      // console.log('dataArray >> ', dataArray);	
+      // console.log('voltages :>> ', voltages);	
+      // console.log('newACDC >> ', newACDC);	
 
-      console.log('contactor >> ', contactor);	
-      console.log('balancing >> ', balancing);	
-      console.log('contactorOverride >> ', contactorOverride);	
-      console.log('balancingOverride >> ', balancingOverride);	
-      console.log('boardsTemp >> ', boardsTemp);	
-      console.log('timestamp >> ', timestamp);	
-      console.groupEnd()	
+      // console.log('contactor >> ', contactor);	
+      // console.log('balancing >> ', balancing);	
+      // console.log('contactorOverride >> ', contactorOverride);	
+      // console.log('balancingOverride >> ', balancingOverride);	
+      // console.log('timestamp >> ', timestamp);	
+      // console.groupEnd()	
       // Десереализация -- конец	
-
+      this.nullify();
+      // this.genData(timestamp*1000);
       this.multi = [];	
       this.single = [];	
       let total_voltage_value = 0;	
-      // let lastDataset;	
-      // try {	
-      //   let lastObj = data[this.currentBattery]; //data.length - 1];	
-      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
-      // } catch (error) {	
-      //   let lastObj = data[data.length - 1];	
-      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
-      // }	
-
-      // console.groupCollapsed('data from server -- app.component');	
       // Графикс c 30 батареями и total_voltage	
       for (let j = 0; j < voltages.length; j += 2) {	
         const battery1 = voltages[j]; // 1 батарейка	
@@ -560,7 +497,6 @@ export class AppComponent implements OnInit {
         total_voltage_value += battery1 + battery2;
       }
 
-
       //------------------График с зарядом батареи
       this.single.push({//Значение
         name: 'Заряд батареи',
@@ -572,92 +508,37 @@ export class AppComponent implements OnInit {
         ],
       ];
 
-      // for(let i = 0, l = voltages.length; i < l; i++){	
-      //   let battery1: number = 0	
-      //     , battery2: number = 0;	
-      //   for(let j = i; j < voltages[i].length / 2; j++){	
-      //     j % 2 == 0 ? 	
-      //       battery2 = voltages[i][j]: 	
-      //       battery1 = voltages[i][j];	
+      //------------------Контактор и балансировка
+      this.addTimePoint(this.contactor, {
+        value: contactor ? '1' : '0',
+        name: new Date(timestamp*1000),
+      });
+      this.addTimePoint(this.balance, {
+        value: balancing ? '1' : '0',
+        name: new Date(timestamp*1000),
+      });
+      this.colorChange.domain = ['#ff0000'];
 
-      //     // this.multi.push({	
-      //     //   name: iter,	
+      //------------------Сила тока
+      this.addTimePoint(this.ACDC, {
+        value: `${newACDC}`,
+        name: new Date(timestamp*1000),
+      });
+      
+      this.colorChange_ACDC.domain = [];
+      this.colorChange_ACDC.domain.push([
+        ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
+        [Math.floor((newACDC - 15) / 5)],
+      ]);
+      console.log('boardsTemp >> ', boardsTemp);	
 
-      //     // })	
-
-      //   }	
-      // }	
-
-
-        // this.multi.push({	
-        //   name: j / 2 + 1,	
-        //   series: [	
-        //     {	
-        //       name: 'Battery1',	
-        //       value: battery1.value - 1.75,	
-        //     },	
-        //     {	
-        //       name: 'Battery2',	
-        //       value: battery2.value - 1.75,	
-        //     },	
-        //   ],	
-        // });	
-    //     total_voltage_value += battery1.value + battery2.value;	
-    //   }	
-    //   console.groupCollapsed('data from server -- app.component');	
-    //   // Графикс c 30 батареями и total_voltage	
-    //   for (let j = 0; j < lastDataset.voltages.length; j += 2) {	
-    //     const battery1 = lastDataset.voltages[j]; // 1 батарейка	
-    //     const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка	
-    //     this.multi.push({	
-    //       name: j / 2 + 1,	
-    //       series: [	
-    //         {	
-    //           name: 'Battery1',	
-    //           value: battery1.value - 1.75,	
-    //         },	
-    //         {	
-    //           name: 'Battery2',	
-    //           value: battery2.value - 1.75,	
-    //         },	
-    //       ],	
-    //     });	
-    //     total_voltage_value += battery1.value + battery2.value;	
-    //   }	
-    //   this.single.push({	
-    //     name: 'Заряд батареи',	
-    //     value:	
-    //       (total_voltage_value / (1.05 * lastDataset.voltages.length)) * 100,	
-    //   });	
-
-    //   // Line charts	
-    //   for (let i = 0; i < data.length; i++) {	
-    //     const element = data[i]; // 1 по Х	
-    //     //console.log(element);	
-    //     for (let j = 0; j < element.data.length; j++) {	
-    //       const dataset = element.data[j];	
-    //       //console.log('dataset :>> ', dataset);	
-    //       // temp0 = dataset.temperatures[0].value;	
-    //       //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));	
-    //       //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");	
-    //       if (dataset.total_amp.value > 100) continue;	
-
-    //       this.addTimePoint(this.ACDC, {	
-    //         value: dataset.total_amp.value.toFixed(2),	
-    //         name: new Date(element.timestamp),	
-    //       });	
-    //       this.addTimePoint(this.contractor, {	
-    //         value: dataset.contractor ? '1' : '0',	
-    //         name: new Date(element.timestamp),	
-    //       });	
-    //     }	
-    //     this.addTimePoint(this.time_temp0, {	
-    //       value: '' + element.data[0].temperatures[this.currentBattery].value,	
-    //       name: new Date(element.timestamp),	
-    //     });	
-    //   }	
-    //   console.groupEnd();	
-    // });	
+      //------------------Температуры
+      for (let i = 0; i < boardsTemp.length; i++) {
+        this.time_temp0[i].series.push({
+          value: `${Math.floor(boardsTemp[i] * 100) / 100}`,
+          name: new Date(timestamp*1000),
+        });
+      }
   }
 
   getArrY(min: number, max: number, dist: number) {
