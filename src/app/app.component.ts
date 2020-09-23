@@ -106,7 +106,6 @@ export class AppComponent implements OnInit {
 
 
   nullify() {
-    // this.colorChange_Temperature.domain = [];
     this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
@@ -448,11 +447,11 @@ export class AppComponent implements OnInit {
     // setInterval(() => { this.request(); } , 1000)
   }
   Now:Date;
+  isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
-      this.Now = new Date( data.timestamp*1000)
-      console.log('object :>> ', this.Now) ;
+      this.Now = new Date(data.timestamp*1000);
       let newACDC = data.current_ma;
       let dataArray: data[] = data.data;
       let voltages: number[] = [];
@@ -485,7 +484,10 @@ export class AppComponent implements OnInit {
       // console.log('timestamp >> ', timestamp);
       // console.groupEnd()
       // Десереализация -- конец
-      this.nullify();
+      if (this.isFirst) {
+        this.nullify();
+        this.isFirst = false;
+      }
       // this.genData(timestamp*1000);
       this.multi = [];
       this.single = [];
@@ -538,6 +540,9 @@ export class AppComponent implements OnInit {
         name: new Date(timestamp*1000),
       });
 
+      console.log(+this.ACDC[0].series[this.ACDC[0].series.length - 1].name, this.ACDC[0].series.length, this.ACDC[0].series[this.ACDC[0].series.length - 1].value, newACDC) ;
+
+
       this.colorChange_ACDC.domain = [];
       this.colorChange_ACDC.domain.push([
         ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
@@ -551,6 +556,41 @@ export class AppComponent implements OnInit {
           name: new Date(timestamp*1000),
         });
       }
+
+      // Добавление значений
+      let buff; 
+      buff = this.ACDC[0].series;      
+      this.ACDC = [{
+        name: 'Сила тока',
+        series: [...buff],
+      }];
+    
+      buff = [
+        this.time_temp0[0].series, 
+        this.time_temp0[1].series, 
+        this.time_temp0[2].series
+      ] 
+      this.time_temp0 = [{
+        name: 'Температура 1',
+        series: [...buff[0]],
+      }, {
+        name: 'Температура 2',
+        series: [...buff[1]],
+      }, {
+        name: 'Температура 3',
+        series: [...buff[2]],
+      }
+      ];
+      buff = this.balance[0].series;      
+      this.balance = [{
+        name: 'Балансировка',
+        series: [...buff],
+      }];
+      buff = this.contactor[0].series;      
+      this.contactor = [{
+        name: 'Контактор',
+        series: [...buff],
+    }];
   }
 
   getArrY(min: number, max: number, dist: number) {
