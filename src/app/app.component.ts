@@ -492,7 +492,10 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  drawServerData(data: board) {	
+
+  contactorOverride: boolean
+  balancingOverride: boolean
+  drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {	
       // Десереализация -- начало	
       console.groupCollapsed('data from JSON')	
@@ -500,8 +503,8 @@ export class AppComponent implements OnInit {
       let voltages: number[] = [];
       let contactor: boolean = data.contactor0_closed;	
       let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение	
-      let contactorOverride: boolean = data.contactor_override;	
-      let balancingOverride: boolean = data.balancer_override;	
+      this.contactorOverride = data.contactor_override;	
+      this.balancingOverride = data.balancer_override;	
       
       let boardsTemp: number[] = [];	
       let timestamp = data.timestamp;	
@@ -520,8 +523,8 @@ export class AppComponent implements OnInit {
 
       console.log('contactor >> ', contactor);	
       console.log('balancing >> ', balancing);	
-      console.log('contactorOverride >> ', contactorOverride);	
-      console.log('balancingOverride >> ', balancingOverride);	
+      console.log('contactorOverride >> ', this.contactorOverride);	
+      console.log('balancingOverride >> ', this.balancingOverride);	
       console.log('boardsTemp >> ', boardsTemp);	
       console.log('timestamp >> ', timestamp);	
       console.groupEnd()	
@@ -529,9 +532,9 @@ export class AppComponent implements OnInit {
 
       this.multi = [];	
       this.single = [];	
-      let total_voltage_value = 0;	
+      let total_voltage_value = 0;
       // let lastDataset;	
-      // try {	
+      // try {
       //   let lastObj = data[this.currentBattery]; //data.length - 1];	
       //   lastDataset = lastObj.data[lastObj.data.length - 1];	
       // } catch (error) {	

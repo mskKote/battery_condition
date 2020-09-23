@@ -51,6 +51,10 @@
 	color: white;
 	font-weight: bold;
 }
+.indicator.unactive, #toggle_contactor.unactive{
+	pointer-events: none;
+	opacity: .4;
+}
 .turnAutoOn {
 	background-color: red;
 }
