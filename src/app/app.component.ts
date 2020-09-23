@@ -1,9 +1,9 @@
-import { ServerService, totals, board,data} from './server.service';
+import { ServerService, board } from './server.service';
 import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -19,18 +19,15 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  loginForm: FormGroup;
-
+  
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactor: boolean = false;
   balancing: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
-  TryAuth($event){
-    console.log('object :>> ', $event);
-  }
+  
+  //---------------------------------------------------Переключение тоглеров
   turnMode(e: any) {
     e.preventDefault()
 
@@ -100,48 +97,47 @@ export class AppComponent implements OnInit {
 
   nullify() {
     // this.colorChange_Temperature.domain = [];
-    this.time_temp0 = [
-      {
+    this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 2',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 3',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 4',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 5',
         series: [],
       },
     ];
-    this.ACDC = [
-      {
+    this.ACDC = [{
         name: 'Сила тока',
         series: [],
       },
     ];
-    this.balance = [
-      {
+    this.balance = [{
         name: 'Балансировка',
         series: [],
       },
     ];
-    this.contractor = [
-      {
+    this.contractor = [{
         name: 'Контактор',
         series: [],
       },
     ];
     this.multi = [];
     this.single = [];
+  }
+
+  ChangeTemp(temp) {
+    return temp + '°C';
+  }
+  ChangeAmper(amper) {
+    return amper + 'A';
   }
 
   // Главный график
@@ -160,6 +156,7 @@ export class AppComponent implements OnInit {
   roundDomains: boolean = true;
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
+
   yAxisTickFormattingMulti(val: any) {
     return val + 1.75 + 'V';
   }
@@ -172,12 +169,13 @@ export class AppComponent implements OnInit {
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    if (val == '0') {
-      return 'Выкл';
-    }
-    if (val == '1') {
-      return 'Вкл';
-    }
+    return val == '0' ? 'Выкл' : 'Вкл';
+    // if (val == '0') {
+    //   return 'Выкл';
+    // }
+    // if (val == '1') {
+    //   return 'Вкл';
+    // }
   }
   showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
@@ -188,7 +186,6 @@ export class AppComponent implements OnInit {
   timeline: boolean = true;
   colorChange = { domain: [] };
   colorChange_Total = { domain: [] };
-  // colorChange_Temperature = { domain: [] };
   colorChange_ACDC = { domain: [] };
   colorScheme = {
     domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
@@ -271,7 +268,6 @@ export class AppComponent implements OnInit {
   tooltipText = 'Баттарея №';
 
   genData(timestamp: number) {
-    // Генерит и рисует данные
 
     // Закидываем значения на график
     this.addTimePoint(this.contractor, {
@@ -423,14 +419,19 @@ export class AppComponent implements OnInit {
       this.genData(end - ((end - start) / amount) * i);
     }
   }
-
-  //---------------------------------------------------
-
+  
   addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
     chart = buff;
   }
+  //---------------------------------------------------Аутентификация
+
+  loginForm: FormGroup;
+  TryAuth($event){
+    console.log('object :>> ', $event);
+  }
+
   initForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required,
@@ -454,18 +455,22 @@ export class AppComponent implements OnInit {
       this.IsWrong = true;
     }
   }
+
+  //---------------------------------------------------Старт
   constructor(private fb: FormBuilder,
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp)
+    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp);
     this.nullify();
-    this.genGlobalCharts();
+    // this.genGlobalCharts();
   }
+  
   BoardLast:Observable<board>;
   isTabletScreen;
   isSmallScreen;
   isXSmallScreen;
+
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
@@ -485,12 +490,7 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  ChangeTemp(temp) {
-    return temp + '°C';
-  }
-  ChangeAmper(amper) {
-    return amper + 'A';
-  }
+
 
   getArrY(min: number, max: number, dist: number) {
     let arr = [];
