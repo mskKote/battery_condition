@@ -67,7 +67,7 @@ export class ServerService {
 
   async getDataQuery(
     start_time = '1000',
-    end_time = '4999999000',
+    end_time = '',
     data = '10'
   ) {
     const str: string =
