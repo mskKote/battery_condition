@@ -47,6 +47,7 @@
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
     [rowspan]="(isSmallScreen ? 13 : (isTabletScreen ? 6 : (isXSmallScreen ? 20 : 5)))">
+    <h2>{{Now}}</h2>
     <app-header (dateRangeEvent)="receiveDateRange($event)"></app-header></mat-grid-tile>
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4"
@@ -64,7 +65,7 @@
       [barPadding]="2"
       [animations]="false"
       [groupPadding]="4"
-      [results]=""
+      [results]="multi"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"

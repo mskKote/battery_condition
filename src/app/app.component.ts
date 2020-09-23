@@ -447,9 +447,12 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
+  Now:Date;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
+      this.Now = new Date( data.timestamp*1000)
+      console.log('object :>> ', this.Now) ;
       let newACDC = data.current_ma;
       let dataArray: data[] = data.data;
       let voltages: number[] = [];
