@@ -98,6 +98,13 @@ export class AppComponent implements OnInit {
     this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
+  batteryIndex: number;
+  receiveBatteryIndex(index: number){
+    this.batteryIndex = index;
+    console.log(this.batteryIndex);
+  }
+  
+
   nullify() {
     // this.colorChange_Temperature.domain = [];
     this.time_temp0 = [
@@ -203,12 +210,6 @@ export class AppComponent implements OnInit {
   multi: any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
-
-  currentBattery: number = 0;
-  changeBattery(target) {
-    this.nullify();
-    this.currentBattery = target;
-  }
 
   //---------------------------------------------------Раздел генерации значений
   static randomDate(start: Date, end: Date): Date {
