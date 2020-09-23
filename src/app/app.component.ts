@@ -4,6 +4,7 @@ import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Timestamp } from 'rxjs';
+import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -90,10 +91,10 @@ export class AppComponent implements OnInit {
   dateRange: any;
   receiveDateRange(event: any) {
     this.dateRange = event;
-    let timeStart=  +this.dateRange['start'];
-    this.server.getDataQuery(`${timeStart}`,"","60")
-    this.nullify();
-    this.iter = 0;
+    // let timeStart=  +this.dateRange['start'];
+
+    // this.nullify();
+    // this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
@@ -478,7 +479,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
-    this.BoardLast.subscribe((resp)=> this.drawServerData(resp));//console.log(resp)
+    const source = interval(1000);
+    const subscribe = source.subscribe(val =>{
+
+      this.BoardLast.subscribe((resp)=> this.drawServerData(resp));}
+
+
+    );
+   //console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
     this.breakpointObserver
