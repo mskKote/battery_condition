@@ -80,6 +80,13 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  @Output() sendBatteryIndexEvent = new EventEmitter<any>();
+
+  sendBatteryIndex(index:number) {
+    this.sendBatteryIndexEvent.emit(index);
+  }
+
+
   elClicked: any;
   clickFilter(e: any) {
     if (this.elClicked) {
@@ -109,4 +116,6 @@ export class HeaderComponent implements OnInit {
     new Date().getTime() - 60000 * 10 * 6 * 24 * 7, // 1 неделя
     new Date().getTime() - 60000 * 10 * 6 * 24 * 7 * 4, // 1 месяц
   ];
+
+  batteryIndex = [1,2,3];
 }

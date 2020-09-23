@@ -1,12 +1,49 @@
 <mat-form-field>
-  <mat-label>За последние...</mat-label>
+  <mat-label>Батарея №</mat-label>
   <mat-select>
-    <mat-option  value="1 минута">
-    <button  (click)="clickFilter($event); sendDateRange(timeRange[0]);" [value]="timeRange[0]" type="button" class="btn btn-link" value="1 минута">
 
-     1 минута
+
+    <mat-option *ngFor="let num of [1, 2, 3]" [value]="num">
+      <button (click)="clickFilter($event);sendBatteryIndex(batteryIndex[num]);" type="button" class="btn btn-link" [value]="num">
+      Батарея №{{num}}
+      </button>
+    </mat-option>
+
+  <!-- <mat-option  value="1">
+    <button (click)="clickFilter($event);sendBatteryIndex(batteryIndex[0]);" type="button" class="btn btn-link" value="1">
+    Батарея №1
     </button>
   </mat-option>
+  <mat-option  value="2">
+    <button (click)="clickFilter($event); sendBatteryIndex(batteryIndex[1]);" type="button" class="btn btn-link" value="2">
+    Батарея №2
+    </button>
+  </mat-option>
+  <mat-option  value="3">
+    <button (click)="clickFilter($event); sendBatteryIndex(batteryIndex[2]);" type="button" class="btn btn-link" value="3">
+    Батарея №3
+    </button>
+  </mat-option> -->
+  </mat-select>
+</mat-form-field>
+
+<br />
+
+<mat-form-field>
+  <mat-label>За последние...</mat-label>
+  <mat-select>
+
+    <mat-option *ngFor="let time of ['1 минута', '10 минут', '1 час', '1 день', '1 неделя', '1 месяц']; let i = index" [value]="time">
+      <button  (click)="clickFilter($event); sendDateRange(timeRange[i]);" [value]="timeRange[i]" type="button" class="btn btn-link" [value]="time">
+        {{time}}
+      </button>
+    </mat-option>
+
+    <!-- <mat-option  value="1 минута">
+      <button  (click)="clickFilter($event); sendDateRange(timeRange[0]);" [value]="timeRange[0]" type="button" class="btn btn-link" value="1 минута">
+      1 минута
+      </button>
+    </mat-option>
   <mat-option  value="10 минут">
     <button (click)="clickFilter($event); sendDateRange(timeRange[1]);" [value]="timeRange[1]" type="button" class="btn btn-link" value="10 минут">
      10 минут
@@ -32,7 +69,9 @@
     <button (click)="clickFilter($event); sendDateRange(timeRange[5]);" [value]="timeRange[5]" type="button" class="btn btn-link" value="1 месяц">
      1 месяц
     </button>
-  </mat-option>
+  </mat-option> -->
+
+
     <!-- <button type="button" class="btn btn-link" value="1 час">
       <option (click)="clickFilter($event); sendDateRange(timeRange[2]);" [value]="timeRange[2]"> 1 час</option>
     </button>
@@ -68,6 +107,8 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
+
 <br>
+
 <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
 <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>

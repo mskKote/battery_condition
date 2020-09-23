@@ -2,47 +2,48 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
 ///MODELS
-export class board {
+export interface board {
   balancer_override: boolean;
-  balancing_enable: boolean;
+  // balancing_enable: boolean;
   balancing_enabled: boolean;
-  board_id: string;
-  chg_present: boolean;
+  // board_id: string;
+  // chg_present: boolean;
   contactor0_closed: boolean;
-  contactor1_closed: boolean;
-  contactor_close: boolean;
+  // contactor1_closed: boolean;
+  // contactor_close: boolean;
   contactor_override: boolean;
-  created_at: string;
+  // created_at: string;
   current_ma: number;
   data: data[];
   timestamp: Timestamp<number>;
-  v_bat_mv: number;
+  // v_bat_mv: number;
 }
-export class data {
+export interface data {
   balancing_enabled: boolean;
-  bms_id: number;
+  // bms_id: number;
   board_temperature: number;
   created_at: string;
-  temperatures: number[];
-  timestamp: Timestamp<number>;
+  voltages: number[]
+  // temperatures: number[];
+  // timestamp: Timestamp<number>;
 }
-export class totals {
-  data: total[];
-  timestamp: number;
-}
-export class total {
-  total_voltage: val[];
-  total_amp: val;
-  temperatures: val[];
-  voltages: val[];
-  contractor: boolean;
-  created_at: Date;
-  timestamp: Timestamp<number>;
-}
-export class val {
-  index: number;
-  value: number;
-}
+// export class totals {
+//   data: total[];
+//   timestamp: number;
+// }
+// export class total {
+//   total_voltage: val[];
+//   total_amp: val;
+//   temperatures: val[];
+//   voltages: val[];
+//   contractor: boolean;
+//   created_at: Date;
+//   timestamp: Timestamp<number>;
+// }
+// export class val {
+//   index: number;
+//   value: number;
+// }
 ///ENDMODELS
 
 @Injectable({
@@ -50,7 +51,7 @@ export class val {
 })
 export class ServerService {
   static HOST = 'http://80.89.235.39';
-  public datas: totals[];
+  // public datas: totals[];
   public IsAuthored;
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);

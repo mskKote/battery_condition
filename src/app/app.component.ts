@@ -1,9 +1,9 @@
-import { ServerService, totals, board,data} from './server.service';
+import { ServerService, board, data } from './server.service';
 import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -19,18 +19,15 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  loginForm: FormGroup;
-
+  
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactor: boolean = false;
   balancing: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
-  TryAuth($event){
-    console.log('object :>> ', $event);
-  }
+  
+  //---------------------------------------------------Переключение тоглеров
   turnMode(e: any) {
     e.preventDefault()
 
@@ -95,53 +92,59 @@ export class AppComponent implements OnInit {
     this.dateRange = event;
     this.nullify();
     this.iter = 0;
-    this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
+    // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
+
+  batteryIndex: number;
+  receiveBatteryIndex(index: number){
+    this.batteryIndex = index;
+    console.log(this.batteryIndex);
+  }
+  
 
   nullify() {
     // this.colorChange_Temperature.domain = [];
-    this.time_temp0 = [
-      {
+    this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 2',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 3',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 4',
         series: [],
-      },
-      {
+      }, {
         name: 'Температура 5',
         series: [],
       },
     ];
-    this.ACDC = [
-      {
+    this.ACDC = [{
         name: 'Сила тока',
         series: [],
       },
     ];
-    this.balance = [
-      {
+    this.balance = [{
         name: 'Балансировка',
         series: [],
       },
     ];
-    this.contractor = [
-      {
+    this.contractor = [{
         name: 'Контактор',
         series: [],
       },
     ];
     this.multi = [];
     this.single = [];
+  }
+
+  ChangeTemp(temp) {
+    return temp + '°C';
+  }
+  ChangeAmper(amper) {
+    return amper + 'A';
   }
 
   // Главный график
@@ -160,6 +163,7 @@ export class AppComponent implements OnInit {
   roundDomains: boolean = true;
   noBarWhenZero: boolean = true;
   rotateXAxisTicks: boolean = false;
+
   yAxisTickFormattingMulti(val: any) {
     return val + 1.75 + 'V';
   }
@@ -172,12 +176,13 @@ export class AppComponent implements OnInit {
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    if (val == '0') {
-      return 'Выкл';
-    }
-    if (val == '1') {
-      return 'Вкл';
-    }
+    return val == '0' ? 'Выкл' : 'Вкл';
+    // if (val == '0') {
+    //   return 'Выкл';
+    // }
+    // if (val == '1') {
+    //   return 'Вкл';
+    // }
   }
   showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
@@ -188,10 +193,10 @@ export class AppComponent implements OnInit {
   timeline: boolean = true;
   colorChange = { domain: [] };
   colorChange_Total = { domain: [] };
-  // colorChange_Temperature = { domain: [] };
   colorChange_ACDC = { domain: [] };
   colorScheme = {
     domain: ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'],
+    // domain: ['#ff615e', '#ffc13b', '#e0e356', '#c1ff38', '#61ff61'], // Более тусклая гамма
   };
   schemeType: string = 'linear';
   timeframe: string = 'Время'; // Нужно изменять мс/cек/мин/час/день/неделя/месяц
@@ -203,12 +208,6 @@ export class AppComponent implements OnInit {
   multi: any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
-
-  currentBattery: number = 0;
-  changeBattery(target) {
-    this.nullify();
-    this.currentBattery = target;
-  }
 
   //---------------------------------------------------Раздел генерации значений
   static randomDate(start: Date, end: Date): Date {
@@ -271,7 +270,6 @@ export class AppComponent implements OnInit {
   tooltipText = 'Баттарея №';
 
   genData(timestamp: number) {
-    // Генерит и рисует данные
 
     // Закидываем значения на график
     this.addTimePoint(this.contractor, {
@@ -423,14 +421,19 @@ export class AppComponent implements OnInit {
       this.genData(end - ((end - start) / amount) * i);
     }
   }
-
-  //---------------------------------------------------
-
+  
   addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
     chart = buff;
   }
+  //---------------------------------------------------Аутентификация
+
+  loginForm: FormGroup;
+  TryAuth($event){
+    console.log('object :>> ', $event);
+  }
+
   initForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required,
@@ -454,22 +457,26 @@ export class AppComponent implements OnInit {
       this.IsWrong = true;
     }
   }
+
+  //---------------------------------------------------Старт
   constructor(private fb: FormBuilder,
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp)
+    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp);
     this.nullify();
-    this.genGlobalCharts();
+    // this.genGlobalCharts();
   }
+  
   BoardLast:Observable<board>;
   isTabletScreen;
   isSmallScreen;
   isXSmallScreen;
+
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
-    this.BoardLast.subscribe((resp)=>console.log(resp))
+    this.BoardLast.subscribe((resp)=> this.drawServerData(resp));//console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
     this.breakpointObserver
@@ -485,11 +492,172 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  ChangeTemp(temp) {
-    return temp + '°C';
-  }
-  ChangeAmper(amper) {
-    return amper + 'A';
+  drawServerData(data: board) {	
+    // this.server.getDataQuery().then((data) => {	
+      // Десереализация -- начало	
+      console.groupCollapsed('data from JSON')	
+      let dataArray: data[] = data.data;	
+      let voltages: number[] = [];
+      let contactor: boolean = data.contactor0_closed;	
+      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение	
+      let contactorOverride: boolean = data.contactor_override;	
+      let balancingOverride: boolean = data.balancer_override;	
+      
+      let boardsTemp: number[] = [];	
+      let timestamp = data.timestamp;	
+      
+      for(let i = 0; i < dataArray.length; i++){	
+        // Берём 30 вольтажей
+        for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
+          voltages.push(dataArray[i].voltages[j]);	
+        // Берём температру
+        boardsTemp.push(dataArray[i].board_temperature);	
+      }	
+
+
+      console.log('dataArray >> ', dataArray);	
+      console.log('voltages :>> ', voltages);	
+
+      console.log('contactor >> ', contactor);	
+      console.log('balancing >> ', balancing);	
+      console.log('contactorOverride >> ', contactorOverride);	
+      console.log('balancingOverride >> ', balancingOverride);	
+      console.log('boardsTemp >> ', boardsTemp);	
+      console.log('timestamp >> ', timestamp);	
+      console.groupEnd()	
+      // Десереализация -- конец	
+
+      this.multi = [];	
+      this.single = [];	
+      let total_voltage_value = 0;	
+      // let lastDataset;	
+      // try {	
+      //   let lastObj = data[this.currentBattery]; //data.length - 1];	
+      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
+      // } catch (error) {	
+      //   let lastObj = data[data.length - 1];	
+      //   lastDataset = lastObj.data[lastObj.data.length - 1];	
+      // }	
+
+      // console.groupCollapsed('data from server -- app.component');	
+      // Графикс c 30 батареями и total_voltage	
+      for (let j = 0; j < voltages.length; j += 2) {	
+        const battery1 = voltages[j]; // 1 батарейка	
+        const battery2 = voltages[j + 1]; // 2 батарейка	
+
+        this.multi.push({	
+          name: j / 2 + 1,	
+          series: [{	
+              name: 'first',	
+              value: battery1 - 1.75,	
+              number: j + 1	
+            }, {	
+              name: 'second',	
+              value: battery2 - 1.75,	
+              number: j + 2	
+            }]	
+        });	
+        total_voltage_value += battery1 + battery2;
+      }
+
+
+      //------------------График с зарядом батареи
+      this.single.push({//Значение
+        name: 'Заряд батареи',
+        value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
+      });
+      this.colorChange_Total.domain = [// Цвет графика
+        ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
+          Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
+        ],
+      ];
+
+      // for(let i = 0, l = voltages.length; i < l; i++){	
+      //   let battery1: number = 0	
+      //     , battery2: number = 0;	
+      //   for(let j = i; j < voltages[i].length / 2; j++){	
+      //     j % 2 == 0 ? 	
+      //       battery2 = voltages[i][j]: 	
+      //       battery1 = voltages[i][j];	
+
+      //     // this.multi.push({	
+      //     //   name: iter,	
+
+      //     // })	
+
+      //   }	
+      // }	
+
+
+        // this.multi.push({	
+        //   name: j / 2 + 1,	
+        //   series: [	
+        //     {	
+        //       name: 'Battery1',	
+        //       value: battery1.value - 1.75,	
+        //     },	
+        //     {	
+        //       name: 'Battery2',	
+        //       value: battery2.value - 1.75,	
+        //     },	
+        //   ],	
+        // });	
+    //     total_voltage_value += battery1.value + battery2.value;	
+    //   }	
+    //   console.groupCollapsed('data from server -- app.component');	
+    //   // Графикс c 30 батареями и total_voltage	
+    //   for (let j = 0; j < lastDataset.voltages.length; j += 2) {	
+    //     const battery1 = lastDataset.voltages[j]; // 1 батарейка	
+    //     const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка	
+    //     this.multi.push({	
+    //       name: j / 2 + 1,	
+    //       series: [	
+    //         {	
+    //           name: 'Battery1',	
+    //           value: battery1.value - 1.75,	
+    //         },	
+    //         {	
+    //           name: 'Battery2',	
+    //           value: battery2.value - 1.75,	
+    //         },	
+    //       ],	
+    //     });	
+    //     total_voltage_value += battery1.value + battery2.value;	
+    //   }	
+    //   this.single.push({	
+    //     name: 'Заряд батареи',	
+    //     value:	
+    //       (total_voltage_value / (1.05 * lastDataset.voltages.length)) * 100,	
+    //   });	
+
+    //   // Line charts	
+    //   for (let i = 0; i < data.length; i++) {	
+    //     const element = data[i]; // 1 по Х	
+    //     //console.log(element);	
+    //     for (let j = 0; j < element.data.length; j++) {	
+    //       const dataset = element.data[j];	
+    //       //console.log('dataset :>> ', dataset);	
+    //       // temp0 = dataset.temperatures[0].value;	
+    //       //console.log('Ampere :>> ', (dataset.total_amp.value).toFixed(2));	
+    //       //console.log('contractor :>> ', dataset.contractor ? "Вкл" : "Выкл");	
+    //       if (dataset.total_amp.value > 100) continue;	
+
+    //       this.addTimePoint(this.ACDC, {	
+    //         value: dataset.total_amp.value.toFixed(2),	
+    //         name: new Date(element.timestamp),	
+    //       });	
+    //       this.addTimePoint(this.contractor, {	
+    //         value: dataset.contractor ? '1' : '0',	
+    //         name: new Date(element.timestamp),	
+    //       });	
+    //     }	
+    //     this.addTimePoint(this.time_temp0, {	
+    //       value: '' + element.data[0].temperatures[this.currentBattery].value,	
+    //       name: new Date(element.timestamp),	
+    //     });	
+    //   }	
+    //   console.groupEnd();	
+    // });	
   }
 
   getArrY(min: number, max: number, dist: number) {
