@@ -67,7 +67,7 @@ export class ServerService {
 
   async getDataQuery(
     start_time = '1000',
-    end_time = '4999999000',
+    end_time = '',
     data = '10'
   ) {
     const str: string =
@@ -79,11 +79,6 @@ export class ServerService {
       end_time +
       '&data=' +
       data;
-    let response = await fetch(str, {
-      keepalive: false,
-    });
-    let res = await response.json();
-    // let res: totals[] = await response.json();
-    return res;
+      return this.http.get<board>(str);
   }
 }

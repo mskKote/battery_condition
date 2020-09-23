@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Timestamp } from 'rxjs';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -19,14 +19,14 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  
+
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
   balancingTog: boolean = false;
   turnModeContactor: boolean = false;
   turnModeBalancing: boolean = false;
-  
+
   //---------------------------------------------------Переключение тоглеров
   turnMode(e: any) {
     e.preventDefault()
@@ -90,6 +90,8 @@ export class AppComponent implements OnInit {
   dateRange: any;
   receiveDateRange(event: any) {
     this.dateRange = event;
+    let timeStart=  +this.dateRange['start'];
+    this.server.getDataQuery(`${timeStart}`,"","60")
     this.nullify();
     this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
@@ -100,7 +102,7 @@ export class AppComponent implements OnInit {
     this.batteryIndex = index;
     console.log(this.batteryIndex);
   }
-  
+
 
   nullify() {
     // this.colorChange_Temperature.domain = [];
@@ -366,7 +368,7 @@ export class AppComponent implements OnInit {
       this.genData(end - ((end - start) / amount) * i);
     }
   }
-  
+
   addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
@@ -412,7 +414,7 @@ export class AppComponent implements OnInit {
     // this.nullify();
     // this.genGlobalCharts();
   }
-  
+
   BoardLast:Observable<board>;
   isTabletScreen;
   isSmallScreen;
@@ -454,7 +456,7 @@ export class AppComponent implements OnInit {
       for(let i = 0; i < dataArray.length; i++){	
         // Берём 30 вольтажей
         for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
-          voltages.push(dataArray[i].voltages[j]);	
+          voltages.push(dataArray[i].voltages[j]);
         // Берём температру
         boardsTemp.push(dataArray[i].board_temperature);	
       }	
