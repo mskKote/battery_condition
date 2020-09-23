@@ -4,6 +4,7 @@ import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Timestamp } from 'rxjs';
+import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
 
@@ -90,10 +91,10 @@ export class AppComponent implements OnInit {
   dateRange: any;
   receiveDateRange(event: any) {
     this.dateRange = event;
-    let timeStart=  +this.dateRange['start'];
-    this.server.getDataQuery(`${timeStart}`,"","60")
-    this.nullify();
-    this.iter = 0;
+    // let timeStart=  +this.dateRange['start'];
+
+    // this.nullify();
+    // this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
@@ -423,7 +424,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
-    this.BoardLast.subscribe(resp => this.drawServerData(resp));
+    const source = interval(1000);
+    const subscribe = source.subscribe(val =>{
+
+      this.BoardLast.subscribe((resp)=> this.drawServerData(resp));}
+
+
+    );
+   //console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
     this.breakpointObserver
@@ -439,63 +447,66 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  drawServerData(data: board) {	
-    // this.server.getDataQuery().then((data) => {	
-      // Десереализация -- начало	
-      let newACDC = data.current_ma;	
-      let dataArray: data[] = data.data;	
+  Now:Date;
+  drawServerData(data: board) {
+    // this.server.getDataQuery().then((data) => {
+      // Десереализация -- начало
+      this.Now = new Date( data.timestamp*1000)
+      console.log('object :>> ', this.Now) ;
+      let newACDC = data.current_ma;
+      let dataArray: data[] = data.data;
       let voltages: number[] = [];
-      let contactor: boolean = data.contactor0_closed;	
-      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение	
-      let contactorOverride: boolean = data.contactor_override;	
-      let balancingOverride: boolean = data.balancer_override;	
-      
-      let boardsTemp: number[] = [];	
-      let timestamp: number = data.timestamp;	
-      
-      for(let i = 0; i < dataArray.length; i++){	
+      let contactor: boolean = data.contactor0_closed;
+      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
+      let contactorOverride: boolean = data.contactor_override;
+      let balancingOverride: boolean = data.balancer_override;
+
+      let boardsTemp: number[] = [];
+      let timestamp: number = data.timestamp;
+
+      for(let i = 0; i < dataArray.length; i++){
         // Берём 30 вольтажей
         for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
           voltages.push(dataArray[i].voltages[j]);
         // Берём температру
-        boardsTemp.push(dataArray[i].board_temperature);	
-      }	
+        boardsTemp.push(dataArray[i].board_temperature);
+      }
 
       // console.groupCollapsed('data from JSON')
 
-      // console.log('dataArray >> ', dataArray);	
-      // console.log('voltages :>> ', voltages);	
-      // console.log('newACDC >> ', newACDC);	
+      // console.log('dataArray >> ', dataArray);
+      // console.log('voltages :>> ', voltages);
+      // console.log('newACDC >> ', newACDC);
 
-      // console.log('contactor >> ', contactor);	
-      // console.log('balancing >> ', balancing);	
-      // console.log('contactorOverride >> ', contactorOverride);	
-      // console.log('balancingOverride >> ', balancingOverride);	
-      // console.log('timestamp >> ', timestamp);	
-      // console.groupEnd()	
-      // Десереализация -- конец	
+      // console.log('contactor >> ', contactor);
+      // console.log('balancing >> ', balancing);
+      // console.log('contactorOverride >> ', contactorOverride);
+      // console.log('balancingOverride >> ', balancingOverride);
+      // console.log('timestamp >> ', timestamp);
+      // console.groupEnd()
+      // Десереализация -- конец
       this.nullify();
       // this.genData(timestamp*1000);
-      this.multi = [];	
-      this.single = [];	
-      let total_voltage_value = 0;	
-      // Графикс c 30 батареями и total_voltage	
-      for (let j = 0; j < voltages.length; j += 2) {	
-        const battery1 = voltages[j]; // 1 батарейка	
-        const battery2 = voltages[j + 1]; // 2 батарейка	
+      this.multi = [];
+      this.single = [];
+      let total_voltage_value = 0;
+      // Графикс c 30 батареями и total_voltage
+      for (let j = 0; j < voltages.length; j += 2) {
+        const battery1 = voltages[j]; // 1 батарейка
+        const battery2 = voltages[j + 1]; // 2 батарейка
 
-        this.multi.push({	
-          name: j / 2 + 1,	
-          series: [{	
-              name: 'first',	
-              value: battery1 - 1.75,	
-              number: j + 1	
-            }, {	
-              name: 'second',	
-              value: battery2 - 1.75,	
-              number: j + 2	
-            }]	
-        });	
+        this.multi.push({
+          name: j / 2 + 1,
+          series: [{
+              name: 'first',
+              value: battery1 - 1.75,
+              number: j + 1
+            }, {
+              name: 'second',
+              value: battery2 - 1.75,
+              number: j + 2
+            }]
+        });
         total_voltage_value += battery1 + battery2;
       }
 
@@ -526,13 +537,12 @@ export class AppComponent implements OnInit {
         value: `${newACDC}`,
         name: new Date(timestamp*1000),
       });
-      
+
       this.colorChange_ACDC.domain = [];
       this.colorChange_ACDC.domain.push([
         ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
         [Math.floor((newACDC - 15) / 5)],
       ]);
-      // console.log('boardsTemp >> ', boardsTemp);	
 
       //------------------Температуры
       for (let i = 0; i < boardsTemp.length; i++) {
