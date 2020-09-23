@@ -446,12 +446,12 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  Now:Date;
+  Now:string;
   isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
-      this.Now = new Date(data.timestamp*1000);
+      this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
       let newACDC = data.current_ma;
       let dataArray: data[] = data.data;
       let voltages: number[] = [];
@@ -539,9 +539,6 @@ export class AppComponent implements OnInit {
         value: `${newACDC}`,
         name: new Date(timestamp*1000),
       });
-
-      console.log(+this.ACDC[0].series[this.ACDC[0].series.length - 1].name, this.ACDC[0].series.length, this.ACDC[0].series[this.ACDC[0].series.length - 1].value, newACDC) ;
-
 
       this.colorChange_ACDC.domain = [];
       this.colorChange_ACDC.domain.push([
