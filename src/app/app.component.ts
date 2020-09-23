@@ -526,7 +526,7 @@ export class AppComponent implements OnInit {
       console.groupEnd()	
       // Десереализация -- конец	
 
-      // this.multi = [];	
+      this.multi = [];	
       // this.single = [];	
       // let total_voltage_value = 0;	
       // let lastDataset;	
@@ -540,25 +540,24 @@ export class AppComponent implements OnInit {
 
       // console.groupCollapsed('data from server -- app.component');	
       // Графикс c 30 батареями и total_voltage	
-      // for (let j = 0; j < lastDataset.voltages.length; j += 2) {	
-      //   const battery1 = lastDataset.voltages[j]; // 1 батарейка	
-      //   const battery2 = lastDataset.voltages[j + 1]; // 2 батарейка	
+      for (let j = 0; j < voltages.length; j += 2) {	
+        const battery1 = voltages[j]; // 1 батарейка	
+        const battery2 = voltages[j + 1]; // 2 батарейка	
 
-      //   this.multi.push({	
-      //     name: j + 1,	
-      //     series: [	
-      //       {	
-      //         name: 'first',	
-      //         value: battery1 - 1.75,	
-      //         number: j * 2,	
-      //       },	
-      //       {	
-      //         name: 'second',	
-      //         value: battery2 - 1.75,	
-      //         number: j * 2 + 1,	
-      //       },	
-      //     ],	
-      //   });	
+        this.multi.push({	
+          name: j/2 + 1,	
+          series: [{	
+              name: 'first',	
+              value: battery1 - 1.75,	
+              number: j + 1,	
+            }, {	
+              name: 'second',	
+              value: battery2 - 1.75,	
+              number: j + 2,	
+            },	
+          ],	
+        });	
+      }
 
       // for(let i = 0, l = voltages.length; i < l; i++){	
       //   let battery1: number = 0	
@@ -575,8 +574,8 @@ export class AppComponent implements OnInit {
 
       //   }	
       // }	
-      console.log();	
 
+      
         // this.multi.push({	
         //   name: j / 2 + 1,	
         //   series: [	
