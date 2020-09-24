@@ -146,8 +146,8 @@
       </mat-grid-tile >
       <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
         <!-- Тогглер -->
-        <button id='modeContactor' class="indicator" title="Вкл./Выкл. автоматический режим"
-          (click)="turnMode($event)">Р</button>
+        <button id='modeContactor' class="indicator turnAutoOn" title="Вкл./Выкл. автоматический режим"
+          (click)="turnMode($event)">А</button>
         <button id="toggle_contactor"
           (click)="onSwitch($event)">
           <i></i>
@@ -189,7 +189,7 @@
       </mat-grid-tile>
       <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
         <!-- Тогглер -->
-        <button id='modeBalancing' class="indicator" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)">Р</button>
+        <button id='modeBalancing' class="indicator turnAutoOn" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)">А</button>
         <button id="toggle_balancing"
           (click)="onSwitch($event)">
           <i></i>

@@ -32,8 +32,8 @@ export class AppComponent implements OnInit {
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
   balancingTog: boolean = false;
-  turnModeContactor: boolean = false;
-  turnModeBalancing: boolean = false;
+  turnModeContactor: boolean = true;
+  turnModeBalancing: boolean = true;
 
   //---------------------------------------------------Переключение тоглеров
 
@@ -86,6 +86,7 @@ export class AppComponent implements OnInit {
     }
   }
   confirmed(e: any) {
+
     if (e.target.classList.contains('contactor')) {
       if (this.contactorTog) this.clickedBtnToggle.classList.remove('clicked');
       else this.clickedBtnToggle.classList.add('clicked');
