@@ -20,8 +20,12 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  subRealTime
+  // isRealTime: boolean
   receiveStatusRealTime(e: any){
-    this.intrvalSub();
+    // this.isRealTime = true;
+    this.subRealTime.unsubscribe();
+    this.subRealTime = this.intrvalSub();
   }
 
   clickedBtnToggle: HTMLElement;
@@ -92,23 +96,25 @@ export class AppComponent implements OnInit {
   }
 
   dateRange: any;
-  isRecFirst: boolean = true
+  isReceiveFirst: boolean = true
   receiveDateRange(event: any) {
-    if(!this.isRecFirst){
+    if(!this.isReceiveFirst){
       this.realTimeSubscription.unsubscribe();
+      // this.isRealTime = false;
+
+      this.isFirst = true;
+
+      this.dateRange = event;
+      // let timeStart=  +this.dateRange['start'];
+      console.log(`${+this.dateRange['end']}`, `${+this.dateRange['start']}`, this.dateRange['end'] - this.dateRange['start']);
+      this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
+        this.nullify();
+        for (const dataset of resp) {
+          this.drawServerData(dataset);
+        }
+      }));
     }
-    this.isRecFirst = false;
-
-    this.isFirst = true;
-
-    this.dateRange = event;
-    // let timeStart=  +this.dateRange['start'];
-    console.log(`${+this.dateRange['end']}`, `${+this.dateRange['start']}`, this.dateRange['end'] - this.dateRange['start']);
-    this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
-      for (const dataset of resp) {
-        this.drawServerData(dataset);
-      }
-    }));
+    this.isReceiveFirst = false;
     // this.nullify();
     // this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
@@ -468,25 +474,25 @@ export class AppComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
-      this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
-      let newACDC = data.current_ma/1000;
-      let dataArray: data[] = data.data;
-      let voltages: number[] = [];
-      let contactor: boolean = data.contactor0_closed;
-      let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
-      let contactorOverride: boolean = data.contactor_override;
-      let balancingOverride: boolean = data.balancer_override;
+    this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
+    let newACDC = data.current_ma/1000;
+    let dataArray: data[] = data.data;
+    let voltages: number[] = [];
+    let contactor: boolean = data.contactor0_closed;
+    let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
+    let contactorOverride: boolean = data.contactor_override;
+    let balancingOverride: boolean = data.balancer_override;
 
-      let boardsTemp: number[] = [];
-      let timestamp: number = data.timestamp;
+    let boardsTemp: number[] = [];
+    let timestamp: number = data.timestamp;
 
-      for(let i = 0; i < dataArray.length; i++){
-        // Берём 30 вольтажей
-        for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
-          voltages.push(dataArray[i].voltages[j]);
-        // Берём температру
-        boardsTemp.push(dataArray[i].board_temperature);
-      }
+    for(let i = 0; i < dataArray.length; i++){
+      // Берём 30 вольтажей
+      for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
+        voltages.push(dataArray[i].voltages[j]);
+      // Берём температру
+      boardsTemp.push(dataArray[i].board_temperature);
+    }
 
       // console.groupCollapsed('data from JSON')
 
