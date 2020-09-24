@@ -12,13 +12,13 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 export class TimepickerStartComponent implements OnInit {
   @Output() timeStartEvent = new EventEmitter<any>();
 
-  time = { hour: 13, minute: 0, test: false};
+  time = { hour: 13, minute: 0};
   spinners = false;
 
   ngOnInit() {
-    this.time.test = true;
+    // this.time.test = true;
     this.timeStartEvent.emit(this.time);
-    this.time.test = false;
+    // this.time.test = false;
   }
 
   getTimeStart() {
@@ -39,13 +39,13 @@ export class TimepickerStartComponent implements OnInit {
 export class TimepickerEndComponent {
   @Output() timeEndEvent = new EventEmitter<any>();
 
-  time = { hour: 14, minute: 0, test: false};
+  time = { hour: 14, minute: 0};
   spinners = false;
 
   ngOnInit() {
-    this.time.test = true;
+    // this.time.test = true;
     this.timeEndEvent.emit(this.time);
-    this.time.test = false;
+    // this.time.test = false;
   }
 
   getTimeEnd() {
