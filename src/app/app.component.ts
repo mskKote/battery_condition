@@ -335,7 +335,7 @@ export class AppComponent implements OnInit {
       const battery2 = AppComponent.randomNumber(1.75, 2.8);
 
       this.multi.push({
-        name: j + 1,
+        name: (j + 1),
         series: [
           {
             name: 'first',
@@ -495,7 +495,7 @@ export class AppComponent implements OnInit {
         const battery2 = voltages[j + 1]; // 2 батарейка
 
         this.multi.push({
-          name: j / 2 + 1,
+          name: j  + 2,
           series: [{
               name: 'first',
               value: battery1 - 1.75,
