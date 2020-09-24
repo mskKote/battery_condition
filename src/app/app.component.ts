@@ -97,9 +97,13 @@ export class AppComponent implements OnInit {
 
   dateRange: any;
   receiveDateRange(event: any) {
-    this.source.unsubscribe();
-    this.isRealTime = false;
-    this.realTimeSubscription.unsubscribe();
+    // this.source.unsubscribe();
+    console.log(event)
+    if(event.timeStart.test){
+      this.isRealTime = false;
+      // event.timeStart.test
+      this.realTimeSubscription.unsubscribe();
+    }
 
     this.isFirst = true;
 
