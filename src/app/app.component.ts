@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Timestamp } from 'rxjs';
+import { Observable, Subscription, Timestamp } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
@@ -90,9 +90,18 @@ export class AppComponent implements OnInit {
 
   dateRange: any;
   receiveDateRange(event: any) {
+    this.realTimeSubscription.unsubscribe();
+
+    this.isFirst = true;
+
     this.dateRange = event;
     // let timeStart=  +this.dateRange['start'];
-
+    console.log(`${+this.dateRange['end']}`, `${+this.dateRange['start']}`, this.dateRange['end'] - this.dateRange['start']);
+    this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
+      for (const dataset of resp) {
+        this.drawServerData(dataset);
+      }
+    }));
     // this.nullify();
     // this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
@@ -420,13 +429,15 @@ export class AppComponent implements OnInit {
   isSmallScreen;
   isXSmallScreen;
 
+  realTimeSubscription: Subscription;
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
     const source = interval(1000);
-    const subscribe = source.subscribe(val =>{
-
-      this.BoardLast.subscribe((resp)=> {this.drawServerData(resp);})});
+    this.realTimeSubscription = source.subscribe(val => {
+      this.BoardLast.subscribe((resp)=> this.drawServerData(resp))
+    });
+    
    //console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
