@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   turnModeBalancing: boolean = false;
 
   //---------------------------------------------------Переключение тоглеров
+
   turnMode(e: any) {
     e.preventDefault()
 
@@ -40,8 +41,10 @@ export class AppComponent implements OnInit {
     if (this.clickedBtnTurn.id == 'modeContactor') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
+        this.clickedBtnTurn.innerHTML = 'Р';
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
+        this.clickedBtnTurn.innerHTML = 'А';
       }
       this.turnModeContactor = !this.turnModeContactor;
     }
@@ -49,8 +52,10 @@ export class AppComponent implements OnInit {
     if(this.clickedBtnTurn.id == 'modeBalancing') {
       if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
         this.clickedBtnTurn.classList.remove('turnAutoOn');
+        this.clickedBtnTurn.innerHTML = 'Р';
       } else {
         this.clickedBtnTurn.classList.add('turnAutoOn');
+        this.clickedBtnTurn.innerHTML = 'А';
       }
       this.turnModeBalancing = !this.turnModeBalancing;
     }
