@@ -8,6 +8,12 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() activateRealTimeEvent = new EventEmitter<boolean>()
+  toRealTime(e: any) {
+    e.preventDefault();
+    this.activateRealTimeEvent.emit(true);
+  }
+
   timeStart: any
   timeEnd: any
   receiveTimeStart(e: any) {
@@ -53,7 +59,8 @@ export class HeaderComponent implements OnInit {
                                             ${this.timeEnd ? this.timeEnd.minute : '00'}:00`)),
         // start: new Date(tRange.start),
         // end: new Date(tRange.end),
-        timeStart: this.timeStart
+        timeStart: this.timeStart,
+        timeEnd: this.timeEnd
       }
     } else if(typeof tRange == 'number') {
       obj = {

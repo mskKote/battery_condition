@@ -45,11 +45,12 @@
 	width: 50px;
 	height: 20px;
 	border-radius: 20px;
-}
-.indicator::before{
-	content: 'A';
 	color: white;
 	font-weight: bold;
+}
+.indicator.unactive, #toggle_contactor.unactive{
+	pointer-events: none;
+	opacity: .6;
 }
 .turnAutoOn {
 	background-color: red;
