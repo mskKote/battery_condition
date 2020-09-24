@@ -81,7 +81,6 @@ export class HeaderComponent implements OnInit {
   }
 
   @Output() sendBatteryIndexEvent = new EventEmitter<any>();
-
   sendBatteryIndex(index:number) {
     this.sendBatteryIndexEvent.emit(index);
   }
@@ -104,6 +103,9 @@ export class HeaderComponent implements OnInit {
   dateRange = new DateRange();
   maxDate = new Date();
   date: Date;
+
+  @Input() lastTime;
+
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
   }

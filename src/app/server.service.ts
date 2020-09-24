@@ -66,14 +66,11 @@ export class ServerService {
   // запрос на сервер с помощью фетча
   getLastBmsQuery():Observable<board> {
 
-  //output: 0,1,2,3,4,5....
-  const str: string = 'http://80.89.235.39/api/bms/last';
-  this.boardLast = this.http.get<board>(str);
- 
+    //output: 0,1,2,3,4,5....
+    const str: string = 'http://80.89.235.39/api/bms/last';
+    this.boardLast = this.http.get<board>(str);
 
-return this.boardLast
-
-
+    return this.boardLast
   }
 
 
@@ -81,7 +78,7 @@ return this.boardLast
     start_time = '1000',
     end_time = '',
     data = '10'
-  ) {
+  ):Promise<Observable<board[]>> {
     const str: string =
       ServerService.HOST +
       '/api/bms?' +
@@ -91,6 +88,6 @@ return this.boardLast
       end_time +
       '&data=' +
       data;
-      return this.http.get<board>(str);
+      return this.http.get<board[]>(str);
   }
 }

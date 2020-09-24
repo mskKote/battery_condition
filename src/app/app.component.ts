@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Timestamp } from 'rxjs';
+import { Observable, Subscription, Timestamp } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
@@ -90,9 +90,18 @@ export class AppComponent implements OnInit {
 
   dateRange: any;
   receiveDateRange(event: any) {
+    this.realTimeSubscription.unsubscribe();
+
+    this.isFirst = true;
+
     this.dateRange = event;
     // let timeStart=  +this.dateRange['start'];
-
+    console.log(`${+this.dateRange['end']}`, `${+this.dateRange['start']}`, this.dateRange['end'] - this.dateRange['start']);
+    this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
+      for (const dataset of resp) {
+        this.drawServerData(dataset);
+      }
+    }));
     // this.nullify();
     // this.iter = 0;
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
@@ -106,7 +115,6 @@ export class AppComponent implements OnInit {
 
 
   nullify() {
-    // this.colorChange_Temperature.domain = [];
     this.time_temp0 = [{
         name: 'Температура 1',
         series: [],
@@ -336,7 +344,7 @@ export class AppComponent implements OnInit {
       const battery2 = AppComponent.randomNumber(1.75, 2.8);
 
       this.multi.push({
-        name: j + 1,
+        name: (j + 1),
         series: [
           {
             name: 'first',
@@ -421,16 +429,15 @@ export class AppComponent implements OnInit {
   isSmallScreen;
   isXSmallScreen;
 
+  realTimeSubscription: Subscription;
   ngOnInit() {
     // Запрос -- ТЕСТ -- начало
     this.BoardLast = this.server.getLastBmsQuery();
     const source = interval(1000);
-    const subscribe = source.subscribe(val =>{
-
-      this.BoardLast.subscribe((resp)=> this.drawServerData(resp));}
-
-
-    );
+    this.realTimeSubscription = source.subscribe(val => {
+      this.BoardLast.subscribe((resp)=> this.drawServerData(resp))
+    });
+    
    //console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
@@ -447,13 +454,13 @@ export class AppComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  Now:Date;
+  Now:string;
+  isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
-      this.Now = new Date( data.timestamp*1000)
-      console.log('object :>> ', this.Now) ;
-      let newACDC = data.current_ma;
+      this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
+      let newACDC = data.current_ma/1000;
       let dataArray: data[] = data.data;
       let voltages: number[] = [];
       let contactor: boolean = data.contactor0_closed;
@@ -485,7 +492,10 @@ export class AppComponent implements OnInit {
       // console.log('timestamp >> ', timestamp);
       // console.groupEnd()
       // Десереализация -- конец
-      this.nullify();
+      if (this.isFirst) {
+        this.nullify();
+        this.isFirst = false;
+      }
       // this.genData(timestamp*1000);
       this.multi = [];
       this.single = [];
@@ -496,7 +506,7 @@ export class AppComponent implements OnInit {
         const battery2 = voltages[j + 1]; // 2 батарейка
 
         this.multi.push({
-          name: j / 2 + 1,
+          name: j  + 2,
           series: [{
               name: 'first',
               value: battery1 - 1.75,
@@ -543,7 +553,6 @@ export class AppComponent implements OnInit {
         ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
         [Math.floor((newACDC - 15) / 5)],
       ]);
-      console.log('boardsTemp >> ', boardsTemp);
 
       //------------------Температуры
       for (let i = 0; i < boardsTemp.length; i++) {
@@ -552,6 +561,41 @@ export class AppComponent implements OnInit {
           name: new Date(timestamp*1000),
         });
       }
+
+      // Добавление значений
+      let buff;
+      buff = this.ACDC[0].series;
+      this.ACDC = [{
+        name: 'Сила тока',
+        series: [...buff],
+      }];
+
+      buff = [
+        this.time_temp0[0].series,
+        this.time_temp0[1].series,
+        this.time_temp0[2].series
+      ]
+      this.time_temp0 = [{
+        name: 'Температура 1',
+        series: [...buff[0]],
+      }, {
+        name: 'Температура 2',
+        series: [...buff[1]],
+      }, {
+        name: 'Температура 3',
+        series: [...buff[2]],
+      }
+      ];
+      buff = this.balance[0].series;
+      this.balance = [{
+        name: 'Балансировка',
+        series: [...buff],
+      }];
+      buff = this.contactor[0].series;
+      this.contactor = [{
+        name: 'Контактор',
+        series: [...buff],
+    }];
   }
 
   getArrY(min: number, max: number, dist: number) {
