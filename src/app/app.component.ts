@@ -426,10 +426,7 @@ export class AppComponent implements OnInit {
     const source = interval(1000);
     const subscribe = source.subscribe(val =>{
 
-      this.BoardLast.subscribe((resp)=> this.drawServerData(resp));}
-
-
-    );
+      this.BoardLast.subscribe((resp)=> {this.drawServerData(resp);})});
    //console.log(resp)
     // Запрос -- ТЕСТ -- конец
     this.initForm();
@@ -452,7 +449,7 @@ export class AppComponent implements OnInit {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
       this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
-      let newACDC = data.current_ma;
+      let newACDC = data.current_ma/1000;
       let dataArray: data[] = data.data;
       let voltages: number[] = [];
       let contactor: boolean = data.contactor0_closed;
@@ -555,18 +552,18 @@ export class AppComponent implements OnInit {
       }
 
       // Добавление значений
-      let buff; 
-      buff = this.ACDC[0].series;      
+      let buff;
+      buff = this.ACDC[0].series;
       this.ACDC = [{
         name: 'Сила тока',
         series: [...buff],
       }];
-    
+
       buff = [
-        this.time_temp0[0].series, 
-        this.time_temp0[1].series, 
+        this.time_temp0[0].series,
+        this.time_temp0[1].series,
         this.time_temp0[2].series
-      ] 
+      ]
       this.time_temp0 = [{
         name: 'Температура 1',
         series: [...buff[0]],
@@ -578,12 +575,12 @@ export class AppComponent implements OnInit {
         series: [...buff[2]],
       }
       ];
-      buff = this.balance[0].series;      
+      buff = this.balance[0].series;
       this.balance = [{
         name: 'Балансировка',
         series: [...buff],
       }];
-      buff = this.contactor[0].series;      
+      buff = this.contactor[0].series;
       this.contactor = [{
         name: 'Контактор',
         series: [...buff],
