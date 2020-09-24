@@ -20,6 +20,13 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  isRealTime: boolean
+  receiveStatusRealTime(e: any){
+    if(!this.isRealTime){
+      this.intrvalSub();
+    }
+    this.isRealTime = e;
+  }
 
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
@@ -90,6 +97,8 @@ export class AppComponent implements OnInit {
 
   dateRange: any;
   receiveDateRange(event: any) {
+    this.source.unsubscribe();
+    this.isRealTime = false;
     this.realTimeSubscription.unsubscribe();
 
     this.isFirst = true;
@@ -430,13 +439,18 @@ export class AppComponent implements OnInit {
   isXSmallScreen;
 
   realTimeSubscription: Subscription;
-  ngOnInit() {
-    // Запрос -- ТЕСТ -- начало
+  source
+  intrvalSub(){
     this.BoardLast = this.server.getLastBmsQuery();
-    const source = interval(1000);
-    this.realTimeSubscription = source.subscribe(val => {
+    this.source = interval(1000);
+    this.realTimeSubscription = this.source.subscribe(val => {
       this.BoardLast.subscribe((resp)=> this.drawServerData(resp))
     });
+  }
+  ngOnInit() {
+    // Запрос -- ТЕСТ -- начало
+    this.intrvalSub();
+    this.isRealTime = true;
     
    //console.log(resp)
     // Запрос -- ТЕСТ -- конец

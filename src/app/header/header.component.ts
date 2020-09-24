@@ -8,9 +8,10 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() activateRealTimeEvent = new EventEmitter<boolean>()
   toRealTime(e: any) {
     e.preventDefault();
-    
+    this.activateRealTimeEvent.emit(true);
   }
 
   timeStart: any
