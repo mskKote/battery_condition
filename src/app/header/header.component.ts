@@ -8,6 +8,11 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  toRealTime(e: any) {
+    e.preventDefault();
+    
+  }
+
   timeStart: any
   timeEnd: any
   receiveTimeStart(e: any) {

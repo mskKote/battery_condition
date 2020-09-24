@@ -43,194 +43,195 @@
   </div>
 </div>
 <div *ngIf="!IsAuthored">
-<mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
-  <mat-grid-tile class="item"
-    [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
-    [rowspan]="(isSmallScreen ? 13 : (isTabletScreen ? 6 : (isXSmallScreen ? 20 : 5)))">
-    <!-- <h1 style='color:hsl(0, 0%, 50%)0, 0%, 50%)' >{{'Последние данные за '+Now}}</h1> -->
-    <app-header [lastTime]="Now" (dateRangeEvent)="receiveDateRange($event)"></app-header>
-  </mat-grid-tile>
-    <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->
-  <mat-grid-tile class="item"
-    [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4"
-    [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?19:9">
-    <!-- пары батареек -->
-    <ngx-charts-bar-vertical-2d
-      [tooltipDisabled]="false"
-      [roundDomains]="true"
-      [yAxisTicks]="yAxisTicksArr"
-      [yAxisTickFormatting]="yAxisTickFormattingMulti"
-      [trimYAxisTicks]="false"
-      [scheme]="colorScheme"
-      [schemeType]="schemeType"
-      [noBarWhenZero]="noBarWhenZero"
-      [barPadding]="2"
-      [animations]="false"
-      [groupPadding]="4"
-      [results]="multi"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [showGridLines]="showGridLines"
-      [roundDomains]="roundDomains"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [rotateXAxisTicks]="rotateXAxisTicks">
-      <ng-template #tooltipTemplate let-model="model">
-        <p style="margin-top: 1rem;">{{tooltipText + model.number}}</p>
-        <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
-      </ng-template>
-    </ngx-charts-bar-vertical-2d>
-  </mat-grid-tile>
-    <mat-grid-tile
-      [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}"
-      class="item"
-      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2"
-      [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?24:5">
-      <ngx-charts-gauge style="width: 100%; height: 80%;"
-        [valueFormatting]="yAxisTickFormattingMulti2"
-        [axisTickFormatting]="batteryCharge"
-        [scheme]="colorChange_Total"
-        [startAngle]="-120"
-        [angleSpan]="240"
-        [results]="single"
+  <mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
+    <mat-grid-tile class="item"
+      [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
+      [rowspan]="(isSmallScreen ? 13 : (isTabletScreen ? 6 : (isXSmallScreen ? 20 : 5)))">
+      <!-- <h1 style='color:hsl(0, 0%, 50%)0, 0%, 50%)' >{{'Последние данные за '+Now}}</h1> -->
+      <app-header [lastTime]="Now" (dateRangeEvent)="receiveDateRange($event)"></app-header>
+    </mat-grid-tile>
+      <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->
+    <mat-grid-tile class="item"
+      [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4"
+      [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?19:9">
+      <!-- пары батареек -->
+      <ngx-charts-bar-vertical-2d
+        [tooltipDisabled]="false"
+        [roundDomains]="true"
+        [yAxisTicks]="yAxisTicksArr"
+        [yAxisTickFormatting]="yAxisTickFormattingMulti"
+        [trimYAxisTicks]="false"
+        [scheme]="colorScheme"
+        [schemeType]="schemeType"
+        [noBarWhenZero]="noBarWhenZero"
+        [barPadding]="2"
+        [animations]="false"
+        [groupPadding]="4"
+        [results]="multi"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [showGridLines]="showGridLines"
+        [roundDomains]="roundDomains"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [rotateXAxisTicks]="rotateXAxisTicks">
+        <ng-template #tooltipTemplate let-model="model">
+          <p style="margin-top: 1rem;">{{tooltipText + model.number}}</p>
+          <pre style="color:whitesmoke">{{(model.value + 1.75).toFixed(2)}} V</pre>
+        </ng-template>
+      </ngx-charts-bar-vertical-2d>
+    </mat-grid-tile>
+      <mat-grid-tile
+        [ngStyle]="{'box-shadow':'0px 4px 0px 0px '+ colorChange_Total.domain.toString()}"
+        class="item"
+        [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2"
+        [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?24:5">
+        <ngx-charts-gauge style="width: 100%; height: 80%;"
+          [valueFormatting]="yAxisTickFormattingMulti2"
+          [axisTickFormatting]="batteryCharge"
+          [scheme]="colorChange_Total"
+          [startAngle]="-120"
+          [angleSpan]="240"
+          [results]="single"
 
-        [min]="0"
-        [max]="100"
-        [units]="'Заряд батареи'">
-      </ngx-charts-gauge>
-      </mat-grid-tile >
+          [min]="0"
+          [max]="100"
+          [units]="'Заряд батареи'">
+        </ngx-charts-gauge>
+        </mat-grid-tile >
 
-      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:7">
-        <ngx-charts-line-chart
-          [roundDomains]="true"
-          [yAxisTickFormatting]="ChangeTemp"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [yAxisLabel]="'Температура'"
-          [xAxisLabel]="'Температура'"
-          [animations]="false"
-          [timeline]="showTimeline"
-          [legend]="false"
-          [scheme]="{domain: ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']}"
-          [schemeType]="'linear'"
-          [gradient]="gradient"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [results]="time_temp0">
-        </ngx-charts-line-chart>
+        <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:7">
+          <ngx-charts-line-chart
+            [roundDomains]="true"
+            [yAxisTickFormatting]="ChangeTemp"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisLabel]="'Температура'"
+            [xAxisLabel]="'Температура'"
+            [animations]="false"
+            [timeline]="showTimeline"
+            [legend]="false"
+            [scheme]="{domain: ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020']}"
+            [schemeType]="'linear'"
+            [gradient]="gradient"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [results]="time_temp0">
+          </ngx-charts-line-chart>
+        </mat-grid-tile >
+        <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:7">
+          <ngx-charts-line-chart
+            [scheme]="colorChange_ACDC"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisLabel]="'Сила тока'"
+            [xAxisLabel]="'Сила тока'"
+            [legend]="false"
+            [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}"
+            [schemeType]="'linear'"
+            [gradient]="gradient"
+            [timeline]="showTimeline"
+            [animations]="false"
+            [roundDomains]="true"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [roundDomains]="true"
+            [animations]="false"
+            [yAxisTickFormatting]="ChangeAmper"
+            [results]="ACDC">
+          </ngx-charts-line-chart>
       </mat-grid-tile >
-      <mat-grid-tile  class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:7">
-        <ngx-charts-line-chart
-          [scheme]="colorChange_ACDC"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [yAxisLabel]="'Сила тока'"
-          [xAxisLabel]="'Сила тока'"
-          [legend]="false"
-          [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}"
-          [schemeType]="'linear'"
-          [gradient]="gradient"
-          [timeline]="showTimeline"
-          [animations]="false"
-          [roundDomains]="true"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [roundDomains]="true"
-          [animations]="false"
-          [yAxisTickFormatting]="ChangeAmper"
-          [results]="ACDC">
-        </ngx-charts-line-chart>
-    </mat-grid-tile >
-    <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
-      <!-- Тогглер -->
-      <button id='modeContactor' class="indicator" title="Вкл./Выкл. автоматический режим"
-        (click)="turnMode($event)"></button>
-      <button id="toggle_contactor"
-        (click)="onSwitch($event)">
-        <i></i>
-      </button>
-      <!-- Modal -->
-      <div class="modal fade" id="modal-contactor" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content">
-            <div class="modal-body">
-              <p>Вы уверены?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button"
-                class="btn btn-primary contactor"
-                data-dismiss="modal"
-                (click)="confirmed($event)">Да</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+      <mat-grid-tile  class="item" [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen? 6 : 2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
+        <!-- Тогглер -->
+        <button id='modeContactor' class="indicator" title="Вкл./Выкл. автоматический режим"
+          (click)="turnMode($event)"></button>
+        <button id="toggle_contactor"
+          (click)="onSwitch($event)">
+          <i></i>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-contactor" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <div class="modal-body">
+                <p>Вы уверены?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                  class="btn btn-primary contactor"
+                  data-dismiss="modal"
+                  (click)="confirmed($event)">Да</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <ngx-charts-line-chart
-        [yAxisTickFormatting]="yAxisTickFormattingLine"
-        [scheme]="colorChange"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="'Контактор'"
-        [yAxisLabel]="'Контактор'"
-        [timeline]="showTimeline"
-        [curve]="linearCurveStep"
-        [xAxis]="xAxis"
-        [yAxis]="yAxis"
-        [roundDomains]="false"
-        [showGridLines]="false"
-        [animations]="false"
-        [results]="contactor">
-      </ngx-charts-line-chart>
-    </mat-grid-tile>
-    <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
-      <!-- Тогглер -->
-      <button id='modeBalancing' class="indicator" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)"></button>
-      <button id="toggle_balancing"
-        (click)="onSwitch($event)">
-        <i></i>
-      </button>
-      <!-- Modal -->
-      <div class="modal fade" id="modal-balancing" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content">
-            <div class="modal-body">
-              <p>Вы уверены?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button"
-                class="btn btn-primary balancing"
-                data-dismiss="modal"
-                (click)="confirmed($event)">Да</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <ngx-charts-line-chart
+          [yAxisTickFormatting]="yAxisTickFormattingLine"
+          [scheme]="colorChange"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="'Контактор'"
+          [yAxisLabel]="'Контактор'"
+          [timeline]="showTimeline"
+          [curve]="linearCurveStep"
+          [xAxis]="xAxis"
+          [yAxis]="yAxis"
+          [roundDomains]="false"
+          [showGridLines]="false"
+          [animations]="false"
+          [results]="contactor">
+        </ngx-charts-line-chart>
+      </mat-grid-tile>
+      <mat-grid-tile class="item" [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2" [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?20:4" >
+        <!-- Тогглер -->
+        <button id='modeBalancing' class="indicator" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)"></button>
+        <button id="toggle_balancing"
+          (click)="onSwitch($event)">
+          <i></i>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-balancing" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <div class="modal-body">
+                <p>Вы уверены?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                  class="btn btn-primary balancing"
+                  data-dismiss="modal"
+                  (click)="confirmed($event)">Да</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <ngx-charts-line-chart
-        [yAxisTickFormatting]="yAxisTickFormattingLine"
-        [scheme]="colorChange"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="'Балансировка'"
-        [yAxisLabel]="'Балансировка'"
-        [timeline]="showTimeline"
-        [curve]="linearCurveStep"
-        [xAxis]="xAxis"
-        [yAxis]="yAxis"
-        [roundDomains]="false"
-        [showGridLines]="false"
-        [animations]="false"
-        [results]="balance">
-      </ngx-charts-line-chart>
-    </mat-grid-tile>
+        <ngx-charts-line-chart
+          [yAxisTickFormatting]="yAxisTickFormattingLine"
+          [scheme]="colorChange"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="'Балансировка'"
+          [yAxisLabel]="'Балансировка'"
+          [timeline]="showTimeline"
+          [curve]="linearCurveStep"
+          [xAxis]="xAxis"
+          [yAxis]="yAxis"
+          [roundDomains]="false"
+          [showGridLines]="false"
+          [animations]="false"
+          [results]="balance">
+        </ngx-charts-line-chart>
+      </mat-grid-tile>
 
-</mat-grid-list>
+  </mat-grid-list>
 
-<ng-template #tooltipTemplate>
-    This is the single point tooltip template
-</ng-template></div>
+  <ng-template #tooltipTemplate>
+      This is the single point tooltip template
+  </ng-template>
+</div>
