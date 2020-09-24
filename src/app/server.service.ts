@@ -1,6 +1,8 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
+import { interval } from 'rxjs/internal/observable/interval';
 ///MODELS
 export interface board {
   balancer_override: boolean;
@@ -15,7 +17,7 @@ export interface board {
   // created_at: string;
   current_ma: number;
   data: data[];
-  timestamp: Timestamp<number>;
+  timestamp: number;
   // v_bat_mv: number;
 }
 export interface data {
@@ -56,12 +58,22 @@ export class ServerService {
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
   }
+  boardLast:Observable<board>
+  voltagesNowAll:number[][];
+
   public static end: Date;
   public static start: Date;
   // запрос на сервер с помощью фетча
   getLastBmsQuery():Observable<board> {
-    const str: string = 'http://80.89.235.39/api/bms/last';
-    return this.http.get<board>(str);
+
+  //output: 0,1,2,3,4,5....
+  const str: string = 'http://80.89.235.39/api/bms/last';
+  this.boardLast = this.http.get<board>(str);
+ 
+
+return this.boardLast
+
+
   }
 
 

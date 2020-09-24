@@ -103,6 +103,9 @@ export class HeaderComponent implements OnInit {
   dateRange = new DateRange();
   maxDate = new Date();
   date: Date;
+
+  @Input() lastTime;
+
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate());
   }
