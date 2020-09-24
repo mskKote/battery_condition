@@ -50,6 +50,7 @@
     <h1 style='color:grey' >{{'Последние данные за '+Now}}</h1>
     <!-- <app-header [lastTime]="Now" (dateRangeEvent)="receiveDateRange($event)"></app-header> -->
   </mat-grid-tile>
+    <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->
   <mat-grid-tile class="item"
     [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:4"
     [rowspan]="isSmallScreen||isXSmallScreen || isTabletScreen?19:9">

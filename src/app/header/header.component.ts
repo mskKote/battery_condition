@@ -81,7 +81,6 @@ export class HeaderComponent implements OnInit {
   }
 
   @Output() sendBatteryIndexEvent = new EventEmitter<any>();
-
   sendBatteryIndex(index:number) {
     this.sendBatteryIndexEvent.emit(index);
   }
