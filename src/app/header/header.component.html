@@ -12,14 +12,14 @@
 <br />
 
 <mat-form-field>
-  <mat-label>За последние...</mat-label>
+  <mat-label >За последние...</mat-label>
   <mat-select>
 
     <mat-option *ngFor="let time of ['1 минута', '10 минут', '1 час', '1 день', '1 неделя', '1 месяц']; let i = index" [value]="time">
       <button  (click)="clickFilter($event); sendDateRange(timeRange[i]);" [value]="timeRange[i]" type="button" class="btn btn-link" [value]="time">
         {{time}}
       </button>
-    </mat-option> 
+    </mat-option>
 
   </mat-select>
 </mat-form-field>
@@ -42,8 +42,8 @@
     />
   </mat-date-range-input>
 
-  
-  
+
+
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
@@ -56,6 +56,9 @@
 <hr>
 
 <h2 style="color: gray; margin-top: 1rem;">
-  <button class="toRealTime" [ngClass]="{realTimeActive: realTimeWorks}" (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
-  <span *ngIf="realTimeWorks" style="white-space: pre-wrap;">Последнее изменение: {{lastTime}}</span>  
+  <div >
+  <button  class="toRealTime timepicker" [ngClass]="{realTimeActive: realTimeWorks}" (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
+  <span style="margin-left:auto;" *ngIf="realTimeWorks" >Последнее изменение:</span>
+  <span class="timepicker" *ngIf="realTimeWorks" > {{lastTime}}</span>
+</div>
 </h2>
