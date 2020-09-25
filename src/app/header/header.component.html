@@ -1,4 +1,4 @@
-<mat-form-field>
+<!-- <mat-form-field>
   <mat-label>Батарея №</mat-label>
   <mat-select>
     <mat-option *ngFor="let num of [1, 2, 3]" [value]="num">
@@ -9,7 +9,7 @@
   </mat-select>
 </mat-form-field>
 
-<br />
+<br /> -->
 
 <mat-form-field>
   <mat-label >За последние...</mat-label>
@@ -50,7 +50,7 @@
 
 <br>
 <!-- container - timepickers -->
-<div class="cont-tp"> 
+<div class="cont-tp">
   <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
   <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
 </div>
@@ -63,8 +63,8 @@
       <span style="margin-left:auto;" *ngIf="realTimeWorks" >Последнее изменение:</span>
       <span class="timepicker" *ngIf="realTimeWorks" > {{lastTime}}</span>
     </p>
-    <button class="toRealTime" 
-      [ngClass]="{realTimeActive: realTimeWorks}" 
+    <button class="toRealTime"
+      [ngClass]="{realTimeActive: realTimeWorks}"
       (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
   <!-- </div> -->
 <!-- </h2> -->
