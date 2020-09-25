@@ -9,8 +9,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
 
-  realTimeBtnText = "Real-time";
+  realTimeBtnText = "LIVE";
   realTimeWorks: boolean = true;
+  isFirstSendDate: boolean = true;
   clickedBtnRT: HTMLElement;
 
   @Output() activateRealTimeEvent = new EventEmitter<boolean>()
@@ -18,14 +19,17 @@ export class HeaderComponent implements OnInit {
     e.preventDefault();
 
     this.clickedBtnRT = e.target;
-    if (this.clickedBtnRT.classList.contains('realTimeActive')) {
-      this.realTimeWorks = false;
-      this.realTimeBtnText = "Включить real-time";
-    }
-    else { 
-      this.realTimeBtnText = "Real-time";
+    if(!this.realTimeWorks){
       this.realTimeWorks = true;
     }
+    // if (this.clickedBtnRT.classList.contains('realTimeActive')) {
+    //   this.realTimeWorks = false;
+    //   // this.realTimeBtnText = "Включить real-time";
+    // }
+    // else { 
+    //   // this.realTimeBtnText = "Real-time";
+    //   this.realTimeWorks = true;
+    // }
 
     this.activateRealTimeEvent.emit(true);
   }
@@ -62,8 +66,6 @@ export class HeaderComponent implements OnInit {
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange(tRange: any) {
-    // console.log('header.comp', );
-
     let obj = { };
     if(typeof tRange == 'object') {
       obj = {
@@ -73,8 +75,6 @@ export class HeaderComponent implements OnInit {
         end: new Date(tRange.end.toString()
                 .replace(/\d\d:\d\d:\d\d/, `${this.timeEnd ? this.timeEnd.hour   : '14'}:
                                             ${this.timeEnd ? this.timeEnd.minute : '00'}:00`)),
-        // start: new Date(tRange.start),
-        // end: new Date(tRange.end),
         timeStart: this.timeStart,
         timeEnd: this.timeEnd
       }
@@ -85,6 +85,8 @@ export class HeaderComponent implements OnInit {
         timeStart: this.timeStart
       }
     }
+    this.isFirstSendDate ? this.realTimeWorks = true : this.realTimeWorks = false;
+    this.isFirstSendDate = false;
     this.dateRangeEvent.emit(obj);
   }
   start: any;

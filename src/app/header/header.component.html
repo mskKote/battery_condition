@@ -49,16 +49,22 @@
 </mat-form-field>
 
 <br>
-
-<app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
-<app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
-
-<hr>
-
-<h2 style="color: gray; margin-top: 1rem;">
-  <div >
-  <button  class="toRealTime timepicker" [ngClass]="{realTimeActive: realTimeWorks}" (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
-  <span style="margin-left:auto;" *ngIf="realTimeWorks" >Последнее изменение:</span>
-  <span class="timepicker" *ngIf="realTimeWorks" > {{lastTime}}</span>
+<!-- container - timepickers -->
+<div class="cont-tp"> 
+  <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
+  <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
 </div>
-</h2>
+
+<!-- <hr> -->
+
+<!-- <h2 style="color: gray; margin-top: 1rem;"> -->
+  <!-- <div> -->
+    <p class="last-change">
+      <span style="margin-left:auto;" *ngIf="realTimeWorks" >Последнее изменение:</span>
+      <span class="timepicker" *ngIf="realTimeWorks" > {{lastTime}}</span>
+    </p>
+    <button class="toRealTime" 
+      [ngClass]="{realTimeActive: realTimeWorks}" 
+      (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
+  <!-- </div> -->
+<!-- </h2> -->

@@ -20,14 +20,8 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  subRealTime
-  // isRealTime: boolean
+  // subRealTime
   receiveStatusRealTime(e: any){
-    // this.isRealTime = true;
-    // if (this.subRealTime) {
-    // }
-    // this.subRealTime.unsubscribe();
-    // this.subRealTime = this.intrvalSub();
     this.realTimeSubscription.unsubscribe();
     this.intrvalSub();
   }

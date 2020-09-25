@@ -1,20 +1,22 @@
+.cont-tp{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+}
+p.last-change{
+    margin: 1rem 0;
+    padding: 0 .7rem;
+}
 .toRealTime{
     height: 35px;
-    margin-right: 1rem;
-    margin-left: 1rem;
+    margin-left: .7rem;
     color: white;
     font-weight: bold;
     border: none;
     border-radius: 7px;
     background: none;
-    background-color: #2D9DED;
+    background-color: #979797;
     outline: none;
-    box-shadow: 0px 3px 10px 0px lightgrey;
-    transition: .2s;
-}
-.toRealTime:hover{
-    box-shadow: 0px 5px 10px 0px rgb(185, 185, 185);
-    transform: scale(1.1) translate(0, -3px);
 }
 .realTimeActive {
     background-color: red;
@@ -27,16 +29,8 @@ mat-form-field{
 .mat-option{
   text-align: center;
 }
-// .timepicker{
-//     display: inline-block;
-//     margin: 0 auto;
-// }
 #end-time{
     margin-left: 1rem
-}
-.d-inline-block{
-  display: inline-block;
-  margin: 0 auto;
 }
 mat-option{
     padding: 0;
@@ -45,21 +39,9 @@ mat-option{
     }
 }
 
-.timepicker{
-    display: inline-block;
-    margin: 0 5rem .7rem 5rem;
-}
-
 @media (max-width: 500px){
     mat-form-field{
         width: 80%;
         margin: 0 10%;
-    }
-    .d-inline-block{
-      display: inline-block;
-      margin: 0 5rem .7rem 5rem;
-    }
-    #end-time{
-        margin-left: 5rem
     }
 }
