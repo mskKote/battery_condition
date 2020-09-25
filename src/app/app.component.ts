@@ -24,10 +24,12 @@ export class AppComponent implements OnInit {
   // isRealTime: boolean
   receiveStatusRealTime(e: any){
     // this.isRealTime = true;
-    if (this.subRealTime) {
-      this.subRealTime.unsubscribe();      
-    }
-    this.subRealTime = this.intrvalSub();
+    // if (this.subRealTime) {
+    // }
+    // this.subRealTime.unsubscribe();
+    // this.subRealTime = this.intrvalSub();
+    this.realTimeSubscription.unsubscribe();
+    this.intrvalSub();
   }
 
   clickedBtnToggle: HTMLElement;
