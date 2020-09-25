@@ -11,8 +11,6 @@
 
 <br />
 
-<button class="toRealTime" (click)="toRealTime($event)">RT</button>
-
 <mat-form-field>
   <mat-label>За последние...</mat-label>
   <mat-select>
@@ -56,4 +54,8 @@
 <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
 
 <hr>
-<h2 style="color: gray; margin-top: 1rem;">Последнее изменение: {{lastTime}}</h2>
+
+<h2 style="color: gray; margin-top: 1rem;">
+  <button class="toRealTime" [ngClass]="{realTimeActive: realTimeWorks}" (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
+  <span *ngIf="realTimeWorks" style="white-space: pre-wrap;">Последнее изменение: {{lastTime}}</span>  
+</h2>

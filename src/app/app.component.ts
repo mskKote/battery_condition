@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
   // isRealTime: boolean
   receiveStatusRealTime(e: any){
     // this.isRealTime = true;
-    this.subRealTime.unsubscribe();
+    if (this.subRealTime) {
+      this.subRealTime.unsubscribe();      
+    }
     this.subRealTime = this.intrvalSub();
   }
 
@@ -445,6 +447,8 @@ export class AppComponent implements OnInit {
 
   BoardLast:Observable<board>;
   isTabletScreen;
+  isLargeScreen;
+  isXLargeScreen;
   isSmallScreen;
   isXSmallScreen;
 
@@ -468,6 +472,12 @@ export class AppComponent implements OnInit {
     this.breakpointObserver
       .observe(Breakpoints.Medium)
       .subscribe((resp) => (this.isTabletScreen = resp.matches));
+    this.breakpointObserver
+      .observe(Breakpoints.Large)
+      .subscribe((resp) => (this.isLargeScreen = resp.matches));
+      this.breakpointObserver
+      .observe(Breakpoints.XLarge)
+      .subscribe((resp) => (this.isXLargeScreen = resp.matches));
     this.breakpointObserver
       .observe(Breakpoints.XSmall)
       .subscribe((resp) => (this.isXSmallScreen = resp.matches));

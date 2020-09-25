@@ -8,9 +8,25 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+
+  realTimeBtnText = "Real-time";
+  realTimeWorks: boolean = true;
+  clickedBtnRT: HTMLElement;
+
   @Output() activateRealTimeEvent = new EventEmitter<boolean>()
   toRealTime(e: any) {
     e.preventDefault();
+
+    this.clickedBtnRT = e.target;
+    if (this.clickedBtnRT.classList.contains('realTimeActive')) {
+      this.realTimeWorks = false;
+      this.realTimeBtnText = "Включить real-time";
+    }
+    else { 
+      this.realTimeBtnText = "Real-time";
+      this.realTimeWorks = true;
+    }
+
     this.activateRealTimeEvent.emit(true);
   }
 
