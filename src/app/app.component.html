@@ -46,7 +46,7 @@
   <mat-grid-list gutterSize='20px' cols="6" rowHeight="4:1">
     <mat-grid-tile class="item"
       [colspan]="isSmallScreen||isXSmallScreen || isTabletScreen?6:2"
-      [rowspan]="(isXLargeScreen? 7 : (isLargeScreen? 10 : (isSmallScreen ? 17 : (isTabletScreen ? 10 : (isXSmallScreen ? 36 : 10)))))">
+      [rowspan]="(isXLargeScreen? 7 : (isLargeScreen? 8 : (isSmallScreen ? 17 : (isTabletScreen ? 10 : (isXSmallScreen ? 31 : 10)))))">
       <!-- <h1 style='color:hsl(0, 0%, 50%)0, 0%, 50%)' >{{'Последние данные за '+Now}}</h1> -->
       <app-header (activateRealTimeEvent)="receiveStatusRealTime($event)" [lastTime]="Now" (dateRangeEvent)="receiveDateRange($event)"></app-header>
     </mat-grid-tile>
