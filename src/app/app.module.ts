@@ -16,8 +16,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSliderModule} from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TimepickerStartComponent, TimepickerEndComponent } from './header/timepicker/timepicker.component';
@@ -25,8 +28,10 @@ import { TimepickerStartComponent, TimepickerEndComponent } from './header/timep
   declarations: [AppComponent, HeaderComponent, TimepickerStartComponent, TimepickerEndComponent],
   imports: [
     MatSelectModule,
+    MatTabsModule,
     MatCardModule,
     MatIconModule,
+MatSliderModule,
     MatGridListModule,
     MatButtonToggleModule,
     MatNativeDateModule,

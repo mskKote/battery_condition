@@ -3,7 +3,36 @@
   box-shadow: -10px 10px 10px 0 lightgray;
   background-color: rgb(255, 255, 255);
 }
+:host ::ng-deep .mat-tab-body-wrapper {
+  margin-top: 1rem;
+  height: 100%;
 
+}
+
+:host ::ng-deep .mat-tab-body.mat-tab-body-active {
+  height: 100%
+
+}
+md-tab{
+  height: 100vh !important;
+  }
+  .mat-tab-group{
+    height: 100%;
+}
+.mat-tab-body-wrapper {
+    flex-grow: 1;
+}
+.component{ height: 100%; }
+.mat-tab-body {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.mat-tab-body-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
 #toggle_contactor, #toggle_balancing{
 	position: absolute;
 	bottom: 9px;
@@ -25,7 +54,7 @@
 		height: 20px;
 		border-radius: 7px;
 		background-color: #fff;
-		
+
 		transition: .2s;
 	}
 }
