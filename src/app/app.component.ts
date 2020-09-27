@@ -26,13 +26,13 @@ export class AppComponent implements OnInit {
     this.intrvalSub();
   }
 
-    formatLabel(value: number) {
-      if (value >= 1000) {
-        return Math.round(value / 1000) + 'k';
-      }
-
-      return value;
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
     }
+
+    return value;
+  }
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
@@ -117,12 +117,15 @@ export class AppComponent implements OnInit {
 
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
-      console.log(`${+this.dateRange['end']}`, `${+this.dateRange['start']}`, this.dateRange['end'] - this.dateRange['start']);
+      console.log(Math.floor(+this.dateRange['start'] / 1000), Math.floor(+this.dateRange['end'] / 1000))
+      console.log(`start: ${new Date(+this.dateRange['start'])}`, `end: ${new Date(+this.dateRange['end'])}`);
       this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
+        console.group();
         this.nullify();
         for (const dataset of resp) {
           this.drawServerData(dataset);
         }
+        console.groupEnd();
       }));
     }
     this.isReceiveFirst = false;
@@ -150,6 +153,14 @@ export class AppComponent implements OnInit {
         series: [],
       }
     ];
+    this.multi_ACDC = [];
+    for (let i = 0; i < 30; i++) {
+      this.multi_ACDC.push({
+        name: 'Сила тока ' + (i + 1),
+        series: [],
+      });
+    }
+
     this.ACDC = [{
         name: 'Сила тока',
         series: [],
@@ -196,6 +207,9 @@ export class AppComponent implements OnInit {
   yAxisTickFormattingMulti(val: any) {
     return val + 1.75 + 'V';
   }
+  yAxisTickFormattingMultiACDC(val: any) {
+    return val + 'V';
+  }
   yAxisTickFormattingMulti2(val: any) {
     return (52.5 + (84 - 52.5) * (val / 100)).toFixed(2) + 'V';
   }
@@ -234,6 +248,7 @@ export class AppComponent implements OnInit {
   balance: any[];
   contactor: any[];
   multi: any[] = [];
+  multi_ACDC: any[] = [];
   single: any[] = [];
   batteries: any[] = new Array(30);
 
@@ -512,7 +527,7 @@ export class AppComponent implements OnInit {
       // Берём температру
       boardsTemp.push(dataArray[i].board_temperature);
     }
-
+    console.log("Дата из запроса: ", new Date(data.timestamp*1000));
       // console.groupCollapsed('data from JSON')
 
       // console.log('dataArray >> ', dataArray);
@@ -551,6 +566,7 @@ export class AppComponent implements OnInit {
               number: j + 2
             }]
         });
+        
         total_voltage_value += battery1 + battery2;
       }
 
@@ -595,6 +611,13 @@ export class AppComponent implements OnInit {
           name: new Date(timestamp*1000),
         });
       }
+      //------------------Батареи
+      for (let i = 0; i < 30; i++) {
+        this.multi_ACDC[i].series.push({
+          value: `${Math.floor(voltages[i] * 100) / 100}`,
+          name: new Date(timestamp*1000),
+        });
+      }
 
       // Добавление значений
       let buff;
@@ -629,7 +652,19 @@ export class AppComponent implements OnInit {
       this.contactor = [{
         name: 'Контактор',
         series: [...buff],
-    }];
+      }];
+      ////////////////////////////////
+      buff = []; 
+      for (let i = 0; i < 30; i++) {
+        buff.push(this.multi_ACDC[i].series);
+      }
+      this.multi_ACDC = [];
+      for (let i = 0; i < 30; i++) {
+        this.multi_ACDC.push({
+          name: 'Батарея №' + (i + 1),
+          series: [...buff[i]],
+        });
+      }
   }
 
   getArrY(min: number, max: number, dist: number) {
