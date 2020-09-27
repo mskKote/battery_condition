@@ -1,5 +1,5 @@
 import { ServerService, board, data } from './server.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +20,6 @@ export interface Tile {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  // subRealTime
   receiveStatusRealTime(e: any){
     this.realTimeSubscription.unsubscribe();
     this.intrvalSub();
@@ -154,7 +153,7 @@ export class AppComponent implements OnInit {
       }
     ];
     this.multi_ACDC = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 10; i++) {
       this.multi_ACDC.push({
         name: 'Сила тока ' + (i + 1),
         series: [],
@@ -212,7 +211,7 @@ export class AppComponent implements OnInit {
   rotateXAxisTicks: boolean = false;
 
   yAxisTickFormattingMulti(val: any) {
-    return val + 1.75 + 'V';
+    return (val + 1.75).toFixed(2) + 'V';
   }
   yAxisTickFormattingMultiACDC(val: any) {
     return val + 'V';
@@ -516,8 +515,8 @@ export class AppComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
       // Десереализация -- начало
-    this.Now = `${new Date(data.timestamp*1000).getDate()}/${new Date(data.timestamp*1000).getMonth()}/${new Date(data.timestamp*1000).getFullYear()}  ${new Date(data.timestamp*1000).getHours()}:${new Date(data.timestamp*1000).getMinutes()}:${new Date(data.timestamp*1000).getSeconds()}`;
-    let newACDC = data.current_ma/1000;
+    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${new Date(data.timestamp * 1000).getMonth()}/${new Date(data.timestamp * 1000).getFullYear()}  ${new Date(data.timestamp * 1000).getHours()}:${new Date(data.timestamp * 1000).getMinutes()}:${new Date(data.timestamp * 1000).getSeconds()}`;
+    let newACDC = data.current_ma / 1000;
     let dataArray: data[] = data.data;
     let voltages: number[] = [];
     let contactor: boolean = data.contactor0_closed;
@@ -535,7 +534,7 @@ export class AppComponent implements OnInit {
       // Берём температру
       boardsTemp.push(dataArray[i].board_temperature);
     }
-    console.log("Дата из запроса: ", new Date(data.timestamp*1000));
+    // console.log("Дата из запроса: ", new Date(data.timestamp*1000));
       // console.groupCollapsed('data from JSON')
 
       // console.log('dataArray >> ', dataArray);
@@ -627,7 +626,7 @@ export class AppComponent implements OnInit {
         });
       }
       //------------------Батареи
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         this.multi_ACDC[i].series.push({
           value: `${Math.floor((voltages[i] - 1.75) * 100) / 100}`,
           name: new Date(timestamp*1000),
@@ -635,7 +634,7 @@ export class AppComponent implements OnInit {
       }
 
       // Добавление значений
-      let buff;
+      let buff: any[];
       buff = this.ACDC[0].series;
       this.ACDC = [{
         name: 'Сила тока',
@@ -646,7 +645,7 @@ export class AppComponent implements OnInit {
         this.time_temp0[0].series,
         this.time_temp0[1].series,
         this.time_temp0[2].series
-      ]
+      ];
       this.time_temp0 = [{
         name: 'Температура 1',
         series: [...buff[0]],
@@ -670,11 +669,11 @@ export class AppComponent implements OnInit {
       }];
       ////////////////////////////////
       buff = []; 
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         buff.push(this.multi_ACDC[i].series);
       }
       this.multi_ACDC = [];
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         this.multi_ACDC.push({
           name: 'Батарея №' + (i + 1),
           series: [...buff[i]],
