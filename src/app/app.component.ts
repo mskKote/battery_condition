@@ -166,6 +166,11 @@ export class AppComponent implements OnInit {
         series: [],
       },
     ];
+    this.single_ACDC = [{
+      name: 'Заряд батареи',
+      series: [],
+    },
+  ];
     this.balance = [{
         name: 'Балансировка',
         series: [],
@@ -189,6 +194,8 @@ export class AppComponent implements OnInit {
 
   // Главный график
   yAxisTicksArr: any[] = this.getArrY(0, 1.05, 0.15);
+  yAxisTicksArrACDC: any[] = this.getArrY(0, 1.05, 0.05);
+
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = true;
@@ -250,6 +257,7 @@ export class AppComponent implements OnInit {
   multi: any[] = [];
   multi_ACDC: any[] = [];
   single: any[] = [];
+  single_ACDC: any[] = [];
   batteries: any[] = new Array(30);
 
   //---------------------------------------------------Раздел генерации значений
@@ -575,6 +583,12 @@ export class AppComponent implements OnInit {
         name: 'Заряд батареи',
         value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
       });
+      
+      this.addTimePoint(this.single_ACDC, {
+        value: `${newACDC}`,
+        name: new Date(timestamp*1000),
+      });
+      
       this.colorChange_Total.domain = [// Цвет графика
         ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
           Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
@@ -598,6 +612,7 @@ export class AppComponent implements OnInit {
         name: new Date(timestamp*1000),
       });
 
+      
       this.colorChange_ACDC.domain = [];
       this.colorChange_ACDC.domain.push([
         ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
@@ -614,7 +629,7 @@ export class AppComponent implements OnInit {
       //------------------Батареи
       for (let i = 0; i < 30; i++) {
         this.multi_ACDC[i].series.push({
-          value: `${Math.floor(voltages[i] * 100) / 100}`,
+          value: `${Math.floor((voltages[i] - 1.75) * 100) / 100}`,
           name: new Date(timestamp*1000),
         });
       }
@@ -665,6 +680,13 @@ export class AppComponent implements OnInit {
           series: [...buff[i]],
         });
       }
+
+      buff = this.single_ACDC[0].series;
+      this.single_ACDC = [{
+        name: 'Сила тока',
+        series: [...buff],
+      }];
+      
   }
 
   getArrY(min: number, max: number, dist: number) {
