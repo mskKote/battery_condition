@@ -592,7 +592,7 @@ export class AppComponent implements OnInit {
         name: 'Заряд батареи',
         value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
       });
-      console.log(total_voltage_value);
+      // console.log(total_voltage_value);
       this.addTimePoint(this.single_ACDC, {
         value: `${total_voltage_value}`,
         name: new Date(timestamp*1000),
