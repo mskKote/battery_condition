@@ -125,7 +125,7 @@
                   [gradient]="gradient"
                   [xAxis]="xAxis"
                   [yAxis]="yAxis"
-                  [results]="multi_ACDC"
+                  [results]="multi_ACDC_1_10"
                 >
                 </ngx-charts-line-chart>
               </mat-tab>
@@ -142,7 +142,7 @@
                   [gradient]="gradient"
                   [xAxis]="xAxis"
                   [yAxis]="yAxis"
-                  [results]="multi_ACDC"
+                  [results]="multi_ACDC_11_20"
                 >
                 </ngx-charts-line-chart>
               </mat-tab>
@@ -159,7 +159,7 @@
                   [gradient]="gradient"
                   [xAxis]="xAxis"
                   [yAxis]="yAxis"
-                  [results]="multi_ACDC"
+                  [results]="multi_ACDC_21_30"
                 >
                 </ngx-charts-line-chart>
               </mat-tab>
@@ -235,12 +235,12 @@
           </mat-tab>
           <mat-tab label="История">
             <ngx-charts-line-chart
-              [scheme]="colorChange_ACDC"
               [showXAxisLabel]="showXAxisLabel"
               [showYAxisLabel]="showYAxisLabel"
-              [yAxisLabel]="'Заряд батареи'"
               [xAxisLabel]="'Заряд батареи'"
+              [yAxisLabel]="'Заряд батареи'"
               [legend]="false"
+              [scheme]="colorScheme"
               [schemeType]="'linear'"
               [gradient]="gradient"
               [timeline]="showTimeline"
@@ -250,8 +250,10 @@
               [yAxis]="yAxis"
               [roundDomains]="true"
               [animations]="false"
-              [yAxisTickFormatting]="ChangeAmper"
+              [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
               [results]="single_ACDC"
+              [autoScale]="true"
+
             >
             </ngx-charts-line-chart>
             <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
