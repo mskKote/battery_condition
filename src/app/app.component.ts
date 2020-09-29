@@ -268,7 +268,7 @@ export class AppComponent implements OnInit {
   single: any[] = [];
   single_ACDC: any[] = [];
   batteries: any[] = new Array(30);
-  tooltipText = 'Баттарея №';
+  tooltipText = 'Батарея №';
 
 
   //---------------------------------------------------Раздел генерации значений
