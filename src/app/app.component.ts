@@ -21,6 +21,7 @@ export interface Tile {
 })
 export class AppComponent implements OnInit {
   receiveStatusRealTime(e: any){
+    this.nullify();
     this.realTimeSubscription.unsubscribe();
     this.intrvalSub();
   }
