@@ -1,9 +1,15 @@
 
-import { Injectable } from '@angular/core';
+import { Host, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
+import { of } from 'rxjs/internal/observable/of';
+import { catchError, mapTo, tap } from 'rxjs/operators';
 ///MODELS
+export class Tokens {
+  jwt: string;
+  refreshToken: string;
+}
 export interface board {
   balancer_override: boolean;
   // balancing_enable: boolean;
@@ -90,4 +96,72 @@ export class ServerService {
       data;
       return this.http.get<board[]>(str);
   }
+  //LOGIN SECTION
+  //
+  private readonly JWT_TOKEN = 'JWT_TOKEN';
+  private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+  private loggedUser: string;
+
+  login(user:{username:string,password:string}):Observable<boolean>{
+    return this.http.post<any>(ServerService.HOST+'/login',user)
+    .pipe(
+      tap(tokens=> this.doLoginUser(user.username,tokens)),
+      mapTo(true),
+      catchError(error=>{
+        alert(error.error);
+        return of(false);
+      })
+    )
+  }
+  logout() {
+    return this.http.post<any>(ServerService.HOST+'/logout', {
+      'refreshToken': this.getRefreshToken()
+    }).pipe(
+      tap(() => this.doLogoutUser()),
+      mapTo(true),
+      catchError(error => {
+        alert(error.error);
+        return of(false);
+      }));
+  }
+  private doLogoutUser() {
+    this.loggedUser = null;
+    this.removeTokens();
+  }
+  private removeTokens() {
+    localStorage.removeItem(this.JWT_TOKEN);
+    localStorage.removeItem(this.REFRESH_TOKEN);
+  }
+
+  private doLoginUser(username: string, tokens: Tokens) {
+    this.loggedUser = username;
+    this.storeTokens(tokens);
+  }
+  private storeTokens(tokens: Tokens) {
+    localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
+    localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+  }
+  private getRefreshToken() {
+    return localStorage.getItem(this.REFRESH_TOKEN);
+  }
+
+  getJwtToken() {
+    return localStorage.getItem(this.JWT_TOKEN);
+  }
+
+  refreshToken() {
+    return this.http.post<any>(ServerService.HOST+'/refresh', {
+      'refreshToken': this.getRefreshToken()
+    }).pipe(tap((tokens: Tokens) => {
+      this.storeJwtToken(tokens.jwt);
+    }));
+  }
+  private storeJwtToken(jwt: string) {
+    localStorage.setItem(this.JWT_TOKEN, jwt);
+  }
+  //проверка - зареган ли пользователь
+  isLoggedIn(){
+    return 5;
+  }
+
 }

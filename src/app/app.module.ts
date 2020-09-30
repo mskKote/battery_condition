@@ -1,10 +1,12 @@
+import { AuthGuard } from './auth.guard';
 import { ServerService } from './server.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { TokenInterceptor } from './token.interceptor';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DateRangePickerModule } from '@uiowa/date-range-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,6 +42,7 @@ MatSliderModule,
     MatNativeDateModule,
     MatExpansionModule,
     MatMenuModule,
+
     BrowserAnimationsModule,
     BrowserModule,
     MatDatepickerModule,
@@ -52,7 +55,11 @@ MatSliderModule,
     ReactiveFormsModule,
     NgbModule,
   ],
-  providers: [ServerService],
+  providers: [ServerService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  },AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
