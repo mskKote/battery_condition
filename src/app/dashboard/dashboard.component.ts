@@ -21,8 +21,8 @@ export interface Tile {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
   receiveStatusRealTime(e: any){
+    this.nullify();
     this.realTimeSubscription.unsubscribe();
     this.intrvalSub();
   }
@@ -269,7 +269,7 @@ export class DashboardComponent implements OnInit {
   single: any[] = [];
   single_ACDC: any[] = [];
   batteries: any[] = new Array(30);
-  tooltipText = 'Баттарея №';
+  tooltipText = 'Батарея №';
 
 
   //---------------------------------------------------Раздел генерации значений
