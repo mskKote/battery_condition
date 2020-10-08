@@ -1,4 +1,3 @@
-
 import { ServerService, board, data } from '../server.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as shape from 'd3-shape';
@@ -18,21 +17,23 @@ export interface Tile {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  receiveStatusRealTime(e: any){
+  receiveStatusRealTime(e: any) {
     this.nullify();
     this.realTimeSubscription.unsubscribe();
     this.intrvalSub();
   }
 
   formatLabel(value: number) {
-    if (value >= 1000)
-      return Math.round(value / 1000) + 'k';
+    if (value >= 1000) return Math.round(value / 1000) + 'k';
 
     return value;
   }
+
+  //---------------------------------------------------Переключение тоглеров
+
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
@@ -40,15 +41,13 @@ export class DashboardComponent implements OnInit {
   turnModeContactor: boolean = true;
   turnModeBalancing: boolean = true;
 
-  //---------------------------------------------------Переключение тоглеров
-
   turnMode(e: any) {
-    e.preventDefault()
+    e.preventDefault();
 
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
-      if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
+      if (this.clickedBtnTurn.classList.contains('turnAutoOn')) {
         this.clickedBtnTurn.classList.remove('turnAutoOn');
         this.clickedBtnTurn.innerHTML = 'Р';
       } else {
@@ -58,8 +57,8 @@ export class DashboardComponent implements OnInit {
       this.turnModeContactor = !this.turnModeContactor;
     }
 
-    if(this.clickedBtnTurn.id == 'modeBalancing') {
-      if(this.clickedBtnTurn.classList.contains('turnAutoOn')){
+    if (this.clickedBtnTurn.id == 'modeBalancing') {
+      if (this.clickedBtnTurn.classList.contains('turnAutoOn')) {
         this.clickedBtnTurn.classList.remove('turnAutoOn');
         this.clickedBtnTurn.innerHTML = 'Р';
       } else {
@@ -69,10 +68,12 @@ export class DashboardComponent implements OnInit {
       this.turnModeBalancing = !this.turnModeBalancing;
     }
   }
-  onSwitch(e: any) {
-    e.preventDefault()
 
+  onSwitch(e: any) {
+    e.preventDefault();
     this.clickedBtnToggle = e.target;
+
+    // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
     if (
@@ -91,7 +92,6 @@ export class DashboardComponent implements OnInit {
     }
   }
   confirmed(e: any) {
-
     if (e.target.classList.contains('contactor')) {
       if (this.contactorTog) this.clickedBtnToggle.classList.remove('clicked');
       else this.clickedBtnToggle.classList.add('clicked');
@@ -107,9 +107,9 @@ export class DashboardComponent implements OnInit {
   }
 
   dateRange: any;
-  isReceiveFirst: boolean = true
+  isReceiveFirst: boolean = true;
   receiveDateRange(event: any) {
-    if(!this.isReceiveFirst){
+    if (!this.isReceiveFirst) {
       this.realTimeSubscription.unsubscribe();
       // this.isRealTime = false;
 
@@ -117,16 +117,30 @@ export class DashboardComponent implements OnInit {
 
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
-      console.log(Math.floor(+this.dateRange['start'] / 1000), Math.floor(+this.dateRange['end'] / 1000))
-      console.log(`start: ${new Date(+this.dateRange['start'])}`, `end: ${new Date(+this.dateRange['end'])}`);
-      this.server.getDataQuery(`${Math.floor(+this.dateRange['start'] / 1000)}`, `${Math.floor(+this.dateRange['end'] / 1000)}`, '100').then(data => data.subscribe(resp => {
-        console.group();
-        this.nullify();
-        for (const dataset of resp) {
-          this.drawServerData(dataset);
-        }
-        console.groupEnd();
-      }));
+      console.log(
+        Math.floor(+this.dateRange['start'] / 1000),
+        Math.floor(+this.dateRange['end'] / 1000)
+      );
+      console.log(
+        `start: ${new Date(+this.dateRange['start'])}`,
+        `end: ${new Date(+this.dateRange['end'])}`
+      );
+      this.server
+        .getDataQuery(
+          `${Math.floor(+this.dateRange['start'] / 1000)}`,
+          `${Math.floor(+this.dateRange['end'] / 1000)}`,
+          '100'
+        )
+        .then((data) =>
+          data.subscribe((resp) => {
+            console.group();
+            this.nullify();
+            for (const dataset of resp) {
+              this.drawServerData(dataset);
+            }
+            console.groupEnd();
+          })
+        );
     }
     this.isReceiveFirst = false;
     // this.nullify();
@@ -135,29 +149,43 @@ export class DashboardComponent implements OnInit {
   }
 
   batteryIndex: number;
-  receiveBatteryIndex(index: number){
+  receiveBatteryIndex(index: number) {
     this.batteryIndex = index;
     console.log(this.batteryIndex);
   }
 
-
   nullify() {
-    this.time_temp0 = [{
-        name: 'Температура 1', series: [], }, {
-        name: 'Температура 2', series: [], }, {
-        name: 'Температура 3', series: [], }
+    this.time_temp0 = [
+      {
+        name: 'Температура 1',
+        series: [],
+      },
+      {
+        name: 'Температура 2',
+        series: [],
+      },
+      {
+        name: 'Температура 3',
+        series: [],
+      },
     ];
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
     this.multi_ACDC_21_30 = [];
 
     for (let i = 0; i < 30; i++) {
-      if (i < 10) 
+      if (i < 10)
         this.multi_ACDC_1_10.push({ name: 'Сила тока ' + (i + 1), series: [] });
       else if (i < 20)
-        this.multi_ACDC_11_20.push({ name: 'Сила тока ' + (i + 1), series: []});
+        this.multi_ACDC_11_20.push({
+          name: 'Сила тока ' + (i + 1),
+          series: [],
+        });
       else
-        this.multi_ACDC_21_30.push({ name: 'Сила тока ' + (i + 1), series: []});
+        this.multi_ACDC_21_30.push({
+          name: 'Сила тока ' + (i + 1),
+          series: [],
+        });
     }
 
     this.ACDC = [{ name: 'Сила тока', series: [] }];
@@ -245,7 +273,6 @@ export class DashboardComponent implements OnInit {
   single_ACDC: any[] = [];
   batteries: any[] = new Array(30);
   tooltipText = 'Батарея №';
-
 
   //---------------------------------------------------Раздел генерации значений
   // static randomDate(start: Date, end: Date): Date {
@@ -419,45 +446,62 @@ export class DashboardComponent implements OnInit {
   //---------------------------------------------------Аутентификация
 
   loginForm: FormGroup;
-  TryAuth($event){
+  TryAuth($event) {
     console.log('object :>> ', $event);
   }
 
   initForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required,
-      Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')]],
-      password: ['', Validators.required]
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$'
+          ),
+        ],
+      ],
+      password: ['', Validators.required],
     });
   }
 
   isValidInput(fieldName): boolean {
-    return this.loginForm.controls[fieldName].invalid &&
-      (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched);
+    return (
+      this.loginForm.controls[fieldName].invalid &&
+      (this.loginForm.controls[fieldName].dirty ||
+        this.loginForm.controls[fieldName].touched)
+    );
   }
 
   IsAuthored;
   IsWrong = false;
   login(): void {
-    if(this.loginForm.value.email=="battery@condition.ru"&& this.loginForm.value.password=="12354"){
+    if (
+      this.loginForm.value.email == 'battery@condition.ru' &&
+      this.loginForm.value.password == '12354'
+    ) {
       this.server.IsAuthored.next(true);
       this.IsWrong = false;
-    }else{
+    } else {
       this.IsWrong = true;
     }
   }
 
   //---------------------------------------------------Старт
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.IsAuthored.subscribe((resp)=>this.IsAuthored=resp);
+    server.isOverrideListener.subscribe((resp: boolean) => {
+      this.contactorTog
+    })
+    server.IsAuthored.subscribe((resp) => (this.IsAuthored = resp));
     // this.nullify();
     // this.genGlobalCharts();
   }
 
-  BoardLast:Observable<board>;
+  BoardLast: Observable<board>;
   isTabletScreen;
   isLargeScreen;
   isXLargeScreen;
@@ -465,12 +509,12 @@ export class DashboardComponent implements OnInit {
   isXSmallScreen;
 
   realTimeSubscription: Subscription;
-  source
-  intrvalSub(){
+  source;
+  intrvalSub() {
     this.BoardLast = this.server.getLastBmsQuery();
     this.source = interval(1000);
-    this.realTimeSubscription = this.source.subscribe(val => {
-      this.BoardLast.subscribe((resp)=> this.drawServerData(resp))
+    this.realTimeSubscription = this.source.subscribe((val) => {
+      this.BoardLast.subscribe((resp) => this.drawServerData(resp));
     });
   }
   ngOnInit() {
@@ -487,7 +531,7 @@ export class DashboardComponent implements OnInit {
     this.breakpointObserver
       .observe(Breakpoints.Large)
       .subscribe((resp) => (this.isLargeScreen = resp.matches));
-      this.breakpointObserver
+    this.breakpointObserver
       .observe(Breakpoints.XLarge)
       .subscribe((resp) => (this.isXLargeScreen = resp.matches));
     this.breakpointObserver
@@ -497,16 +541,23 @@ export class DashboardComponent implements OnInit {
     // this.request();
     // setInterval(() => { this.request(); } , 1000)
   }
-  Now:string;
+  Now: string;
   isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
-      // Десереализация -- начало
-    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${new Date(data.timestamp * 1000).getMonth()}/${new Date(data.timestamp * 1000).getFullYear()}  ${new Date(data.timestamp * 1000).getHours()}:${new Date(data.timestamp * 1000).getMinutes()}:${new Date(data.timestamp * 1000).getSeconds()}`;
+    // Десереализация -- начало
+    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${new Date(
+      data.timestamp * 1000
+    ).getMonth()}/${new Date(data.timestamp * 1000).getFullYear()}  ${new Date(
+      data.timestamp * 1000
+    ).getHours()}:${new Date(data.timestamp * 1000).getMinutes()}:${new Date(
+      data.timestamp * 1000
+    ).getSeconds()}`;
     let newACDC = data.current_ma / 1000;
     let dataArray: data[] = data.data;
     let voltages: number[] = [];
     let contactor: boolean = data.contactor0_closed;
+    this.server.isOverrideListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     // let contactorOverride: boolean = data.contactor_override;
     // let balancingOverride: boolean = data.balancer_override;
@@ -514,9 +565,9 @@ export class DashboardComponent implements OnInit {
     let boardsTemp: number[] = [];
     let timestamp: number = data.timestamp;
 
-    for(let i = 0; i < dataArray.length; i++){
+    for (let i = 0; i < dataArray.length; i++) {
       // Берём 30 вольтажей
-      for(let j = 0, len = dataArray[i].voltages.length; j < len; j++)
+      for (let j = 0, len = dataArray[i].voltages.length; j < len; j++)
         voltages.push(dataArray[i].voltages[j]);
       // Берём температру
       boardsTemp.push(dataArray[i].board_temperature);
@@ -534,174 +585,188 @@ export class DashboardComponent implements OnInit {
     // console.log('balancingOverride >> ', balancingOverride);
     // console.log('timestamp >> ', timestamp);
     // console.groupEnd()
-      // Десереализация -- конец
-      if (this.isFirst) {
-        this.nullify();
-        this.isFirst = false;
-      }
-      this.multi = [];
-      this.single = [];
-      let total_voltage_value = 0;
-      // Графикс c 30 батареями и total_voltage
-      for (let j = 0; j < voltages.length; j += 2) {
-        const battery1 = voltages[j]; // 1 батарейка
-        const battery2 = voltages[j + 1]; // 2 батарейка
+    // Десереализация -- конец
+    if (this.isFirst) {
+      this.nullify();
+      this.isFirst = false;
+    }
+    this.multi = [];
+    this.single = [];
+    let total_voltage_value = 0;
+    // Графикс c 30 батареями и total_voltage
+    for (let j = 0; j < voltages.length; j += 2) {
+      const battery1 = voltages[j]; // 1 батарейка
+      const battery2 = voltages[j + 1]; // 2 батарейка
 
-        this.multi.push({
-          name: j  + 2,
-          series: [{
-              name: 'first',
-              value: battery1 - 1.75,
-              number: j + 1
-            }, {
-              name: 'second',
-              value: battery2 - 1.75,
-              number: j + 2
-            }]
-        });
-
-        total_voltage_value += battery1 + battery2;
-      }
-
-      //------------------График с зарядом батареи
-      this.single.push({//Значение
-        name: 'Заряд батареи',
-        value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
-      });
-      this.addTimePoint(this.single_ACDC, {
-        value: `${total_voltage_value}`,
-        name: new Date(timestamp*1000),
-      });
-
-      this.colorChange_Total.domain = [// Цвет графика
-        ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
-          Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
+      this.multi.push({
+        name: j + 2,
+        series: [
+          {
+            name: 'first',
+            value: battery1 - 1.75,
+            number: j + 1,
+          },
+          {
+            name: 'second',
+            value: battery2 - 1.75,
+            number: j + 2,
+          },
         ],
-      ];
-
-      //------------------Контактор и балансировка
-      this.addTimePoint(this.contactor, {
-        value: contactor ? '1' : '0',
-        name: new Date(timestamp*1000),
-      });
-      this.addTimePoint(this.balance, {
-        value: balancing ? '1' : '0',
-        name: new Date(timestamp*1000),
-      });
-      this.colorChange.domain = ['#ff0000'];
-
-      //------------------Сила тока
-      this.addTimePoint(this.ACDC, {
-        value: `${newACDC}`,
-        name: new Date(timestamp*1000),
       });
 
+      total_voltage_value += battery1 + battery2;
+    }
 
-      this.colorChange_ACDC.domain = [];
-      this.colorChange_ACDC.domain.push([
-        ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF']
-        [Math.floor((newACDC - 15) / 5)],
-      ]);
+    //------------------График с зарядом батареи
+    this.single.push({
+      //Значение
+      name: 'Заряд батареи',
+      value: Math.floor(
+        ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100
+      ),
+    });
+    this.addTimePoint(this.single_ACDC, {
+      value: `${total_voltage_value}`,
+      name: new Date(timestamp * 1000),
+    });
 
-      //------------------Температуры
-      for (let i = 0; i < boardsTemp.length; i++) {
-        this.time_temp0[i].series.push({
-          value: `${Math.floor(boardsTemp[i] * 100) / 100}`,
-          name: new Date(timestamp*1000),
+    this.colorChange_Total.domain = [
+      // Цвет графика
+      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
+        Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
+      ],
+    ];
+
+    //------------------Контактор и балансировка
+    this.addTimePoint(this.contactor, {
+      value: contactor ? '1' : '0',
+      name: new Date(timestamp * 1000),
+    });
+    this.addTimePoint(this.balance, {
+      value: balancing ? '1' : '0',
+      name: new Date(timestamp * 1000),
+    });
+    this.colorChange.domain = ['#ff0000'];
+
+    //------------------Сила тока
+    this.addTimePoint(this.ACDC, {
+      value: `${newACDC}`,
+      name: new Date(timestamp * 1000),
+    });
+
+    this.colorChange_ACDC.domain = [];
+    this.colorChange_ACDC.domain.push([
+      ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF'][
+        Math.floor((newACDC - 15) / 5)
+      ],
+    ]);
+
+    //------------------Температуры
+    for (let i = 0; i < boardsTemp.length; i++) {
+      this.time_temp0[i].series.push({
+        value: `${Math.floor(boardsTemp[i] * 100) / 100}`,
+        name: new Date(timestamp * 1000),
+      });
+    }
+    //------------------Батареи
+    for (let i = 0; i < 30; i++) {
+      if (i < 10)
+        this.multi_ACDC_1_10[i].series.push({
+          value: `${Math.floor(voltages[i] * 100) / 100}`,
+          name: new Date(timestamp * 1000),
         });
-      }
-      //------------------Батареи
-      for (let i = 0; i < 30; i++) {
-        if (i < 10)
-          this.multi_ACDC_1_10[i].series.push({
-            value: `${Math.floor(voltages[i] * 100) / 100}`,
-            name: new Date(timestamp*1000)
-          });
-        else if (i < 20)
-          this.multi_ACDC_11_20[i % 10].series.push({
-            value: `${Math.floor(voltages[i] * 100) / 100}`,
-            name: new Date(timestamp*1000)
-          });
-        else
-          this.multi_ACDC_21_30[i % 10].series.push({
-            value: `${Math.floor(voltages[i] * 100) / 100}`,
-            name: new Date(timestamp*1000)
-          });
-      }
+      else if (i < 20)
+        this.multi_ACDC_11_20[i % 10].series.push({
+          value: `${Math.floor(voltages[i] * 100) / 100}`,
+          name: new Date(timestamp * 1000),
+        });
+      else
+        this.multi_ACDC_21_30[i % 10].series.push({
+          value: `${Math.floor(voltages[i] * 100) / 100}`,
+          name: new Date(timestamp * 1000),
+        });
+    }
 
-      //==========================Добавление значений на графики
-      let buff: any[];
-      buff = this.ACDC[0].series;
-      this.ACDC = [{
+    //==========================Добавление значений на графики
+    let buff: any[];
+    buff = this.ACDC[0].series;
+    this.ACDC = [
+      {
         name: 'Сила тока',
         series: [...buff],
-      }];
+      },
+    ];
 
-      buff = [
-        this.time_temp0[0].series,
-        this.time_temp0[1].series,
-        this.time_temp0[2].series
-      ];
-      this.time_temp0 = [{
+    buff = [
+      this.time_temp0[0].series,
+      this.time_temp0[1].series,
+      this.time_temp0[2].series,
+    ];
+    this.time_temp0 = [
+      {
         name: 'Температура 1',
         series: [...buff[0]],
-      }, {
+      },
+      {
         name: 'Температура 2',
         series: [...buff[1]],
-      }, {
+      },
+      {
         name: 'Температура 3',
         series: [...buff[2]],
-      }
-      ];
-      buff = this.balance[0].series;
-      this.balance = [{
+      },
+    ];
+    buff = this.balance[0].series;
+    this.balance = [
+      {
         name: 'Балансировка',
         series: [...buff],
-      }];
-      buff = this.contactor[0].series;
-      this.contactor = [{
+      },
+    ];
+    buff = this.contactor[0].series;
+    this.contactor = [
+      {
         name: 'Контактор',
         series: [...buff],
-      }];
-      ////////////////////////////////
-      buff = [];
-      for (let i = 0; i < 30; i++) {
-        if (i < 10)
-          buff.push(this.multi_ACDC_1_10[i].series);
-        else if (i < 20)
-          buff.push(this.multi_ACDC_11_20[i % 10].series);
-        else
-          buff.push(this.multi_ACDC_21_30[i % 10].series);
-      }
-      this.multi_ACDC_1_10 = [];
-      this.multi_ACDC_11_20 = [];
-      this.multi_ACDC_21_30 = [];
+      },
+    ];
+    ////////////////////////////////
+    buff = [];
+    for (let i = 0; i < 30; i++) {
+      if (i < 10) buff.push(this.multi_ACDC_1_10[i].series);
+      else if (i < 20) buff.push(this.multi_ACDC_11_20[i % 10].series);
+      else buff.push(this.multi_ACDC_21_30[i % 10].series);
+    }
+    this.multi_ACDC_1_10 = [];
+    this.multi_ACDC_11_20 = [];
+    this.multi_ACDC_21_30 = [];
 
-      for (let i = 0; i < 30; i++) {
-        if (i < 10)
-          this.multi_ACDC_1_10.push({
-            name: 'Батарея №' + (i + 1),
-            series: [...buff[i]],
-          });
-        else if (i < 20)
-          this.multi_ACDC_11_20.push({
-            name: 'Батарея №' + (i + 1),
-            series: [...buff[i]],
-          });
-        else
-          this.multi_ACDC_21_30.push({
-            name: 'Батарея №' + (i + 1),
-            series: [...buff[i]],
-          });
-      }
+    for (let i = 0; i < 30; i++) {
+      if (i < 10)
+        this.multi_ACDC_1_10.push({
+          name: 'Батарея №' + (i + 1),
+          series: [...buff[i]],
+        });
+      else if (i < 20)
+        this.multi_ACDC_11_20.push({
+          name: 'Батарея №' + (i + 1),
+          series: [...buff[i]],
+        });
+      else
+        this.multi_ACDC_21_30.push({
+          name: 'Батарея №' + (i + 1),
+          series: [...buff[i]],
+        });
+    }
 
-      ////////////////////////////////
-      buff = this.single_ACDC[0].series;
-      this.single_ACDC = [{ 
+    ////////////////////////////////
+    buff = this.single_ACDC[0].series;
+    this.single_ACDC = [
+      {
         name: 'Заряд батареи',
-        series: [...buff]
-      }];
-
+        series: [...buff],
+      },
+    ];
   }
 
   getArrY(min: number, max: number, dist: number) {
@@ -711,5 +776,4 @@ export class DashboardComponent implements OnInit {
     arr.push(max);
     return arr;
   }
-
 }

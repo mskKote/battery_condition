@@ -261,7 +261,6 @@
               [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
               [results]="single_ACDC"
               [autoScale]="true"
-
             >
             </ngx-charts-line-chart>
             <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
@@ -368,12 +367,17 @@
       [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 20 : 4"
     >
       <!-- Тогглер -->
-      <!-- <button id='modeContactor' class="indicator turnAutoOn" title="Вкл./Выкл. автоматический режим"
-          (click)="turnMode($event)">А</button>
-        <button id="toggle_contactor"
-          (click)="onSwitch($event)">
-          <i></i>
-        </button> -->
+      <button
+        id="modeContactor"
+        class="indicator turnAutoOn"
+        title="Вкл./Выкл. автоматический режим"
+        (click)="turnMode($event)"
+      >
+        А
+      </button>
+      <button id="toggle_contactor" (click)="onSwitch($event)">
+        <i></i>
+      </button>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -431,11 +435,17 @@
       [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 20 : 4"
     >
       <!-- Тогглер -->
-      <!-- <button id='modeBalancing' class="indicator turnAutoOn" title="Вкл./Выкл. автоматический режим" (click)="turnMode($event)">А</button>
-        <button id="toggle_balancing"
-          (click)="onSwitch($event)">
-          <i></i>
-        </button> -->
+      <button
+        id="modeBalancing"
+        class="indicator turnAutoOn"
+        title="Вкл./Выкл. автоматический режим"
+        (click)="turnMode($event)"
+      >
+        А
+      </button>
+      <button id="toggle_balancing" (click)="onSwitch($event)">
+        <i></i>
+      </button>
       <!-- Modal -->
       <div
         class="modal fade"

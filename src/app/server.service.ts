@@ -58,8 +58,19 @@ export interface data {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST = 'http://80.89.235.39';
+  static HOST     = 'http://80.89.235.39';
+  static BOARD_ID = '3737574e430234305d8ff36';
   // public datas: totals[];
+
+  isOverrideListener = new BehaviorSubject(false);
+  changedState: Observable<any>
+  tgglrStateReg(state: boolean){
+    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
+    this.changedState = this.http.post(str, {
+      // автоматический режим
+    })
+  }
+
   public IsAuthored;
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
