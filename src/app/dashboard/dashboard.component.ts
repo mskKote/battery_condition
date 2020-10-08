@@ -28,9 +28,8 @@ export class DashboardComponent implements OnInit {
   }
 
   formatLabel(value: number) {
-    if (value >= 1000) {
+    if (value >= 1000)
       return Math.round(value / 1000) + 'k';
-    }
 
     return value;
   }
@@ -144,51 +143,27 @@ export class DashboardComponent implements OnInit {
 
   nullify() {
     this.time_temp0 = [{
-        name: 'Температура 1',
-        series: [],
-      }, {
-        name: 'Температура 2',
-        series: [],
-      }, {
-        name: 'Температура 3',
-        series: [],
-      }
+        name: 'Температура 1', series: [], }, {
+        name: 'Температура 2', series: [], }, {
+        name: 'Температура 3', series: [], }
     ];
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
     this.multi_ACDC_21_30 = [];
 
     for (let i = 0; i < 30; i++) {
-      if (i < 10)
-        this.multi_ACDC_1_10.push({
-          name: 'Сила тока ' + (i + 1),
-          series: []});
+      if (i < 10) 
+        this.multi_ACDC_1_10.push({ name: 'Сила тока ' + (i + 1), series: [] });
       else if (i < 20)
-        this.multi_ACDC_11_20.push({
-          name: 'Сила тока ' + (i + 1),
-          series: []});
+        this.multi_ACDC_11_20.push({ name: 'Сила тока ' + (i + 1), series: []});
       else
-        this.multi_ACDC_21_30.push({
-          name: 'Сила тока ' + (i + 1),
-          series: []});
+        this.multi_ACDC_21_30.push({ name: 'Сила тока ' + (i + 1), series: []});
     }
 
-    this.ACDC = [{
-        name: 'Сила тока',
-        series: []
-    }];
-    this.single_ACDC = [{
-      name: 'Заряд батареи',
-      series: []
-    }];
-    this.balance = [{
-        name: 'Балансировка',
-        series: []
-    }];
-    this.contactor = [{
-        name: 'Контактор',
-        series: []
-    }];
+    this.ACDC = [{ name: 'Сила тока', series: [] }];
+    this.single_ACDC = [{ name: 'Заряд батареи', series: [] }];
+    this.balance = [{ name: 'Балансировка', series: [] }];
+    this.contactor = [{ name: 'Контактор', series: [] }];
     this.multi = [];
     this.single = [];
   }
@@ -223,7 +198,7 @@ export class DashboardComponent implements OnInit {
     return (val + 1.75).toFixed(2) + 'V';
   }
   yAxisTickFormattingMultiACDC(val: any) {
-    return (+val).toFixed(3) + 'V';
+    return (+val).toFixed(2) + 'V';
   }
   yAxisTickFormattingMulti2(val: any) {
     return (52.5 + (84 - 52.5) * (val / 100)).toFixed(2) + 'V';
@@ -533,8 +508,8 @@ export class DashboardComponent implements OnInit {
     let voltages: number[] = [];
     let contactor: boolean = data.contactor0_closed;
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
-    let contactorOverride: boolean = data.contactor_override;
-    let balancingOverride: boolean = data.balancer_override;
+    // let contactorOverride: boolean = data.contactor_override;
+    // let balancingOverride: boolean = data.balancer_override;
 
     let boardsTemp: number[] = [];
     let timestamp: number = data.timestamp;
@@ -547,24 +522,23 @@ export class DashboardComponent implements OnInit {
       boardsTemp.push(dataArray[i].board_temperature);
     }
     // console.log("Дата из запроса: ", new Date(data.timestamp*1000));
-      // console.groupCollapsed('data from JSON')
+    // console.groupCollapsed('data from JSON')
 
-      //console.log('dataArray >> ', dataArray);
-      // console.log('voltages :>> ', voltages);
-      // console.log('newACDC >> ', newACDC);
+    //console.log('dataArray >> ', dataArray);
+    // console.log('voltages :>> ', voltages);
+    // console.log('newACDC >> ', newACDC);
 
-      // console.log('contactor >> ', contactor);
-      // console.log('balancing >> ', balancing);
-      // console.log('contactorOverride >> ', contactorOverride);
-      // console.log('balancingOverride >> ', balancingOverride);
-      // console.log('timestamp >> ', timestamp);
-      // console.groupEnd()
+    // console.log('contactor >> ', contactor);
+    // console.log('balancing >> ', balancing);
+    // console.log('contactorOverride >> ', contactorOverride);
+    // console.log('balancingOverride >> ', balancingOverride);
+    // console.log('timestamp >> ', timestamp);
+    // console.groupEnd()
       // Десереализация -- конец
       if (this.isFirst) {
         this.nullify();
         this.isFirst = false;
       }
-      // this.genData(timestamp*1000);
       this.multi = [];
       this.single = [];
       let total_voltage_value = 0;
@@ -594,7 +568,6 @@ export class DashboardComponent implements OnInit {
         name: 'Заряд батареи',
         value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100),
       });
-      // console.log(total_voltage_value);
       this.addTimePoint(this.single_ACDC, {
         value: `${total_voltage_value}`,
         name: new Date(timestamp*1000),
@@ -641,17 +614,17 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i < 30; i++) {
         if (i < 10)
           this.multi_ACDC_1_10[i].series.push({
-            value: `${Math.floor((voltages[i] - 1.75) * 100) / 100}`,
+            value: `${Math.floor(voltages[i] * 100) / 100}`,
             name: new Date(timestamp*1000)
           });
         else if (i < 20)
           this.multi_ACDC_11_20[i % 10].series.push({
-            value: `${Math.floor((voltages[i] - 1.75) * 100) / 100}`,
+            value: `${Math.floor(voltages[i] * 100) / 100}`,
             name: new Date(timestamp*1000)
           });
         else
           this.multi_ACDC_21_30[i % 10].series.push({
-            value: `${Math.floor((voltages[i] - 1.75) * 100) / 100}`,
+            value: `${Math.floor(voltages[i] * 100) / 100}`,
             name: new Date(timestamp*1000)
           });
       }
@@ -722,19 +695,11 @@ export class DashboardComponent implements OnInit {
           });
       }
 
-      // for (let i = 0; i < 10; i++) {
-      //   this.multi_ACDC_1_10.push({
-      //     name: 'Батарея №' + (i + 1),
-      //     series: [...buff[i]],
-      //   });
-      // }
-
-
       ////////////////////////////////
       buff = this.single_ACDC[0].series;
-      this.single_ACDC = [{
+      this.single_ACDC = [{ 
         name: 'Заряд батареи',
-        series: [...buff],
+        series: [...buff]
       }];
 
   }
