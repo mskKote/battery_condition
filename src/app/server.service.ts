@@ -71,7 +71,7 @@ export class ServerService {
   //isToggledBalancingListener = new BehaviorSubject(false);
   isToggledBalancing;
   changedState: Observable<any>
-  tgglrStateReg(state: boolean){
+  tgglrBalanceStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
     console.log("балансир сменился на: "+state+" и пошел в "+str);
     let options =  {
@@ -85,7 +85,56 @@ export class ServerService {
     switcher.contactor_override = false;
     const switcherStr=JSON.stringify(switcher);
     this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
-    this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  }
+  tgglrContactorStateReg(state: boolean){
+    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
+    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    let options =  {
+      headers : "Content-Type = application/json",
+      withCredentials :true
+    }
+    let switcher = new Switcher();
+    switcher.balancer_override= false;
+    switcher.balancing_enable = false;
+    switcher.contactor_close = state;
+    switcher.contactor_override = true;
+    const switcherStr=JSON.stringify(switcher);
+    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
+    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  }
+  modeContactorStateReg(state: boolean){
+    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
+    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    let options =  {
+      headers : "Content-Type = application/json",
+      withCredentials :true
+    }
+    let switcher = new Switcher();
+    switcher.balancer_override= false;
+    switcher.balancing_enable = false;
+    switcher.contactor_close = false;
+    switcher.contactor_override = !state;
+    const switcherStr=JSON.stringify(switcher);
+    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
+    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  }
+  modeBalanceStateReg(state: boolean){
+    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
+    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    let options =  {
+      headers : "Content-Type = application/json",
+      withCredentials :true
+    }
+    let switcher = new Switcher();
+    console.log(state);
+    switcher.balancer_override= !state;
+    switcher.balancing_enable = false;
+    switcher.contactor_close = false;
+    switcher.contactor_override = false;
+    const switcherStr=JSON.stringify(switcher);
+    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
+    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
   }
 
   public IsAuthored;

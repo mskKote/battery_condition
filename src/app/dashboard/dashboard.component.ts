@@ -47,13 +47,15 @@ export class DashboardComponent implements OnInit {
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
-      this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'Р' : 'А';
       this.turnModeContactor = !this.turnModeContactor;
+      this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'A' : 'P';
+      this.server.modeContactorStateReg(this.turnModeContactor);
     }
-    
+
     if (this.clickedBtnTurn.id == 'modeBalancing') {
-      this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'Р' : 'А';
       this.turnModeBalancing = !this.turnModeBalancing;
+      this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'A' : 'P';
+      this.server.modeBalanceStateReg(this.turnModeBalancing);
     }
   }
   onSwitch(e: any) {
@@ -63,9 +65,9 @@ export class DashboardComponent implements OnInit {
     // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
-    if (!this.turnModeContactor && this.clickedBtnToggle.id == 'toggle_contactor') 
+    if (!this.turnModeContactor && this.clickedBtnToggle.id == 'toggle_contactor')
       jQuery('#modal-contactor').modal('show');
-    
+
     // Проверка статуса балансировки
     if (!this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
       jQuery('#modal-balancing').modal('show');
@@ -75,14 +77,14 @@ export class DashboardComponent implements OnInit {
       this.contactorTog = !this.contactorTog;
       // ДОБАВИТЬ СЮДА ЗАПРОС С КОНТАКТОРОМ, КАК ТОЛЬКО ОН БУДЕТ
     }
-    
+
     if (e.target.classList.contains('balancing')) {
       this.balancingTog = !this.balancingTog;
       console.log("this.balancingTog", this.balancingTog);
-      this.server.tgglrStateReg(this.balancingTog);
+      this.server.tgglrBalanceStateReg(this.balancingTog);
     }
   }
- 
+
 
   dateRange: any;
   isReceiveFirst: boolean = true;
@@ -612,7 +614,7 @@ export class DashboardComponent implements OnInit {
     // Добавляем значения на тогглеры
     this.contactorTog = contactor;
     this.balancingTog = balancing;
-  
+
 
     //------------------Сила тока
     this.addTimePoint(this.ACDC, {
@@ -664,9 +666,9 @@ export class DashboardComponent implements OnInit {
       this.time_temp0[2].series,
     ];
     this.time_temp0 = [
-      { name: 'Температура 1', series: [...buff[0]] }, 
+      { name: 'Температура 1', series: [...buff[0]] },
       { name: 'Температура 2', series: [...buff[1]] },
-      { name: 'Температура 3', series: [...buff[2]] } 
+      { name: 'Температура 3', series: [...buff[2]] }
     ];
     buff = this.balance[0].series;
     this.balance = [{ name: 'Балансировка', series: [...buff] }];
