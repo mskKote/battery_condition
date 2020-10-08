@@ -511,8 +511,9 @@ export class DashboardComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     // Десереализация -- начало
-    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${
-        new Date(data.timestamp * 1000).getMonth()}/${
+    this.Now = `${
+        new Date(data.timestamp * 1000).getDate()}/${
+        new Date(data.timestamp * 1000).getMonth() + 1}/${
         new Date(data.timestamp * 1000).getFullYear()}  ${
         new Date(data.timestamp * 1000).getHours()}:${
         new Date(data.timestamp * 1000).getMinutes()}:${
