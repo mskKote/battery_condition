@@ -17,19 +17,12 @@ export class HeaderComponent implements OnInit {
   @Output() activateRealTimeEvent = new EventEmitter<boolean>()
   toRealTime(e: any) {
     e.preventDefault();
+    this.server.IsRealTimeListener.next(true); 
 
     this.clickedBtnRT = e.target;
     if(!this.realTimeWorks){
       this.realTimeWorks = true;
     }
-    // if (this.clickedBtnRT.classList.contains('realTimeActive')) {
-    //   this.realTimeWorks = false;
-    //   // this.realTimeBtnText = "Включить real-time";
-    // }
-    // else { 
-    //   // this.realTimeBtnText = "Real-time";
-    //   this.realTimeWorks = true;
-    // }
 
     this.activateRealTimeEvent.emit(true);
   }
@@ -85,7 +78,16 @@ export class HeaderComponent implements OnInit {
         timeStart: this.timeStart
       }
     }
-    this.isFirstSendDate ? this.realTimeWorks = true : this.realTimeWorks = false;
+
+    if (this.isFirstSendDate) {
+      this.realTimeWorks = true;
+      this.server.IsRealTimeListener.next(true); 
+    }
+    else {
+      this.realTimeWorks = false;
+      this.server.IsRealTimeListener.next(false); 
+    }
+
     this.isFirstSendDate = false;
     this.dateRangeEvent.emit(obj);
   }

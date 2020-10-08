@@ -5,6 +5,7 @@ import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, mapTo, tap } from 'rxjs/operators';
+import { ɵBrowserGetTestability } from '@angular/platform-browser';
 ///MODELS
 export class Switcher{
     contactor_override: boolean;
@@ -105,7 +106,7 @@ export class ServerService {
   }
   modeContactorStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    console.log("балансир сменился на: "+!state+" и пошел в "+str);
     let options =  {
       headers : "Content-Type = application/json",
       withCredentials :true
@@ -121,7 +122,7 @@ export class ServerService {
   }
   modeBalanceStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    console.log("балансир сменился на: "+!state+" и пошел в "+str);
     let options =  {
       headers : "Content-Type = application/json",
       withCredentials :true
@@ -137,11 +138,14 @@ export class ServerService {
     this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
   }
 
+  // Показывает, есть ли real-time
+  public IsRealTimeListener: BehaviorSubject<boolean>;
+  public IsRealTime: boolean;
   public IsAuthored;
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
-
-
+    this.IsRealTimeListener = new BehaviorSubject(true);
+    this.IsRealTimeListener.subscribe(x => this.IsRealTime = x);
   }
   boardLast:Observable<board>
   voltagesNowAll:number[][];

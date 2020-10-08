@@ -80,7 +80,6 @@ export class DashboardComponent implements OnInit {
 
     if (e.target.classList.contains('balancing')) {
       this.balancingTog = !this.balancingTog;
-      console.log("this.balancingTog", this.balancingTog);
       this.server.tgglrBalanceStateReg(this.balancingTog);
     }
   }

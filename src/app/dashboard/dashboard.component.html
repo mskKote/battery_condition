@@ -373,6 +373,7 @@
     >
       <!-- Тогглер -->
       <button
+       *ngIf="server.IsRealTime"
         id="modeContactor"
         class="indicator"
         [ngClass]="{turnAutoOn: turnModeContactor}"
@@ -381,7 +382,7 @@
       >
         А
       </button>
-      <button id="toggle_contactor" [ngClass]="{clicked: contactorTog}" (click)="onSwitch($event)">
+      <button *ngIf="server.IsRealTime" id="toggle_contactor" [ngClass]="{clicked: contactorTog}" (click)="onSwitch($event)">
         <i></i>
       </button>
       <!-- Modal -->
@@ -442,6 +443,7 @@
     >
       <!-- Тогглер -->
       <button
+        *ngIf="server.IsRealTime"
         id="modeBalancing"
         class="indicator"
         [ngClass]="{turnAutoOn: turnModeBalancing}"
@@ -450,7 +452,7 @@
       >
         А
       </button>
-      <button id="toggle_balancing" [ngClass]="{clicked: balancingTog}" (click)="onSwitch($event)">
+      <button *ngIf="server.IsRealTime" id="toggle_balancing" [ngClass]="{clicked: balancingTog}" (click)="onSwitch($event)">
         <i></i>
       </button>
       <!-- Modal -->
