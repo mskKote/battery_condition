@@ -68,7 +68,7 @@
       ></app-header>
     </mat-grid-tile>
     <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->
-    <mat-grid-tile
+    <mat-grid-tile 
       class="item"
       [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 4"
       [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 19 : 9"
@@ -77,6 +77,8 @@
       <div style="height: 100%; width: 100%">
         <mat-tab-group dynamicHeight animationDuration="0ms">
           <mat-tab label="Последнее значение">
+            <ng-template matTabContent>
+
             <ngx-charts-bar-vertical-2d
               style="height: 100%; width: 100%"
               [tooltipDisabled]="false"
@@ -109,6 +111,7 @@
                 >
               </ng-template>
             </ngx-charts-bar-vertical-2d>
+            </ng-template>
           </mat-tab>
           <mat-tab label="История">
             <ng-template matTabContent>
@@ -227,44 +230,48 @@
       <div style="height: 100%; width: 100%">
         <mat-tab-group dynamicHeight animationDuration="0ms">
           <mat-tab label="Последнее значение">
-            <ngx-charts-gauge
-              style="width: 100%; height: 80%"
-              [valueFormatting]="yAxisTickFormattingMulti2"
-              [axisTickFormatting]="batteryCharge"
-              [scheme]="colorChange_Total"
-              [startAngle]="-120"
-              [angleSpan]="240"
-              [results]="single"
-              [min]="0"
-              [max]="100"
-              [units]="'Заряд батареи'"
-            >
-            </ngx-charts-gauge>
+            <ng-template matTabContent>
+              <ngx-charts-gauge
+                style="width: 100%; height: 80%"
+                [valueFormatting]="yAxisTickFormattingMulti2"
+                [axisTickFormatting]="batteryCharge"
+                [scheme]="colorChange_Total"
+                [startAngle]="-120"
+                [angleSpan]="240"
+                [results]="single"
+                [min]="0"
+                [max]="100"
+                [units]="'Заряд батареи'"
+              >
+              </ngx-charts-gauge>
+            </ng-template>
           </mat-tab>
           <mat-tab label="История">
-            <ngx-charts-line-chart
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [xAxisLabel]="'Заряд батареи'"
-              [yAxisLabel]="'Заряд батареи'"
-              [legend]="false"
-              [scheme]="colorScheme"
-              [schemeType]="'linear'"
-              [gradient]="gradient"
-              [timeline]="showTimeline"
-              [animations]="false"
-              [roundDomains]="true"
-              [xAxis]="xAxis"
-              [yAxis]="yAxis"
-              [roundDomains]="true"
-              [animations]="false"
-              [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
-              [results]="single_ACDC"
-              [autoScale]="true"
+            <ng-template matTabContent>
 
-            >
+              <ngx-charts-line-chart
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="'Заряд батареи'"
+                [yAxisLabel]="'Заряд батареи'"
+                [legend]="false"
+                [scheme]="colorScheme"
+                [schemeType]="'linear'"
+                [gradient]="gradient"
+                [timeline]="showTimeline"
+                [animations]="false"
+                [roundDomains]="true"
+                [xAxis]="xAxis"
+                [yAxis]="yAxis"
+                [roundDomains]="true"
+                [animations]="false"
+                [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
+                [results]="single_ACDC"
+                [autoScale]="true"
+              >
             </ngx-charts-line-chart>
             <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
+            </ng-template>
           </mat-tab>
         </mat-tab-group>
       </div>
@@ -352,11 +359,9 @@
         [gradient]="gradient"
         [timeline]="showTimeline"
         [animations]="false"
-        [roundDomains]="true"
         [xAxis]="xAxis"
         [yAxis]="yAxis"
         [roundDomains]="true"
-        [animations]="false"
         [yAxisTickFormatting]="ChangeAmper"
         [results]="ACDC"
       >
