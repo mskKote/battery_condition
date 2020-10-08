@@ -104,6 +104,7 @@ export class DashboardComponent implements OnInit {
 
       this.balancingTog = !this.balancingTog;
     }
+    this.server.tgglrStateReg(this.balancingTog);
   }
 
   dateRange: any;
@@ -493,9 +494,7 @@ export class DashboardComponent implements OnInit {
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.isOverrideListener.subscribe((resp: boolean) => {
-      this.contactorTog
-    })
+
     server.IsAuthored.subscribe((resp) => (this.IsAuthored = resp));
     // this.nullify();
     // this.genGlobalCharts();
@@ -514,7 +513,10 @@ export class DashboardComponent implements OnInit {
     this.BoardLast = this.server.getLastBmsQuery();
     this.source = interval(1000);
     this.realTimeSubscription = this.source.subscribe((val) => {
-      this.BoardLast.subscribe((resp) => this.drawServerData(resp));
+      this.BoardLast.subscribe((resp:board) => {
+        this.drawServerData(resp);
+        this.server.isToggledBalancing = resp.balancing_enabled;
+      });
     });
   }
   ngOnInit() {
@@ -557,11 +559,10 @@ export class DashboardComponent implements OnInit {
     let dataArray: data[] = data.data;
     let voltages: number[] = [];
     let contactor: boolean = data.contactor0_closed;
-    this.server.isOverrideListener.next(data.contactor0_closed);
+    //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     // let contactorOverride: boolean = data.contactor_override;
     // let balancingOverride: boolean = data.balancer_override;
-
     let boardsTemp: number[] = [];
     let timestamp: number = data.timestamp;
 

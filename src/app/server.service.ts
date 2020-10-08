@@ -6,6 +6,12 @@ import { interval } from 'rxjs/internal/observable/interval';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 ///MODELS
+export class Switcher{
+    contactor_override: boolean;
+    contactor_close: boolean;
+    balancer_override: boolean;
+    balancing_enable: boolean;
+}
 export class Tokens {
   jwt: string;
   refreshToken: string;
@@ -62,18 +68,31 @@ export class ServerService {
   static BOARD_ID = '3737574e430234305d8ff36';
   // public datas: totals[];
 
-  isOverrideListener = new BehaviorSubject(false);
+  //isToggledBalancingListener = new BehaviorSubject(false);
+  isToggledBalancing;
   changedState: Observable<any>
   tgglrStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    this.changedState = this.http.post(str, {
-      // автоматический режим
-    })
+    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    let options =  {
+      headers : "Content-Type = application/json",
+      withCredentials :true
+    }
+    let switcher = new Switcher();
+    switcher.balancer_override= true;
+    switcher.balancing_enable = state;
+    switcher.contactor_close = false;
+    switcher.contactor_override = false;
+    const switcherStr=JSON.stringify(switcher);
+    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
+    this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
   }
 
   public IsAuthored;
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
+
+
   }
   boardLast:Observable<board>
   voltagesNowAll:number[][];
@@ -114,7 +133,7 @@ export class ServerService {
   private loggedUser: string;
 
   login(user:{username:string,password:string}):Observable<boolean>{
-    return this.http.post<any>(ServerService.HOST+'/login',user)
+    return this.http.post<any>(ServerService.HOST+'/api/account/login',user)
     .pipe(
       tap(tokens=> this.doLoginUser(user.username,tokens)),
       mapTo(true),

@@ -68,7 +68,7 @@
       ></app-header>
     </mat-grid-tile>
     <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->
-    <mat-grid-tile 
+    <mat-grid-tile
       class="item"
       [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 4"
       [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 19 : 9"
@@ -447,7 +447,7 @@
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        А
+        ДА
       </button>
       <button id="toggle_balancing" (click)="onSwitch($event)">
         <i></i>
@@ -508,3 +508,4 @@
     This is the single point tooltip template
   </ng-template>
 </div>
+{{server.isToggledBalancing}}
