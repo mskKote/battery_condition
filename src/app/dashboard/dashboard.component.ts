@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
-  balancingTog: boolean = true;
+  balancingTog: boolean = false;
   turnModeContactor: boolean = true;
   turnModeBalancing: boolean = true;
 
@@ -71,12 +71,18 @@ export class DashboardComponent implements OnInit {
       jQuery('#modal-balancing').modal('show');
   }
   confirmed(e: any) {
-    if (e.target.classList.contains('contactor'))
+    if (e.target.classList.contains('contactor')) {
       this.contactorTog = !this.contactorTog;
+      // ДОБАВИТЬ СЮДА ЗАПРОС С КОНТАКТОРОМ, КАК ТОЛЬКО ОН БУДЕТ
+    }
     
-    if (e.target.classList.contains('balancing')) 
+    if (e.target.classList.contains('balancing')) {
       this.balancingTog = !this.balancingTog;
+      console.log("this.balancingTog", this.balancingTog);
+      this.server.tgglrStateReg(this.balancingTog);
+    }
   }
+ 
 
   dateRange: any;
   isReceiveFirst: boolean = true;
@@ -450,9 +456,7 @@ export class DashboardComponent implements OnInit {
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.isOverrideListener.subscribe((resp: boolean) => {
-      this.contactorTog
-    })
+
     server.IsAuthored.subscribe((resp) => (this.IsAuthored = resp));
     // this.nullify();
     // this.genGlobalCharts();
@@ -471,7 +475,10 @@ export class DashboardComponent implements OnInit {
     this.BoardLast = this.server.getLastBmsQuery();
     this.source = interval(1000);
     this.realTimeSubscription = this.source.subscribe((val) => {
-      this.BoardLast.subscribe((resp) => this.drawServerData(resp));
+      this.BoardLast.subscribe((resp:board) => {
+        this.drawServerData(resp);
+        this.server.isToggledBalancing = resp.balancing_enabled;
+      });
     });
   }
   ngOnInit() {
@@ -503,22 +510,21 @@ export class DashboardComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     // Десереализация -- начало
-    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${new Date(
-      data.timestamp * 1000
-    ).getMonth()}/${new Date(data.timestamp * 1000).getFullYear()}  ${new Date(
-      data.timestamp * 1000
-    ).getHours()}:${new Date(data.timestamp * 1000).getMinutes()}:${new Date(
-      data.timestamp * 1000
-    ).getSeconds()}`;
+    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${
+        new Date(data.timestamp * 1000).getMonth()}/${
+        new Date(data.timestamp * 1000).getFullYear()}  ${
+        new Date(data.timestamp * 1000).getHours()}:${
+        new Date(data.timestamp * 1000).getMinutes()}:${
+        new Date(data.timestamp * 1000).getSeconds()}`;
+
     let newACDC = data.current_ma / 1000;
     let dataArray: data[] = data.data;
     let voltages: number[] = [];
     let contactor: boolean = data.contactor0_closed;
-    this.server.isOverrideListener.next(data.contactor0_closed);
+    //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     // let contactorOverride: boolean = data.contactor_override;
     // let balancingOverride: boolean = data.balancer_override;
-
     let boardsTemp: number[] = [];
     let timestamp: number = data.timestamp;
 
@@ -576,7 +582,6 @@ export class DashboardComponent implements OnInit {
 
     //------------------График с зарядом батареи
     this.single.push({
-      //Значение
       name: 'Заряд батареи',
       value: Math.floor(
         ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100
@@ -604,6 +609,10 @@ export class DashboardComponent implements OnInit {
       name: new Date(timestamp * 1000),
     });
     this.colorChange.domain = ['#ff0000'];
+    // Добавляем значения на тогглеры
+    this.contactorTog = contactor;
+    this.balancingTog = balancing;
+  
 
     //------------------Сила тока
     this.addTimePoint(this.ACDC, {
@@ -647,12 +656,7 @@ export class DashboardComponent implements OnInit {
     //==========================Добавление значений на графики
     let buff: any[];
     buff = this.ACDC[0].series;
-    this.ACDC = [
-      {
-        name: 'Сила тока',
-        series: [...buff],
-      },
-    ];
+    this.ACDC = [{ name: 'Сила тока', series: [...buff] }];
 
     buff = [
       this.time_temp0[0].series,
@@ -660,33 +664,15 @@ export class DashboardComponent implements OnInit {
       this.time_temp0[2].series,
     ];
     this.time_temp0 = [
-      {
-        name: 'Температура 1',
-        series: [...buff[0]],
-      },
-      {
-        name: 'Температура 2',
-        series: [...buff[1]],
-      },
-      {
-        name: 'Температура 3',
-        series: [...buff[2]],
-      },
+      { name: 'Температура 1', series: [...buff[0]] }, 
+      { name: 'Температура 2', series: [...buff[1]] },
+      { name: 'Температура 3', series: [...buff[2]] } 
     ];
     buff = this.balance[0].series;
-    this.balance = [
-      {
-        name: 'Балансировка',
-        series: [...buff],
-      },
-    ];
+    this.balance = [{ name: 'Балансировка', series: [...buff] }];
+
     buff = this.contactor[0].series;
-    this.contactor = [
-      {
-        name: 'Контактор',
-        series: [...buff],
-      },
-    ];
+    this.contactor = [{ name: 'Контактор', series: [...buff] }];
     ////////////////////////////////
     buff = [];
     for (let i = 0; i < 30; i++) {
