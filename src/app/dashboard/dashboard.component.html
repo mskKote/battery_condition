@@ -248,7 +248,6 @@
           </mat-tab>
           <mat-tab label="История">
             <ng-template matTabContent>
-
               <ngx-charts-line-chart
                 [showXAxisLabel]="showXAxisLabel"
                 [showYAxisLabel]="showYAxisLabel"
@@ -269,7 +268,7 @@
                 [results]="single_ACDC"
                 [autoScale]="true"
               >
-            </ngx-charts-line-chart>
+              </ngx-charts-line-chart>
             <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
             </ng-template>
           </mat-tab>
@@ -375,13 +374,14 @@
       <!-- Тогглер -->
       <button
         id="modeContactor"
-        class="indicator turnAutoOn"
+        class="indicator"
+        [ngClass]="{turnAutoOn: turnModeContactor}"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
         А
       </button>
-      <button id="toggle_contactor" (click)="onSwitch($event)">
+      <button id="toggle_contactor" [ngClass]="{clicked: contactorTog}" (click)="onSwitch($event)">
         <i></i>
       </button>
       <!-- Modal -->
@@ -443,13 +443,14 @@
       <!-- Тогглер -->
       <button
         id="modeBalancing"
-        class="indicator turnAutoOn"
+        class="indicator"
+        [ngClass]="{turnAutoOn: turnModeBalancing}"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
         А
       </button>
-      <button id="toggle_balancing" (click)="onSwitch($event)">
+      <button id="toggle_balancing" [ngClass]="{clicked: balancingTog}" (click)="onSwitch($event)">
         <i></i>
       </button>
       <!-- Modal -->

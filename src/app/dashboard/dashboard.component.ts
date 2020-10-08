@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
   }
 
   formatLabel(value: number) {
-    if (value >= 1000) return Math.round(value / 1000) + 'k';
+    if (value >= 1000) return value % 1000 + 'k'; //Math.round(value / 1000)
 
     return value;
   }
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean = false;
-  balancingTog: boolean = false;
+  balancingTog: boolean = true;
   turnModeContactor: boolean = true;
   turnModeBalancing: boolean = true;
 
@@ -47,28 +47,15 @@ export class DashboardComponent implements OnInit {
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
-      if (this.clickedBtnTurn.classList.contains('turnAutoOn')) {
-        this.clickedBtnTurn.classList.remove('turnAutoOn');
-        this.clickedBtnTurn.innerHTML = 'Р';
-      } else {
-        this.clickedBtnTurn.classList.add('turnAutoOn');
-        this.clickedBtnTurn.innerHTML = 'А';
-      }
+      this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'Р' : 'А';
       this.turnModeContactor = !this.turnModeContactor;
     }
-
+    
     if (this.clickedBtnTurn.id == 'modeBalancing') {
-      if (this.clickedBtnTurn.classList.contains('turnAutoOn')) {
-        this.clickedBtnTurn.classList.remove('turnAutoOn');
-        this.clickedBtnTurn.innerHTML = 'Р';
-      } else {
-        this.clickedBtnTurn.classList.add('turnAutoOn');
-        this.clickedBtnTurn.innerHTML = 'А';
-      }
+      this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'Р' : 'А';
       this.turnModeBalancing = !this.turnModeBalancing;
     }
   }
-
   onSwitch(e: any) {
     e.preventDefault();
     this.clickedBtnToggle = e.target;
@@ -76,34 +63,19 @@ export class DashboardComponent implements OnInit {
     // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
-    if (
-      this.clickedBtnToggle.id == 'toggle_contactor' &&
-      this.turnModeContactor == false
-    ) {
+    if (!this.turnModeContactor && this.clickedBtnToggle.id == 'toggle_contactor') 
       jQuery('#modal-contactor').modal('show');
-    }
-
+    
     // Проверка статуса балансировки
-    if (
-      this.clickedBtnToggle.id == 'toggle_balancing' &&
-      this.turnModeBalancing == false
-    ) {
+    if (!this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
       jQuery('#modal-balancing').modal('show');
-    }
   }
   confirmed(e: any) {
-    if (e.target.classList.contains('contactor')) {
-      if (this.contactorTog) this.clickedBtnToggle.classList.remove('clicked');
-      else this.clickedBtnToggle.classList.add('clicked');
-
+    if (e.target.classList.contains('contactor'))
       this.contactorTog = !this.contactorTog;
-    }
-    if (e.target.classList.contains('balancing')) {
-      if (this.balancingTog) this.clickedBtnToggle.classList.remove('clicked');
-      else this.clickedBtnToggle.classList.add('clicked');
-
+    
+    if (e.target.classList.contains('balancing')) 
       this.balancingTog = !this.balancingTog;
-    }
   }
 
   dateRange: any;
@@ -156,18 +128,9 @@ export class DashboardComponent implements OnInit {
 
   nullify() {
     this.time_temp0 = [
-      {
-        name: 'Температура 1',
-        series: [],
-      },
-      {
-        name: 'Температура 2',
-        series: [],
-      },
-      {
-        name: 'Температура 3',
-        series: [],
-      },
+      { name: 'Температура 1', series: [] },
+      { name: 'Температура 2', series: [] },
+      { name: 'Температура 3', series: [] },
     ];
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
@@ -175,17 +138,11 @@ export class DashboardComponent implements OnInit {
 
     for (let i = 0; i < 30; i++) {
       if (i < 10)
-        this.multi_ACDC_1_10.push({ name: 'Сила тока ' + (i + 1), series: [] });
+        this.multi_ACDC_1_10.push({  name: 'Сила тока ' + (i + 1), series: [] });
       else if (i < 20)
-        this.multi_ACDC_11_20.push({
-          name: 'Сила тока ' + (i + 1),
-          series: [],
-        });
+        this.multi_ACDC_11_20.push({ name: 'Сила тока ' + (i + 1), series: [] });
       else
-        this.multi_ACDC_21_30.push({
-          name: 'Сила тока ' + (i + 1),
-          series: [],
-        });
+        this.multi_ACDC_21_30.push({ name: 'Сила тока ' + (i + 1), series: [] });
     }
 
     this.ACDC = [{ name: 'Сила тока', series: [] }];
