@@ -5,6 +5,8 @@ import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, mapTo, tap } from 'rxjs/operators';
+import { ɵBrowserGetTestability } from '@angular/platform-browser';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 ///MODELS
 export class Switcher{
     contactor_override: boolean;
@@ -105,7 +107,7 @@ export class ServerService {
   }
   modeContactorStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    console.log("балансир сменился на: "+!state+" и пошел в "+str);
     let options =  {
       headers : "Content-Type = application/json",
       withCredentials :true
@@ -121,7 +123,7 @@ export class ServerService {
   }
   modeBalanceStateReg(state: boolean){
     const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
+    console.log("балансир сменился на: "+!state+" и пошел в "+str);
     let options =  {
       headers : "Content-Type = application/json",
       withCredentials :true
@@ -138,10 +140,14 @@ export class ServerService {
   }
 
   public IsAuthored:BehaviorSubject<boolean>;
+  // Показывает, есть ли real-time
+  public IsRealTimeListener: BehaviorSubject<boolean>;
+  public IsRealTime: boolean;
+
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
-
-
+    this.IsRealTimeListener = new BehaviorSubject(true);
+    this.IsRealTimeListener.subscribe(x => this.IsRealTime = x);
   }
   boardLast:Observable<board>
   voltagesNowAll:number[][];
@@ -164,16 +170,23 @@ export class ServerService {
     end_time = '',
     data = '10'
   ):Promise<Observable<board[]>> {
+    // Героическими усилиями осмысленно добавляем 3 часа
+    // start_time = `${+start_time + 10800}`;
+    // end_time = `${+end_time + 10800}`;
+
+    console.log(new Date(start_time), new Date(end_time));
+
     const str: string =
-      ServerService.HOST +
-      '/api/bms?' +
-      '&start_time=' +
-      start_time +
-      '&end_time=' +
-      end_time +
-      '&data=' +
-      data;
-      return this.http.get<board[]>(str);
+    ServerService.HOST +
+    '/api/bms?' +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
+    '&data=' +
+    data;
+    console.log(str);
+    return this.http.get<board[]>(str);
   }
   //LOGIN SECTION
   //

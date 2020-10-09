@@ -81,7 +81,6 @@ export class DashboardComponent implements OnInit {
 
     if (e.target.classList.contains('balancing')) {
       this.balancingTog = !this.balancingTog;
-      console.log("this.balancingTog", this.balancingTog);
       this.server.tgglrBalanceStateReg(this.balancingTog);
     }
   }
@@ -115,10 +114,14 @@ export class DashboardComponent implements OnInit {
         .then((data) =>
           data.subscribe((resp) => {
             console.group();
+            console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
             this.nullify();
+            console.groupCollapsed("Timestamps");
             for (const dataset of resp) {
               this.drawServerData(dataset);
+              console.log(dataset.timestamp);
             }
+            console.groupEnd();
             console.groupEnd();
           })
         );
@@ -471,8 +474,9 @@ export class DashboardComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     // Десереализация -- начало
-    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${
-        new Date(data.timestamp * 1000).getMonth()}/${
+    this.Now = `${
+        new Date(data.timestamp * 1000).getDate()}/${
+        new Date(data.timestamp * 1000).getMonth() + 1}/${
         new Date(data.timestamp * 1000).getFullYear()}  ${
         new Date(data.timestamp * 1000).getHours()}:${
         new Date(data.timestamp * 1000).getMinutes()}:${
