@@ -5,20 +5,20 @@ import { AppComponent } from './app.component';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-
 export const routes: Routes = [
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
 
-
-    {path: 'dashboard',
-    component: DashboardComponent, canActivate:[AuthGuard]},
-    {path:'auth',
-    component:AuthComponent,
-
-    canLoad:[AuthGuard]
+    canLoad: [AuthGuard],
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },
-
 ];
 
 const config: ExtraOptions = {
@@ -29,5 +29,4 @@ const config: ExtraOptions = {
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

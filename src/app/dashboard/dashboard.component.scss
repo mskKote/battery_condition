@@ -59,8 +59,8 @@ md-tab{
 	}
 }
 #toggle_contactor.clicked, #toggle_balancing.clicked{
-	border-color: #29B5A8;
-	background-color: #29B5A8;
+	border-color: red;
+	background-color: red;
 	i{ left: 16px; }
 }
 // Индикация переключения авторежима
@@ -68,7 +68,7 @@ md-tab{
 	position: absolute;
 	outline: none;
 	border: none;
-	background-color: #29B5A8;
+	background-color: red;
 	bottom: 40px;
 	left: 4px;
 	width: 50px;
@@ -82,5 +82,5 @@ md-tab{
 	opacity: .6;
 }
 .turnAutoOn {
-	background-color: red;
+	background-color: #29B5A8;
 }

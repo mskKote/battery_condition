@@ -1,11 +1,61 @@
-<div class="login">
-  <div class="login-triangle"></div>
-
-  <h2 class="login-header">Log in</h2>
-
-  <form class="login-container">
-    <p><input type="email" placeholder="Email"></p>
-    <p><input type="password" placeholder="Password"></p>
-    <p><input type="submit" (submit)="signIn($event)" value="Log in"></p>
-  </form>
-</div>
+<mat-card>
+  <mat-card-title>Авторизируйтесь</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="authForm" (submit)="signIn($event)">
+      <mat-form-field>
+        <mat-label>Логин</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="username"
+          [ngClass]="{
+            invalid:
+              authForm.get('username').invalid &&
+              authForm.get('username').touched
+          }"
+        />
+        <mat-error
+          *ngIf="
+            authForm.get('username').invalid && authForm.get('username').touched
+          "
+          >{{
+            authForm.get("username").getError("required")
+              ? 'Поле "логин" не должно быть пустым'
+              : ""
+          }}</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Пароль</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          [ngClass]="{
+            invalid:
+              authForm.get('password').invalid &&
+              authForm.get('password').touched
+          }"
+        />
+        <mat-error
+          *ngIf="
+            authForm.get('password').invalid && authForm.get('password').touched
+          "
+          >{{
+            authForm.get("password").getError("required")
+              ? 'Поле "пароль" не должно быть пустым'
+              : ""
+          }}</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="authForm.invalid"
+        type="submit"
+      >
+        Войти
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
