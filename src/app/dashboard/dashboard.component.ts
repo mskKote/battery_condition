@@ -20,6 +20,7 @@ export interface Tile {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  IsAuthored: any;
   receiveStatusRealTime(e: any) {
     this.nullify();
     this.realTimeSubscription.unsubscribe();
@@ -410,56 +411,14 @@ export class DashboardComponent implements OnInit {
   }
   //---------------------------------------------------Аутентификация
 
-  loginForm: FormGroup;
-  TryAuth($event) {
-    console.log('object :>> ', $event);
-  }
-
-  initForm(): void {
-    this.loginForm = this.fb.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$'
-          ),
-        ],
-      ],
-      password: ['', Validators.required],
-    });
-  }
-
-  isValidInput(fieldName): boolean {
-    return (
-      this.loginForm.controls[fieldName].invalid &&
-      (this.loginForm.controls[fieldName].dirty ||
-        this.loginForm.controls[fieldName].touched)
-    );
-  }
-
-  IsAuthored;
-  IsWrong = false;
-  login(): void {
-    if (
-      this.loginForm.value.email == 'battery@condition.ru' &&
-      this.loginForm.value.password == '12354'
-    ) {
-      this.server.IsAuthored.next(true);
-      this.IsWrong = false;
-    } else {
-      this.IsWrong = true;
-    }
-  }
-
   //---------------------------------------------------Старт
   constructor(
-    private fb: FormBuilder,
+
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-
     server.IsAuthored.subscribe((resp) => (this.IsAuthored = resp));
+
     // this.nullify();
     // this.genGlobalCharts();
   }
@@ -487,7 +446,7 @@ export class DashboardComponent implements OnInit {
     // Запрос -- ТЕСТ -- начало
     this.intrvalSub();
     // Запрос -- ТЕСТ -- конец
-    this.initForm();
+
     this.breakpointObserver
       .observe(Breakpoints.Small)
       .subscribe((resp) => (this.isSmallScreen = resp.matches));

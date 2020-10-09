@@ -7,12 +7,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private server: ServerService,private router: Router){ }
+  IsAuthored:boolean;
+  constructor(private server: ServerService,private router: Router){
+    server.IsAuthored.subscribe((resp)=>this.IsAuthored = resp);
+   }
   canActivate(){
-   if(this.server.isLoggedIn()){
+
+    console.log("can activate says: "+ this.IsAuthored.valueOf());
+   if(!this.IsAuthored.valueOf()){
      this.router.navigate(['/auth']);
    }
-   return !this.server.isLoggedIn();}
+   return this.IsAuthored;}
   }
 
 

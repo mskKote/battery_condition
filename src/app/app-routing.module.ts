@@ -10,10 +10,10 @@ export const routes: Routes = [
 
 
     {path: 'dashboard',
-    component: DashboardComponent},
+    component: DashboardComponent, canActivate:[AuthGuard]},
     {path:'auth',
     component:AuthComponent,
-    canActivate:[AuthGuard],
+
     canLoad:[AuthGuard]
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

@@ -1,47 +1,5 @@
-<div *ngIf="IsAuthored" class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-12 align-self-center">
-      <h1 class="page-title">Login</h1>
-      <form (ngSubmit)="login()" [formGroup]="loginForm">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" formControlName="email" />
-        </div>
-        <div *ngIf="isValidInput('email')" class="alert alert-danger">
-          <div *ngIf="loginForm.controls['email'].errors.required">
-            Email is required.
-          </div>
-          <div *ngIf="loginForm.controls['email'].errors.pattern">
-            Must be a valid email format.
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
-        </div>
-        <div *ngIf="isValidInput('password')" class="alert alert-danger">
-          <div *ngIf="loginForm.controls['password'].errors.required">
-            Password is required.
-          </div>
-        </div>
-
-        <button
-          [disabled]="!loginForm.valid"
-          type="submit"
-          class="btn btn-primary"
-        >
-          Sign In
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-<div *ngIf="!IsAuthored">
+<div >
   <mat-grid-list gutterSize="20px" cols="6" rowHeight="4:1">
     <mat-grid-tile
       class="item"

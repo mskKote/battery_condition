@@ -137,7 +137,7 @@ export class ServerService {
     this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
   }
 
-  public IsAuthored;
+  public IsAuthored:BehaviorSubject<boolean>;
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
 
@@ -182,7 +182,7 @@ export class ServerService {
   private loggedUser: string;
 
   login(user:{username:string,password:string}):Observable<boolean>{
-    return this.http.post<any>(ServerService.HOST+'/api/account/login',user)
+    return this.http.post<any>(ServerService.HOST+'/api/account/login',JSON.stringify(user))
     .pipe(
       tap(tokens=> this.doLoginUser(user.username,tokens)),
       mapTo(true),
@@ -206,15 +206,19 @@ export class ServerService {
   private doLogoutUser() {
     this.loggedUser = null;
     this.removeTokens();
+
   }
   private removeTokens() {
     localStorage.removeItem(this.JWT_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
+    this.IsAuthored.next(false);
   }
 
   private doLoginUser(username: string, tokens: Tokens) {
     this.loggedUser = username;
     this.storeTokens(tokens);
+    console.log("tokens:"+tokens+"user: "+username);
+    this.IsAuthored.next(true);
   }
   private storeTokens(tokens: Tokens) {
     localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
@@ -233,14 +237,13 @@ export class ServerService {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: Tokens) => {
       this.storeJwtToken(tokens.jwt);
+
     }));
   }
   private storeJwtToken(jwt: string) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
   }
   //проверка - зареган ли пользователь
-  isLoggedIn(){
-    return 5;
-  }
+
 
 }
