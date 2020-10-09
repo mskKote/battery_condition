@@ -168,13 +168,13 @@ export class ServerService {
   async getDataQuery(
     start_time = '1000',
     end_time = '',
-    data = '10'
+    data = '100'
   ):Promise<Observable<board[]>> {
     // Героическими усилиями осмысленно добавляем 3 часа
     // start_time = `${+start_time + 10800}`;
     // end_time = `${+end_time + 10800}`;
 
-    console.log(new Date(start_time), new Date(end_time));
+    console.log(new Date(+start_time*1000), new Date(+end_time*1000));
 
     const str: string =
     ServerService.HOST +
@@ -182,10 +182,8 @@ export class ServerService {
     '&start_time=' +
     start_time +
     '&end_time=' +
-    end_time +
-    '&data=' +
-    data;
-    console.log(str);
+    end_time;
+    console.log('REQUEST URL >> ', str);
     return this.http.get<board[]>(str);
   }
   //LOGIN SECTION
