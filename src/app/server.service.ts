@@ -6,6 +6,7 @@ import { interval } from 'rxjs/internal/observable/interval';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ɵBrowserGetTestability } from '@angular/platform-browser';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 ///MODELS
 export class Switcher{
     contactor_override: boolean;
@@ -168,16 +169,23 @@ export class ServerService {
     end_time = '',
     data = '10'
   ):Promise<Observable<board[]>> {
+    // Героическими усилиями осмысленно добавляем 3 часа
+    // start_time = `${+start_time + 10800}`;
+    // end_time = `${+end_time + 10800}`;
+
+    console.log(new Date(start_time), new Date(end_time));
+    
     const str: string =
-      ServerService.HOST +
-      '/api/bms?' +
-      '&start_time=' +
-      start_time +
-      '&end_time=' +
-      end_time +
-      '&data=' +
-      data;
-      return this.http.get<board[]>(str);
+    ServerService.HOST +
+    '/api/bms?' +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
+    '&data=' +
+    data;
+    console.log(str);
+    return this.http.get<board[]>(str);
   }
   //LOGIN SECTION
   //

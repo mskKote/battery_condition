@@ -113,10 +113,14 @@ export class DashboardComponent implements OnInit {
         .then((data) =>
           data.subscribe((resp) => {
             console.group();
+            console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
             this.nullify();
+            console.groupCollapsed("Timestamps");
             for (const dataset of resp) {
               this.drawServerData(dataset);
+              console.log(dataset.timestamp);
             }
+            console.groupEnd();
             console.groupEnd();
           })
         );
