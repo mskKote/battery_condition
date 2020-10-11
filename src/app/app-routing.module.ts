@@ -9,14 +9,14 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'auth',
-  //   component: AuthComponent,
+  {
+    path: 'auth',
+    component: AuthComponent,
 
-  //   canLoad: [AuthGuard],
-  // },
+    canLoad: [AuthGuard],
+  },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },
 ];

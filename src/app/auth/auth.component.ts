@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
       username: event.target[0].value,
       password: event.target[1].value
     }
-    this.server.login(user);
+    this.server.login(user).subscribe((resp) => console.log(resp));
     console.log('User >> ', user);
   }
 }
