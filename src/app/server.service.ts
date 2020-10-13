@@ -190,15 +190,16 @@ export class ServerService {
   //
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+  private readonly IS_AUTH = 'IS_AUTH';
   private loggedUser: string;
 
   login(user:{username:string,password:string}):Observable<boolean>{
     return this.http.post<any>(ServerService.HOST+'/api/account/login',JSON.stringify(user))
     .pipe(
-      tap(tokens=> this.doLoginUser(user.username,tokens)),
+      tap(tokens=> this.doLoginUser(user.username,{jwt: tokens.access_token, refreshToken: tokens.refresh_token})),
       mapTo(true),
       catchError(error=>{
-        alert(error.error);
+        console.log(error.error);
         return of(false);
       })
     )
@@ -210,7 +211,7 @@ export class ServerService {
       tap(() => this.doLogoutUser()),
       mapTo(true),
       catchError(error => {
-        alert(error.error);
+        console.log(error.error);
         return of(false);
       }));
   }
@@ -234,6 +235,8 @@ export class ServerService {
   private storeTokens(tokens: Tokens) {
     localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
     localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+    this.IsAuthored.next(true);
+    localStorage.setItem(this.IS_AUTH, `${this.IsAuthored.getValue()}`);
   }
   private getRefreshToken() {
     return localStorage.getItem(this.REFRESH_TOKEN);
@@ -241,6 +244,10 @@ export class ServerService {
 
   getJwtToken() {
     return localStorage.getItem(this.JWT_TOKEN);
+  }
+
+  getUserStatus(): boolean {
+    return !!localStorage.getItem(this.IS_AUTH);
   }
 
   refreshToken() {

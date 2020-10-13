@@ -14,7 +14,6 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-
     canLoad: [AuthGuard],
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

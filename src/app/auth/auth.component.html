@@ -1,4 +1,10 @@
-<mat-card>
+<mat-card class="allready-auth" *ngIf="isAuth">
+  <mat-card-content>
+    <h1>Вы уже авторизованы</h1>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!isAuth">
   <mat-card-title>Авторизируйтесь</mat-card-title>
   <mat-card-content>
     <form [formGroup]="authForm" (submit)="signIn($event)">
@@ -20,7 +26,7 @@
           "
           >{{
             authForm.get("username").getError("required")
-              ? 'Поле "логин" не должно быть пустым'
+              ? 'Не введён логин'
               : ""
           }}</mat-error
         >
@@ -43,7 +49,7 @@
           "
           >{{
             authForm.get("password").getError("required")
-              ? 'Поле "пароль" не должно быть пустым'
+              ? 'Не введён пароль'
               : ""
           }}</mat-error
         >
