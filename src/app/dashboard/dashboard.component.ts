@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
     if (this.clickedBtnTurn.id == 'modeBalancing') {
       this.turnModeBalancing = !this.turnModeBalancing;
       this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'A' : 'P';
-      this.server.modeBalanceStateReg(this.turnModeBalancing);
+      this.server.modeBalancerStateReg(this.turnModeBalancing);
     }
   }
   onSwitch(e: any) {
@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
 
     if (e.target.classList.contains('balancing')) {
       this.balancingTog = !this.balancingTog;
-      this.server.tgglrBalanceStateReg(this.balancingTog);
+      this.server.tgglrBalancerStateReg(this.balancingTog);
     }
   }
 

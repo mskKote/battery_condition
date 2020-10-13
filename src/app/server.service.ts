@@ -1,4 +1,3 @@
-
 import { Host, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
@@ -8,11 +7,19 @@ import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ɵBrowserGetTestability } from '@angular/platform-browser';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 ///MODELS
-export class Switcher{
-    contactor_override: boolean;
-    contactor_close: boolean;
-    balancer_override: boolean;
-    balancing_enable: boolean;
+// export class Switcher{
+//     contactor_override: boolean;
+//     contactor_close: boolean;
+//     balancer_override: boolean;
+//     balancing_enable: boolean;
+// }
+export class Contactor {
+  contactor_override: boolean;
+  contactor_close: boolean;
+}
+export class Balancer {
+  balancer_override: boolean;
+  balancing_enable: boolean;
 }
 export class Tokens {
   jwt: string;
@@ -39,7 +46,7 @@ export interface data {
   // bms_id: number;
   board_temperature: number;
   created_at: string;
-  voltages: number[]
+  voltages: number[];
   // temperatures: number[];
   // timestamp: Timestamp<number>;
 }
@@ -66,80 +73,96 @@ export interface data {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST     = 'http://80.89.235.39';
+  static HOST = 'http://80.89.235.39';
   static BOARD_ID = '3737574e430234305d8ff36';
   // public datas: totals[];
 
   //isToggledBalancingListener = new BehaviorSubject(false);
   isToggledBalancing;
-  changedState: Observable<any>
-  tgglrBalanceStateReg(state: boolean){
-    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
-    let options =  {
-      headers : "Content-Type = application/json",
-      withCredentials :true
-    }
-    let switcher = new Switcher();
-    switcher.balancer_override= true;
-    switcher.balancing_enable = state;
-    switcher.contactor_close = false;
-    switcher.contactor_override = false;
-    const switcherStr=JSON.stringify(switcher);
-    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
-    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  changedState: Observable<any>;
+  tgglrContactorStateReg(state: boolean) {
+    const str: string =
+      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
+    console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
+    let options = {
+      headers: 'Content-Type = application/json',
+      withCredentials: true,
+    };
+    let contactor = new Contactor();
+    contactor.contactor_close = state;
+    contactor.contactor_override = true;
+    const switcherStr = JSON.stringify(contactor);
+    this.changedState = this.http.post(
+      'http://80.89.235.39/api/contactor/3737574e430234305d8ff36',
+      switcherStr
+    );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
-  tgglrContactorStateReg(state: boolean){
-    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+state+" и пошел в "+str);
-    let options =  {
-      headers : "Content-Type = application/json",
-      withCredentials :true
-    }
-    let switcher = new Switcher();
-    switcher.balancer_override= false;
-    switcher.balancing_enable = false;
-    switcher.contactor_close = state;
-    switcher.contactor_override = true;
-    const switcherStr=JSON.stringify(switcher);
-    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
-    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  tgglrBalancerStateReg(state: boolean) {
+    const str: string =
+      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
+    console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
+    let options = {
+      headers: 'Content-Type = application/json',
+      withCredentials: true,
+    };
+    let balancer = new Balancer();
+    balancer.balancer_override = true;
+    balancer.balancing_enable = state;
+    const switcherStr = JSON.stringify(balancer);
+    this.changedState = this.http.post(
+      'http://80.89.235.39/api/balancer/3737574e430234305d8ff36',
+      switcherStr
+    );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
-  modeContactorStateReg(state: boolean){
-    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+!state+" и пошел в "+str);
-    let options =  {
-      headers : "Content-Type = application/json",
-      withCredentials :true
-    }
-    let switcher = new Switcher();
-    switcher.balancer_override= false;
-    switcher.balancing_enable = false;
-    switcher.contactor_close = false;
-    switcher.contactor_override = !state;
-    const switcherStr=JSON.stringify(switcher);
-    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
-    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  modeContactorStateReg(state: boolean) {
+    const str: string =
+      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
+    console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
+    let options = {
+      headers: 'Content-Type = application/json',
+      withCredentials: true,
+    };
+    let contactor = new Contactor();
+    contactor.contactor_close = false;
+    contactor.contactor_override = !state;
+    const switcherStr = JSON.stringify(contactor);
+    this.changedState = this.http.post(
+      'http://80.89.235.39/api/contactor/3737574e430234305d8ff36',
+      switcherStr
+    );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
-  modeBalanceStateReg(state: boolean){
-    const str: string = ServerService.HOST + '/api/switcher/' + ServerService.BOARD_ID;
-    console.log("балансир сменился на: "+!state+" и пошел в "+str);
-    let options =  {
-      headers : "Content-Type = application/json",
-      withCredentials :true
-    }
-    let switcher = new Switcher();
-    console.log(state);
-    switcher.balancer_override= !state;
-    switcher.balancing_enable = false;
-    switcher.contactor_close = false;
-    switcher.contactor_override = false;
-    const switcherStr=JSON.stringify(switcher);
-    this.changedState =  this.http.post("http://80.89.235.39/api/switcher/3737574e430234305d8ff36", switcherStr);
-    this.isToggledBalancing = this.changedState.subscribe((resp)=> console.log("balancer changed: "+state));
+  modeBalancerStateReg(state: boolean) {
+    const str: string =
+      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
+    console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
+    let options = {
+      headers: 'Content-Type = application/json',
+      withCredentials: true,
+    };
+    let balancer = new Balancer();
+    balancer.balancer_override = !state;
+    balancer.balancing_enable = false;
+    const switcherStr = JSON.stringify(balancer);
+    console.log(balancer);
+    this.changedState = this.http.post(
+      'http://80.89.235.39/api/balancer/3737574e430234305d8ff36',
+      switcherStr
+    );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
 
-  public IsAuthored:BehaviorSubject<boolean>;
+  public IsAuthored: BehaviorSubject<boolean>;
   // Показывает, есть ли real-time
   public IsRealTimeListener: BehaviorSubject<boolean>;
   public IsRealTime: boolean;
@@ -147,42 +170,40 @@ export class ServerService {
   constructor(public http: HttpClient) {
     this.IsAuthored = new BehaviorSubject(false);
     this.IsRealTimeListener = new BehaviorSubject(true);
-    this.IsRealTimeListener.subscribe(x => this.IsRealTime = x);
+    this.IsRealTimeListener.subscribe((x) => (this.IsRealTime = x));
   }
-  boardLast:Observable<board>
-  voltagesNowAll:number[][];
+  boardLast: Observable<board>;
+  voltagesNowAll: number[][];
 
   public static end: Date;
   public static start: Date;
   // запрос на сервер с помощью фетча
-  getLastBmsQuery():Observable<board> {
-
+  getLastBmsQuery(): Observable<board> {
     //output: 0,1,2,3,4,5....
     const str: string = 'http://80.89.235.39/api/bms/last';
     this.boardLast = this.http.get<board>(str);
 
-    return this.boardLast
+    return this.boardLast;
   }
-
 
   async getDataQuery(
     start_time = '1000',
     end_time = '',
     data = '100'
-  ):Promise<Observable<board[]>> {
+  ): Promise<Observable<board[]>> {
     // Героическими усилиями осмысленно добавляем 3 часа
     // start_time = `${+start_time + 10800}`;
     // end_time = `${+end_time + 10800}`;
 
-    console.log(new Date(+start_time*1000), new Date(+end_time*1000));
+    console.log(new Date(+start_time * 1000), new Date(+end_time * 1000));
 
     const str: string =
-    ServerService.HOST +
-    '/api/bms?' +
-    '&start_time=' +
-    start_time +
-    '&end_time=' +
-    end_time;
+      ServerService.HOST +
+      '/api/bms?' +
+      '&start_time=' +
+      start_time +
+      '&end_time=' +
+      end_time;
     console.log('REQUEST URL >> ', str);
     return this.http.get<board[]>(str);
   }
@@ -193,32 +214,43 @@ export class ServerService {
   private readonly IS_AUTH = 'IS_AUTH';
   private loggedUser: string;
 
-  login(user:{username:string,password:string}):Observable<boolean>{
-    return this.http.post<any>(ServerService.HOST+'/api/account/login',JSON.stringify(user))
-    .pipe(
-      tap(tokens=> this.doLoginUser(user.username,{jwt: tokens.access_token, refreshToken: tokens.refresh_token})),
-      mapTo(true),
-      catchError(error=>{
-        console.log(error.error);
-        return of(false);
-      })
-    )
+  login(user: { username: string; password: string }): Observable<boolean> {
+    return this.http
+      .post<any>(
+        ServerService.HOST + '/api/account/login',
+        JSON.stringify(user)
+      )
+      .pipe(
+        tap((tokens) =>
+          this.doLoginUser(user.username, {
+            jwt: tokens.access_token,
+            refreshToken: tokens.refresh_token,
+          })
+        ),
+        mapTo(true),
+        catchError((error) => {
+          console.log(error.error);
+          return of(false);
+        })
+      );
   }
   logout() {
-    return this.http.post<any>(ServerService.HOST+'/logout', {
-      'refreshToken': this.getRefreshToken()
-    }).pipe(
-      tap(() => this.doLogoutUser()),
-      mapTo(true),
-      catchError(error => {
-        console.log(error.error);
-        return of(false);
-      }));
+    return this.http
+      .post<any>(ServerService.HOST + '/logout', {
+        refreshToken: this.getRefreshToken(),
+      })
+      .pipe(
+        tap(() => this.doLogoutUser()),
+        mapTo(true),
+        catchError((error) => {
+          console.log(error.error);
+          return of(false);
+        })
+      );
   }
   private doLogoutUser() {
     this.loggedUser = null;
     this.removeTokens();
-
   }
   private removeTokens() {
     localStorage.removeItem(this.JWT_TOKEN);
@@ -229,7 +261,7 @@ export class ServerService {
   private doLoginUser(username: string, tokens: Tokens) {
     this.loggedUser = username;
     this.storeTokens(tokens);
-    console.log("tokens:"+tokens+"user: "+username);
+    console.log('tokens:' + tokens + 'user: ' + username);
     this.IsAuthored.next(true);
   }
   private storeTokens(tokens: Tokens) {
@@ -251,17 +283,18 @@ export class ServerService {
   }
 
   refreshToken() {
-    return this.http.post<any>(ServerService.HOST+'/refresh', {
-      'refreshToken': this.getRefreshToken()
-    }).pipe(tap((tokens: Tokens) => {
-      this.storeJwtToken(tokens.jwt);
-
-    }));
+    return this.http
+      .post<any>(ServerService.HOST + '/refresh', {
+        refreshToken: this.getRefreshToken(),
+      })
+      .pipe(
+        tap((tokens: Tokens) => {
+          this.storeJwtToken(tokens.jwt);
+        })
+      );
   }
   private storeJwtToken(jwt: string) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
   }
   //проверка - зареган ли пользователь
-
-
 }
