@@ -14,27 +14,42 @@
           matInput
           type="text"
           formControlName="username"
+          (focus)="onFocus()"
           [ngClass]="{
             invalid:
               authForm.get('username').invalid &&
               authForm.get('username').touched
           }"
         />
-        <mat-error
+        <mat-error>
+          <span *ngIf="authForm.get('username').invalid && authForm.get('username').touched">
+            <span *ngIf="authForm.get('username').getError('required')">Не введён логин</span>
+            <span *ngIf="authForm.get('username').getError('incorrectData')">Некорректный логин или пароль</span>
+            <!-- <span *ngIf="incorrectDataCode == 100">Некорректный логин или пароль</span> -->
+          </span>
+        </mat-error>
+        <!-- <mat-error *ngIf="incorrectData">
+          <span *ngIf="incorrectData">Некорректный логин или пароль</span>
+        </mat-error> -->
+        <!-- <mat-error
           *ngIf="
-            authForm.get('username').invalid && authForm.get('username').touched
+            authForm.get('username').invalid && authForm.get('username').touched || incorrectData
           "
-          >{{
-            authForm.get("username").getError("required")
-              ? 'Не введён логин'
-              : ""
-          }}</mat-error
         >
+          <span *ngIf="authForm.get('username').getError('required')"
+            >Не введён логин</span
+          >
+          <span *ngIf="incorrectData">Некорректный логин или пароль</span>
+        </mat-error> -->
+        <!-- <mat-error *ngIf="incorrectData">
+          <span *ngIf="incorrectData">Некорректный логин или пароль</span>
+        </mat-error> -->
       </mat-form-field>
       <mat-form-field>
         <mat-label>Пароль</mat-label>
         <input
           matInput
+          (focus)="onFocus()"
           type="password"
           formControlName="password"
           [ngClass]="{
@@ -43,16 +58,27 @@
               authForm.get('password').touched
           }"
         />
-        <mat-error
+        <mat-error>
+          <span *ngIf="authForm.get('password').invalid && authForm.get('password').touched">
+            <span *ngIf="authForm.get('password').getError('required')">Не введён логин</span>
+            <span *ngIf="authForm.get('password').getError('incorrectData')">Некорректный логин или пароль</span>
+            <span *ngIf="authForm.get('password').getError('incorrectPassword')">Некорректный пароль</span>
+            <!-- <span *ngIf="incorrectDataCode == 100">Некорректный логин или пароль</span>
+            <span *ngIf="incorrectDataCode == 305">Некорректный пароль</span> -->
+          </span>
+        </mat-error>
+        <!-- <mat-error
           *ngIf="
             authForm.get('password').invalid && authForm.get('password').touched
           "
-          >{{
-            authForm.get("password").getError("required")
-              ? 'Не введён пароль'
-              : ""
-          }}</mat-error
         >
+          <span *ngIf="authForm.get('password').getError('required')"
+            >Не введён пароль</span
+          >
+        </mat-error>
+        <mat-error *ngIf="incorrectData">
+          <span>Некорректный логин или пароль</span>
+        </mat-error> -->
       </mat-form-field>
       <button
         mat-raised-button

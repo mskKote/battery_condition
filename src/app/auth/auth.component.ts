@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { ServerService } from 'src/app/server.service';
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -33,9 +34,20 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  // isSubmitted = false;
+  onFocus() {
+    switch(this.incorrectDataCode){
+      case 100:
+        this.authForm.controls['username'].setErrors(null)
+        this.authForm.controls['password'].setErrors(null)
+        break;
+      case 305:
+        this.authForm.controls['password'].setErrors(null)
+        break;
+    }
+  }
+
+  incorrectDataCode: number;
   signIn(event: any) {
-    // this.isSubmitted = true;
     let user = {
       username: event.target[0].value,
       password: event.target[1].value
@@ -47,6 +59,18 @@ export class AuthComponent implements OnInit {
       this.server.login(user).subscribe((resp) => {
         if(resp){
           this.router.navigate(['dashboard'])
+        } else {
+          this.incorrectDataCode = this.server.loginError.code;
+
+          switch(this.incorrectDataCode){
+            case 100:
+              this.authForm.controls['username'].setErrors({'incorrectData': true})
+              this.authForm.controls['password'].setErrors({'incorrectData': true})
+              break;
+            case 305:
+              this.authForm.controls['password'].setErrors({'incorrectPassword': true})
+              break;
+          }
         }
       });
     }

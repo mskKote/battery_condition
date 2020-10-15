@@ -13,8 +13,8 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public server: ServerService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-console.log("mew"+request.url+
-this.server.IsAuthored.getValue());
+// console.log("mew"+request.url+
+// this.server.IsAuthored.getValue());
     if (this.server.getJwtToken()) {
       if(this.server.IsAuthored.getValue()==false){
         this.handle401Error(request,next);
