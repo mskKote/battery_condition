@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
   confirmed(e: any) {
     if (e.target.classList.contains('contactor')) {
       this.contactorTog = !this.contactorTog;
-      // ДОБАВИТЬ СЮДА ЗАПРОС С КОНТАКТОРОМ, КАК ТОЛЬКО ОН БУДЕТ
+      this.server.tgglrContactorStateReg(this.contactorTog);
     }
 
     if (e.target.classList.contains('balancing')) {

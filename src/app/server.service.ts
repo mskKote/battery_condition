@@ -81,9 +81,10 @@ export class ServerService {
   isToggledBalancing;
   changedState: Observable<any>;
   tgglrContactorStateReg(state: boolean) {
+    // 'http://80.89.235.39/api/contactor/3737574e430234305d8ff36/'
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
-    console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
+    // console.log('contactor сменился на: ' + state + ' и пошел в ' + str);
     let options = {
       headers: 'Content-Type = application/json',
       withCredentials: true,
@@ -91,19 +92,16 @@ export class ServerService {
     let contactor = new Contactor();
     contactor.contactor_close = state;
     contactor.contactor_override = true;
-    const switcherStr = JSON.stringify(contactor);
-    this.changedState = this.http.post(
-      'http://80.89.235.39/api/contactor/3737574e430234305d8ff36/',
-      switcherStr
-    );
-    this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
-    );
+    const contactorStr = JSON.stringify(contactor);
+    this.changedState = this.http.post(str, contactorStr);
+    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
+    //   console.log('contactor changed: ' + state)
+    // );
   }
   tgglrBalancerStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
-    console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
+    // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
     let options = {
       headers: 'Content-Type = application/json',
       withCredentials: true,
@@ -111,19 +109,16 @@ export class ServerService {
     let balancer = new Balancer();
     balancer.balancer_override = true;
     balancer.balancing_enable = state;
-    const switcherStr = JSON.stringify(balancer);
-    this.changedState = this.http.post(
-      'http://80.89.235.39/api/balancer/3737574e430234305d8ff36/',
-      switcherStr
-    );
-    this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
-    );
+    const balancerStr = JSON.stringify(balancer);
+    this.changedState = this.http.post(str, balancerStr);
+    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
+    //   console.log('balancer changed: ' + state)
+    // );
   }
   modeContactorStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
-    console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
+    // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
     let options = {
       headers: 'Content-Type = application/json',
       withCredentials: true,
@@ -131,19 +126,16 @@ export class ServerService {
     let contactor = new Contactor();
     contactor.contactor_close = false;
     contactor.contactor_override = state;
-    const switcherStr = JSON.stringify(contactor);
-    this.changedState = this.http.post(
-      'http://80.89.235.39/api/contactor/3737574e430234305d8ff36/',
-      switcherStr
-    );
-    this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
-    );
+    const contactorStr = JSON.stringify(contactor);
+    this.changedState = this.http.post(str, contactorStr);
+    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
+    //   console.log('balancer changed: ' + state)
+    // );
   }
   modeBalancerStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
-    console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
+    // console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
     let options = {
       headers: 'Content-Type = application/json',
       withCredentials: true,
@@ -151,15 +143,12 @@ export class ServerService {
     let balancer = new Balancer();
     balancer.balancer_override = !state;
     balancer.balancing_enable = false;
-    const switcherStr = JSON.stringify(balancer);
+    const balancerStr = JSON.stringify(balancer);
     console.log(balancer);
-    this.changedState = this.http.post(
-      'http://80.89.235.39/api/balancer/3737574e430234305d8ff36/',
-      switcherStr
-    );
-    this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
-    );
+    this.changedState = this.http.post(str, balancerStr);
+    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
+    //   console.log('balancer changed: ' + state)
+    // );
   }
 
   public IsAuthored: BehaviorSubject<boolean>;
@@ -214,7 +203,7 @@ export class ServerService {
   private readonly IS_AUTH = 'IS_AUTH';
   private loggedUser: string;
 
-  loginError: any
+  loginError: any;
   login(user: { username: string; password: string }): Observable<boolean> {
     return this.http
       .post<any>(
