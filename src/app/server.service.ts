@@ -73,7 +73,8 @@ export interface data {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST = 'http://80.89.235.39';
+  // static HOST = 'http://80.89.235.39';
+  static HOST = 'http://localhost:4200/api';
   static BOARD_ID = '3737574e430234305d8ff36';
   // public datas: totals[];
 
@@ -169,7 +170,7 @@ export class ServerService {
   // запрос на сервер с помощью фетча
   getLastBmsQuery(): Observable<board> {
     //output: 0,1,2,3,4,5....
-    const str: string = 'http://80.89.235.39/api/bms/last';
+    const str: string = ServerService.HOST + '/api/bms/last';
     this.boardLast = this.http.get<board>(str);
 
     return this.boardLast;
