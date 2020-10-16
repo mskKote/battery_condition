@@ -172,6 +172,8 @@ export class ServerService {
     //output: 0,1,2,3,4,5....
     const str: string = ServerService.HOST + '/api/bms/last';
     this.boardLast = this.http.get<board>(str);
+    // console.log('bms last resp >> ', this.boardLast);
+    // this.boardLast.pipe(tap((resp) => {console.log('bms last resp >> ', resp);}))
 
     return this.boardLast;
   }
@@ -276,11 +278,17 @@ export class ServerService {
 
   refreshToken() {
     return this.http
-      .post<any>(ServerService.HOST + '/refresh', {
-        refreshToken: this.getRefreshToken(),
-      })
+      .post<any>('http://localhost:4200/api/api/account/tokens/update', {
+          access_token: this.getJwtToken(),
+          refresh_token: this.getRefreshToken(),
+        })
+      // .post<any>(ServerService.HOST + '/account/tokens/update', {
+      //   access_token: this.getJwtToken(),
+      //   refresh_token: this.getRefreshToken(),
+      // })
       .pipe(
         tap((tokens: Tokens) => {
+          console.log('tokens >> ', tokens);
           this.storeJwtToken(tokens.jwt);
         })
       );

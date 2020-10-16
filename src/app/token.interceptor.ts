@@ -1,7 +1,7 @@
 import { ServerService } from './server.service';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
 @Injectable()
@@ -50,9 +50,14 @@ export class TokenInterceptor implements HttpInterceptor {
           this.refreshTokenSubject.next(token.jwt);
           this.server.IsAuthored.next(true);
           return next.handle(this.addToken(request, token.jwt));
-        }));
-
+        }),
+        catchError((err) => {
+          console.log('h401E catch err >> ', err);
+          return of(null);
+        })
+      );
     } else {
+      // console.log('isRefreshing >> ', this.isRefreshing);
       return this.refreshTokenSubject.pipe(
         filter(token => token != null),
         take(1),
