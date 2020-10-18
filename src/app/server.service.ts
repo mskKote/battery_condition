@@ -75,7 +75,7 @@ export interface data {
 export class ServerService {
   // static HOST = 'http://80.89.235.39';
   static HOST = 'http://localhost:4200/api';
-  static BOARD_ID = '3737574e430234305d8ff36';
+  static BOARD_ID = '3737574e430234305d8ff36/';
   // public datas: totals[];
 
   //isToggledBalancingListener = new BehaviorSubject(false);
@@ -86,70 +86,70 @@ export class ServerService {
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
     // console.log('contactor сменился на: ' + state + ' и пошел в ' + str);
-    let options = {
-      headers: 'Content-Type = application/json',
-      withCredentials: true,
-    };
+    // let options = {
+    //   headers: 'Content-Type = application/json',
+    //   withCredentials: true,
+    // };
     let contactor = new Contactor();
     contactor.contactor_close = state;
     contactor.contactor_override = true;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
-    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
-    //   console.log('contactor changed: ' + state)
-    // );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('contactor changed: ' + state)
+    );
   }
   tgglrBalancerStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
-    let options = {
-      headers: 'Content-Type = application/json',
-      withCredentials: true,
-    };
+    // let options = {
+    //   headers: 'Content-Type = application/json',
+    //   withCredentials: true,
+    // };
     let balancer = new Balancer();
     balancer.balancer_override = true;
     balancer.balancing_enable = state;
     const balancerStr = JSON.stringify(balancer);
     this.changedState = this.http.post(str, balancerStr);
-    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
-    //   console.log('balancer changed: ' + state)
-    // );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
   modeContactorStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
-    let options = {
-      headers: 'Content-Type = application/json',
-      withCredentials: true,
-    };
+    // let options = {
+    //   headers: 'Content-Type = application/json',
+    //   withCredentials: true,
+    // };
     let contactor = new Contactor();
     contactor.contactor_close = false;
     contactor.contactor_override = state;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
-    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
-    //   console.log('balancer changed: ' + state)
-    // );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
   modeBalancerStateReg(state: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
     // console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
-    let options = {
-      headers: 'Content-Type = application/json',
-      withCredentials: true,
-    };
+    // let options = {
+    //   headers: 'Content-Type = application/json',
+    //   withCredentials: true,
+    // };
     let balancer = new Balancer();
     balancer.balancer_override = !state;
     balancer.balancing_enable = false;
     const balancerStr = JSON.stringify(balancer);
     console.log(balancer);
     this.changedState = this.http.post(str, balancerStr);
-    // this.isToggledBalancing = this.changedState.subscribe((resp) =>
-    //   console.log('balancer changed: ' + state)
-    // );
+    this.isToggledBalancing = this.changedState.subscribe((resp) =>
+      console.log('balancer changed: ' + state)
+    );
   }
 
   public IsAuthored: BehaviorSubject<boolean>;
@@ -278,7 +278,7 @@ export class ServerService {
 
   refreshToken() {
     return this.http
-      .post<any>('http://localhost:4200/api/api/account/tokens/update', {
+      .post<any>(ServerService.HOST + '/api/account/tokens/update', {
           access_token: this.getJwtToken(),
           refresh_token: this.getRefreshToken(),
         })
@@ -288,8 +288,10 @@ export class ServerService {
       // })
       .pipe(
         tap((tokens: Tokens) => {
-          console.log('tokens >> ', tokens);
-          this.storeJwtToken(tokens.jwt);
+          // console.log('tokens refresh >> ', tokens);
+          this.storeTokens(tokens)
+          // console.log('tokens >> ', tokens);
+          // this.storeJwtToken(tokens.jwt);
         })
       );
   }

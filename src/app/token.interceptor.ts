@@ -1,6 +1,7 @@
+import { Router } from '@angular/router';
 import { ServerService } from './server.service';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
@@ -10,7 +11,8 @@ export class TokenInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(public server: ServerService) { }
+  constructor(public server: ServerService,
+              private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
 // console.log("mew"+request.url+
@@ -32,10 +34,20 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
+    // let headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${token}`,
+    //   'Access-Control-Request-Headers': 'accept, authorization, content-type',
+    //   'Origin': 'http://80.89.235.39'
+    // })
+    // let opts = {
+    //   headers: headers
+    // }
     return request.clone({
-      setHeaders: {
-        'Authorization': `Bearer ${token}`
-      }
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        // 'Access-Control-Request-Headers': 'accept, authorization, content-type',
+        // 'Origin': 'http://localhost:4200'
+      })
     });
   }
 
@@ -53,6 +65,9 @@ export class TokenInterceptor implements HttpInterceptor {
         }),
         catchError((err) => {
           console.log('h401E catch err >> ', err);
+          this.isRefreshing = false;
+          localStorage.clear();
+          this.router.navigate(['auth'])
           return of(null);
         })
       );
