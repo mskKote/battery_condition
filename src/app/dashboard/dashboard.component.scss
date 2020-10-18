@@ -4,83 +4,106 @@
   background-color: rgb(255, 255, 255);
 }
 :host ::ng-deep .mat-tab-body-wrapper {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   height: 100%;
-
 }
 
 :host ::ng-deep .mat-tab-body.mat-tab-body-active {
-  height: 100%
-
+  height: 100%;
 }
-md-tab{
+md-tab {
   height: 100vh !important;
-  }
-  .mat-tab-group{
-    height: 100%;
+}
+.mat-tab-group {
+  height: 100%;
 }
 .mat-tab-body-wrapper {
-    flex-grow: 1;
+  flex-grow: 1;
 }
-.component{ height: 100%; }
+.component {
+  height: 100%;
+}
 .mat-tab-body {
-    display: flex !important;
-    flex-direction: column;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .mat-tab-body-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
-#toggle_contactor, #toggle_balancing{
-	position: absolute;
-	bottom: 9px;
-	left: 4px;
-	width: 50px;
-	height: 30px;
-	border-radius: 10px;
-	border: solid 2px #A5A5A5;
-	background-color: #A5A5A5;
-	outline: none;
 
-	i{
-		pointer-events: none;
-		display: block;
-		position: relative;
-		top: 0;
-		left: -2px;
-		width: 20px;
-		height: 20px;
-		border-radius: 7px;
-		background-color: #fff;
-
-		transition: .2s;
-	}
+mat-tab{
+	padding-top: 15px !important;
 }
-#toggle_contactor.clicked, #toggle_balancing.clicked{
-	border-color: red;
-	background-color: red;
-	i{ left: 16px; }
+
+.delta-last {
+  position: absolute;
+  top : -10px;
+  left: 64px;
+	border-radius: 5px;
+	border: 2px solid #f9bc60;
+	background-color: #ffd803;
+	color: whitesmoke;
+	padding: 2px 5px;
+	font-weight: bold;
+//   z-index: 10 !important;
+}
+
+#toggle_contactor,
+#toggle_balancing {
+  position: absolute;
+  bottom: 9px;
+  left: 4px;
+  width: 50px;
+  height: 30px;
+  border-radius: 10px;
+  border: solid 2px #a5a5a5;
+  background-color: #a5a5a5;
+  outline: none;
+
+  i {
+    pointer-events: none;
+    display: block;
+    position: relative;
+    top: 0;
+    left: -2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 7px;
+    background-color: #fff;
+
+    transition: 0.2s;
+  }
+}
+#toggle_contactor.clicked,
+#toggle_balancing.clicked {
+  border-color: red;
+  background-color: red;
+  i {
+    left: 16px;
+  }
 }
 // Индикация переключения авторежима
 .indicator {
-	position: absolute;
-	outline: none;
-	border: none;
-	background-color: red;
-	bottom: 40px;
-	left: 4px;
-	width: 50px;
-	height: 20px;
-	border-radius: 20px;
-	color: white;
-	font-weight: bold;
+  position: absolute;
+  outline: none;
+  border: none;
+  background-color: red;
+  bottom: 40px;
+  left: 4px;
+  width: 50px;
+  height: 20px;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
 }
-.indicator.unactive, #toggle_contactor.unactive{
-	pointer-events: none;
-	opacity: .6;
+.indicator.unactive,
+#toggle_contactor.unactive {
+  pointer-events: none;
+  opacity: 0.6;
 }
 .turnAutoOn {
-	background-color: #29B5A8;
+  background-color: #29b5a8;
 }

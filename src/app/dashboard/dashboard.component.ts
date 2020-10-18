@@ -97,14 +97,14 @@ export class DashboardComponent implements OnInit {
 
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
-      console.log(
-        Math.floor(+this.dateRange['start'] / 1000),
-        Math.floor(+this.dateRange['end'] / 1000)
-      );
-      console.log(
-        `start: ${new Date(+this.dateRange['start'])}`,
-        `end: ${new Date(+this.dateRange['end'])}`
-      );
+      // console.log(
+      //   Math.floor(+this.dateRange['start'] / 1000),
+      //   Math.floor(+this.dateRange['end'] / 1000)
+      // );
+      // console.log(
+      //   `start: ${new Date(+this.dateRange['start'])}`,
+      //   `end: ${new Date(+this.dateRange['end'])}`
+      // );
       this.server
         .getDataQuery(
           `${Math.floor(+this.dateRange['start'] / 1000)}`,
@@ -113,8 +113,8 @@ export class DashboardComponent implements OnInit {
         )
         .then((data) =>
           data.subscribe((resp) => {
-            console.group();
-            console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
+            // console.group();
+            // console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
             this.nullify();
             // console.groupCollapsed("Timestamps");
             for (const dataset of resp) {
@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit {
               // console.log(dataset.timestamp);
             }
             // console.groupEnd();
-            console.groupEnd();
+            // console.groupEnd();
           })
         );
     }
@@ -147,6 +147,8 @@ export class DashboardComponent implements OnInit {
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
     this.multi_ACDC_21_30 = [];
+    
+    this.deltaLast = 0.0;
 
     for (let i = 0; i < 30; i++) {
       if (i < 10)
@@ -157,11 +159,12 @@ export class DashboardComponent implements OnInit {
         this.multi_ACDC_21_30.push({ name: 'Сила тока ' + (i + 1), series: [] });
     }
 
-    this.ACDC = [{ name: 'Сила тока', series: [] }];
-    this.single_ACDC = [{ name: 'Заряд батареи', series: [] }];
-    this.balance = [{ name: 'Балансировка', series: [] }];
-    this.contactor = [{ name: 'Контактор', series: [] }];
-    this.multi = [];
+    this.ACDC =         [{ name: 'Сила тока', series: [] }];
+    this.single_ACDC =  [{ name: 'Заряд батареи', series: [] }];
+    this.balance =      [{ name: 'Балансировка', series: [] }];
+    this.contactor =    [{ name: 'Контактор', series: [] }];
+    this.delta =        [{ name: 'ΔV', series: [] }];  
+    this.multi =  [];
     this.single = [];
   }
 
@@ -242,6 +245,9 @@ export class DashboardComponent implements OnInit {
   single_ACDC: any[] = [];
   batteries: any[] = new Array(30);
   tooltipText = 'Батарея №';
+
+  deltaLast: number = 0.0;
+  delta: any[] = [];
 
   //---------------------------------------------------Раздел генерации значений
   // static randomDate(start: Date, end: Date): Date {
@@ -412,16 +418,13 @@ export class DashboardComponent implements OnInit {
     let buff = chart;
     chart = buff;
   }
-  //---------------------------------------------------Аутентификация
 
   //---------------------------------------------------Старт
   constructor(
-
     public server: ServerService,
     private breakpointObserver: BreakpointObserver
   ) {
-    server.IsAuthored.subscribe((resp) => (this.IsAuthored = resp));
-
+    server.IsAuthored.subscribe(resp => this.IsAuthored = resp);
     // this.nullify();
     // this.genGlobalCharts();
   }
@@ -504,26 +507,36 @@ export class DashboardComponent implements OnInit {
     // console.groupCollapsed('data from JSON')
 
     //console.log('dataArray >> ', dataArray);
-    // console.log('voltages :>> ', voltages);
     // console.log('newACDC >> ', newACDC);
-
     // console.log('contactor >> ', contactor);
     // console.log('balancing >> ', balancing);
     // console.log('contactorOverride >> ', contactorOverride);
     // console.log('balancingOverride >> ', balancingOverride);
     // console.log('timestamp >> ', timestamp);
     // console.groupEnd()
+    let min = voltages[0], max = voltages[0];
+    for (let i = 1; i < voltages.length; i++) {
+      if (min > voltages[i]) min = voltages[i];
+      else if (max < voltages[i]) max = voltages[i];
+    }
     // Десереализация -- конец
     if (this.isFirst) {
       this.nullify();
       this.isFirst = false;
     }
+    //------------------Дельты
+    this.deltaLast = +(max - min).toFixed(2);
+    this.addTimePoint(this.delta, {
+      value: `${this.deltaLast}`,//Math.floor(this.deltaLast * 100) / 100
+      name: new Date(timestamp * 1000),
+    });
+    //------------------График с зарядом батареи
     this.multi = [];
     this.single = [];
     let total_voltage_value = 0;
     // Графикс c 30 батареями и total_voltage
     for (let j = 0; j < voltages.length; j += 2) {
-      const battery1 = voltages[j]; // 1 батарейка
+      const battery1 = voltages[j];     // 1 батарейка
       const battery2 = voltages[j + 1]; // 2 батарейка
 
       this.multi.push({
@@ -545,12 +558,9 @@ export class DashboardComponent implements OnInit {
       total_voltage_value += battery1 + battery2;
     }
 
-    //------------------График с зарядом батареи
     this.single.push({
       name: 'Заряд батареи',
-      value: Math.floor(
-        ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100
-      ),
+      value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100)
     });
     this.addTimePoint(this.single_ACDC, {
       value: `${total_voltage_value}`,
@@ -623,6 +633,9 @@ export class DashboardComponent implements OnInit {
     buff = this.ACDC[0].series;
     this.ACDC = [{ name: 'Сила тока', series: [...buff] }];
 
+    buff = this.delta[0].series;
+    this.delta = [{ name: 'ΔV', series: [...buff] }];
+
     buff = [
       this.time_temp0[0].series,
       this.time_temp0[1].series,
@@ -641,9 +654,9 @@ export class DashboardComponent implements OnInit {
     ////////////////////////////////
     buff = [];
     for (let i = 0; i < 30; i++) {
-      if (i < 10) buff.push(this.multi_ACDC_1_10[i].series);
+      if (i < 10)      buff.push(this.multi_ACDC_1_10[i].series);
       else if (i < 20) buff.push(this.multi_ACDC_11_20[i % 10].series);
-      else buff.push(this.multi_ACDC_21_30[i % 10].series);
+      else             buff.push(this.multi_ACDC_21_30[i % 10].series);
     }
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
@@ -669,12 +682,10 @@ export class DashboardComponent implements OnInit {
 
     ////////////////////////////////
     buff = this.single_ACDC[0].series;
-    this.single_ACDC = [
-      {
+    this.single_ACDC = [{
         name: 'Заряд батареи',
         series: [...buff],
-      },
-    ];
+    }];
   }
 
   getArrY(min: number, max: number, dist: number) {
