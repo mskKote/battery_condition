@@ -24,6 +24,9 @@ export class AuthComponent implements OnInit {
     if(status){
       this.isAuth = status;
     }
+    // if(){
+    //   this.realTimeSubscription.unsubscribe();
+    // }
   }
 
   authForm: FormGroup
