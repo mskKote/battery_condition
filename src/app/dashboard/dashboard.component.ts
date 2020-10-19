@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.isLastValTab = false;
     }
-    console.log(e);
+    // console.log(e);
   }
 
   IsAuthored: any;

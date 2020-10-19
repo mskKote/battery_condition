@@ -33,21 +33,22 @@ md-tab {
   flex-grow: 1;
 }
 
-.lastValTab{
-  padding-top: 1.5rem !important;
+.chartChargeWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding-top: 1.5rem;
 }
-
 .delta-last {
   position: absolute;
-  top : 53px;
-  // left: 64px;
+  top: 53px;
   right: 17px;
-	border-radius: 3px;
-	border: 2px solid #f9bc60;
-	background-color: #ffd803;
-	color: whitesmoke;
-	padding: 2px 5px;
-	font-weight: bold;
+  border-radius: 3px;
+  border: 2px solid #338d7c;
+  background-color: #3ba894;
+  color: whitesmoke;
+  padding: 2px 5px;
+  font-weight: bold;
   z-index: 300;
 }
 
