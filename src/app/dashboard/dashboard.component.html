@@ -35,8 +35,8 @@
     <div style="height: 100%; width: 100%">
       <mat-tab-group dynamicHeight animationDuration="0ms">
         <mat-tab label="Последнее значение">
-          <p class="delta-last">ΔV {{deltaLast}}</p>
-            <ng-template matTabContent>
+          <ng-template matTabContent>
+            <p class="delta-last">ΔV {{deltaLast}}</p>
             <ngx-charts-bar-vertical-2d
               style="height: 100%; width: 100%"
               [tooltipDisabled]="false"
