@@ -4,10 +4,9 @@
   background-color: rgb(255, 255, 255);
 }
 :host ::ng-deep .mat-tab-body-wrapper {
-  margin-top: 1.5rem;
+  // margin-top: 1.5rem;
   height: 100%;
 }
-
 :host ::ng-deep .mat-tab-body.mat-tab-body-active {
   height: 100%;
 }
@@ -32,6 +31,10 @@ md-tab {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.lastValTab{
+  padding-top: 1.5rem !important;
 }
 
 .delta-last {

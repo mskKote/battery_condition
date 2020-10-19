@@ -20,6 +20,16 @@ export interface Tile {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  isLastValTab: boolean = true;
+  chooseTab(e: any){
+    if(!e.index) {
+      this.isLastValTab = true;
+    } else {
+      this.isLastValTab = false;
+    }
+    console.log(e);
+  }
+
   IsAuthored: any;
   receiveStatusRealTime(e: any) {
     this.nullify();

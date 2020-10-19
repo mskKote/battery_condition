@@ -1,5 +1,4 @@
-
-<div >
+<div>
   <mat-grid-list gutterSize="20px" cols="6" rowHeight="4:1">
     <mat-grid-tile
       class="item"
@@ -31,44 +30,52 @@
       [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 4"
       [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 19 : 9"
     >
-    <!-- пары батареек -->
-    <p class="delta-last" title="Последнее значение дельты заряда батарей">ΔV {{deltaLast}}</p>
-    <div style="height: 100%; width: 100%">
-      <mat-tab-group dynamicHeight animationDuration="0ms">
-        <mat-tab label="Последнее значение">
-          <ng-template matTabContent>
-            <ngx-charts-bar-vertical-2d
-              style="height: 100%; width: 100%"
-              [tooltipDisabled]="false"
-              [roundDomains]="true"
-              [yAxisTicks]="yAxisTicksArr"
-              [yAxisTickFormatting]="yAxisTickFormattingMulti"
-              [trimYAxisTicks]="false"
-              [scheme]="colorScheme"
-              [schemeType]="schemeType"
-              [noBarWhenZero]="noBarWhenZero"
-              [barPadding]="2"
-              [animations]="false"
-              [groupPadding]="4"
-              [results]="multi"
-              [gradient]="gradient"
-              [xAxis]="showXAxis"
-              [yAxis]="showYAxis"
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [showGridLines]="showGridLines"
-              [roundDomains]="roundDomains"
-              [xAxisLabel]="xAxisLabel"
-              [yAxisLabel]="yAxisLabel"
-              [rotateXAxisTicks]="rotateXAxisTicks"
-            >
-              <ng-template #tooltipTemplate let-model="model">
-                <p style="margin-top: 1rem">{{ tooltipText + model.number }}</p>
-                <pre style="color: whitesmoke"
-                  >{{ (model.value + 1.75).toFixed(2) }} V</pre
-                >
-              </ng-template>
-            </ngx-charts-bar-vertical-2d>
+      <!-- пары батареек -->
+      <p
+        *ngIf="isLastValTab"
+        class="delta-last"
+        title="Последнее значение дельты заряда батарей"
+      >
+        ΔV {{ deltaLast }}
+      </p>
+      <div style="height: 100%; width: 100%">
+        <mat-tab-group dynamicHeight animationDuration="0ms">
+          <mat-tab class="lastValTab" label="Последнее значение">
+            <ng-template matTabContent>
+              <ngx-charts-bar-vertical-2d
+                style="height: 100%; width: 100%"
+                [tooltipDisabled]="false"
+                [roundDomains]="true"
+                [yAxisTicks]="yAxisTicksArr"
+                [yAxisTickFormatting]="yAxisTickFormattingMulti"
+                [trimYAxisTicks]="false"
+                [scheme]="colorScheme"
+                [schemeType]="schemeType"
+                [noBarWhenZero]="noBarWhenZero"
+                [barPadding]="2"
+                [animations]="false"
+                [groupPadding]="4"
+                [results]="multi"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [showGridLines]="showGridLines"
+                [roundDomains]="roundDomains"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                [rotateXAxisTicks]="rotateXAxisTicks"
+              >
+                <ng-template #tooltipTemplate let-model="model">
+                  <p style="margin-top: 1rem">
+                    {{ tooltipText + model.number }}
+                  </p>
+                  <pre style="color: whitesmoke"
+                    >{{ (model.value + 1.75).toFixed(2) }} V</pre
+                  >
+                </ng-template>
+              </ngx-charts-bar-vertical-2d>
             </ng-template>
           </mat-tab>
           <mat-tab label="История">
@@ -246,7 +253,7 @@
                 [autoScale]="true"
               >
               </ngx-charts-line-chart>
-            <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
+              <!-- [scheme]="{domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE']}" -->
             </ng-template>
           </mat-tab>
         </mat-tab-group>
@@ -350,16 +357,21 @@
     >
       <!-- Тогглер -->
       <button
-       *ngIf="server.IsRealTime"
+        *ngIf="server.IsRealTime"
         id="modeContactor"
         class="indicator"
-        [ngClass]="{turnAutoOn: turnModeContactor}"
+        [ngClass]="{ turnAutoOn: turnModeContactor }"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
         А
       </button>
-      <button *ngIf="server.IsRealTime" id="toggle_contactor" [ngClass]="{clicked: contactorTog}" (click)="onSwitch($event)">
+      <button
+        *ngIf="server.IsRealTime"
+        id="toggle_contactor"
+        [ngClass]="{ clicked: contactorTog }"
+        (click)="onSwitch($event)"
+      >
         <i></i>
       </button>
       <!-- Modal -->
@@ -423,13 +435,18 @@
         *ngIf="server.IsRealTime"
         id="modeBalancing"
         class="indicator"
-        [ngClass]="{turnAutoOn: turnModeBalancing}"
+        [ngClass]="{ turnAutoOn: turnModeBalancing }"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
         А
       </button>
-      <button *ngIf="server.IsRealTime" id="toggle_balancing" [ngClass]="{clicked: balancingTog}" (click)="onSwitch($event)">
+      <button
+        *ngIf="server.IsRealTime"
+        id="toggle_balancing"
+        [ngClass]="{ clicked: balancingTog }"
+        (click)="onSwitch($event)"
+      >
         <i></i>
       </button>
       <!-- Modal -->
