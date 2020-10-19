@@ -34,21 +34,18 @@ md-tab {
   flex-grow: 1;
 }
 
-mat-tab{
-	padding-top: 15px !important;
-}
-
 .delta-last {
   position: absolute;
-  top : -10px;
-  left: 64px;
-	border-radius: 5px;
+  top : 53px;
+  // left: 64px;
+  right: 17px;
+	border-radius: 3px;
 	border: 2px solid #f9bc60;
 	background-color: #ffd803;
 	color: whitesmoke;
 	padding: 2px 5px;
 	font-weight: bold;
-//   z-index: 10 !important;
+  z-index: 300;
 }
 
 #toggle_contactor,
