@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   IsAuthored: any;
   receiveStatusRealTime(e: any) {
     this.nullify();
-    this.realTimeSubscription.unsubscribe();
+    this.source.unsubscribe();
     this.intrvalSub();
   }
 
@@ -100,8 +100,13 @@ export class DashboardComponent implements OnInit {
   isReceiveFirst: boolean = true;
   receiveDateRange(event: any) {
     if (!this.isReceiveFirst) {
-      this.realTimeSubscription.unsubscribe();
+      // this.realTimeSubscription.next(false);
+      if(this.source){
+        console.log(this.source);
+        this.source.unsubscribe();
+      }
       // this.isRealTime = false;
+      this.server.IsRealTimeListener.next(false);
 
       this.isFirst = true;
 
@@ -446,12 +451,10 @@ export class DashboardComponent implements OnInit {
   isSmallScreen;
   isXSmallScreen;
 
-  realTimeSubscription: Subscription;
   source;
   intrvalSub() {
     this.BoardLast = this.server.getLastBmsQuery();
-    this.source = interval(1000);
-    this.realTimeSubscription = this.source.subscribe((val) => {
+    this.source = interval(1000).subscribe((val) => {
       this.BoardLast.subscribe((resp:board) => {
         this.drawServerData(resp);
       });
