@@ -22,6 +22,7 @@
         (activateRealTimeEvent)="receiveStatusRealTime($event)"
         [lastTime]="Now"
         (dateRangeEvent)="receiveDateRange($event)"
+        (sendBatteryIndexEvent)="receiveBatteryIndex($event)"
       ></app-header>
     </mat-grid-tile>
     <!-- <app-header (dateRangeEvent)="receiveDateRange($event)" (sendBatteryIndexEvent)="receiveBatteryIndex($event)"></app-header></mat-grid-tile> -->

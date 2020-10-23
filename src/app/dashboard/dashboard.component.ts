@@ -147,10 +147,12 @@ export class DashboardComponent implements OnInit {
     // this.genGlobalCharts(this.dateRange.start, this.dateRange.end);
   }
 
-  batteryIndex: number;
-  receiveBatteryIndex(index: number) {
-    this.batteryIndex = index;
-    console.log(this.batteryIndex);
+  // batteryIndex: string;
+  receiveBatteryIndex(index: string) {
+    // this.batteryIndex = index;
+    console.log(index);
+    this.isFirst = true;
+    ServerService.BOARD_ID = index;
   }
 
   nullify() {

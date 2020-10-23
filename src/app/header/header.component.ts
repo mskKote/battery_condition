@@ -20,9 +20,8 @@ export class HeaderComponent implements OnInit {
     this.server.IsRealTimeListener.next(true); 
 
     this.clickedBtnRT = e.target;
-    if(!this.realTimeWorks){
+    if(!this.realTimeWorks)
       this.realTimeWorks = true;
-    }
 
     this.activateRealTimeEvent.emit(true);
   }
@@ -51,11 +50,21 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  constructor(private server: ServerService) {}
+  constructor(public server: ServerService) {
+    this.server.getBoardsIds()
+    .then((data) =>
+      data.subscribe(ids => {
+        server.boards_ids = ids;
+        for (const id of ids) {
+          console.log('id :>> ', id);
+        }
+      })
+    );
+  }
 
   range = new FormGroup({
     start: new FormControl(),
-    end: new FormControl(),
+    end:   new FormControl()
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange(tRange: any) {
@@ -115,9 +124,8 @@ export class HeaderComponent implements OnInit {
 
   elClicked: any;
   clickFilter(e: any) {
-    if (this.elClicked) {
+    if (this.elClicked)
       this.elClicked.classList.remove('clicked');
-    }
 
     this.elClicked = e.target;
     this.elClicked.classList.add('clicked');
@@ -133,7 +141,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() lastTime;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.maxDate.setDate(this.maxDate.getDate());
   }
 
@@ -146,5 +154,4 @@ export class HeaderComponent implements OnInit {
     new Date().getTime() - 60000 * 10 * 6 * 24 * 7 * 4, // 1 месяц
   ];
 
-  batteryIndex = [1,2,3];
 }

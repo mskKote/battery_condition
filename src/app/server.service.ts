@@ -75,16 +75,23 @@ export interface data {
 export class ServerService {
 //  static HOST = 'http://80.89.235.39';
   static HOST = 'http://localhost:4200/api';
-  static BOARD_ID = '3737574e430234305d8ff36/';
+  static BOARD_ID = '3737574e430234305d8ff36';
   // public datas: totals[];
+  public boards_ids = ['3737574e430234305d8ff36'];
+  async getBoardsIds(): Promise<Observable<string[]>> {
 
+    const URL: string = ServerService.HOST + '/api/bms/boards_ids'; // Поменять URL
+
+    console.log('REQUEST URL >> ', URL);
+    return this.http.get<string[]>(URL);
+  }
   //isToggledBalancingListener = new BehaviorSubject(false);
   isToggledBalancing;
   changedState: Observable<any>;
   tgglrContactorStateReg(state: boolean) {
     // 'http://80.89.235.39/api/contactor/3737574e430234305d8ff36/'
     const str: string =
-      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
+      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID + '/';
     // console.log('contactor сменился на: ' + state + ' и пошел в ' + str);
     // let options = {
     //   headers: 'Content-Type = application/json',
@@ -101,7 +108,7 @@ export class ServerService {
   }
   tgglrBalancerStateReg(state: boolean) {
     const str: string =
-      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
+      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
     // let options = {
     //   headers: 'Content-Type = application/json',
@@ -118,7 +125,7 @@ export class ServerService {
   }
   modeContactorStateReg(state: boolean) {
     const str: string =
-      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID;
+      ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
     // let options = {
     //   headers: 'Content-Type = application/json',
@@ -135,7 +142,7 @@ export class ServerService {
   }
   modeBalancerStateReg(state: boolean) {
     const str: string =
-      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID;
+      ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
     // let options = {
     //   headers: 'Content-Type = application/json',

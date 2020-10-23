@@ -1,13 +1,13 @@
-<!-- <mat-form-field>
+<mat-form-field>
   <mat-label>Батарея №</mat-label>
   <mat-select>
-    <mat-option *ngFor="let num of [1, 2, 3]" [value]="num">
-      <button (click)="clickFilter($event);sendBatteryIndex(batteryIndex[num]);" type="button" class="btn btn-link" [value]="num">
-      Батарея №{{num}}
+    <mat-option *ngFor="let num of server.boards_ids" [value]="num">
+      <button (click)="clickFilter($event);sendBatteryIndex(server.boards_ids[num]);" type="button" class="btn btn-link" [value]="num">
+      {{num}}
       </button>
     </mat-option>
   </mat-select>
-</mat-form-field> -->
+</mat-form-field>
 
 <br />
 
