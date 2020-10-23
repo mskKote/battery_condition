@@ -1,9 +1,8 @@
 import { ServerService, board, data } from '../server.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription, Timestamp } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
@@ -107,14 +106,15 @@ export class DashboardComponent implements OnInit {
 
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
-      // console.log(
-      //   Math.floor(+this.dateRange['start'] / 1000),
-      //   Math.floor(+this.dateRange['end'] / 1000)
-      // );
-      // console.log(
-      //   `start: ${new Date(+this.dateRange['start'])}`,
-      //   `end: ${new Date(+this.dateRange['end'])}`
-      // );
+      console.log(
+        Math.floor(+this.dateRange['start'] / 1000),
+        Math.floor(+this.dateRange['end'] / 1000),
+        Math.floor(+this.dateRange['end'] / 1000) - Math.floor(+this.dateRange['start'] / 1000) 
+      );
+      console.log(
+        `start: ${new Date(+this.dateRange['start'])}`,
+        `end: ${new Date(+this.dateRange['end'])}`
+      );
       this.server
         .getDataQuery(
           `${Math.floor(+this.dateRange['start'] / 1000)}`,
