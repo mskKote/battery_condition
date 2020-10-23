@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit {
       // this.isRealTime = false;
       this.server.IsRealTimeListener.next(false);
 
-      this.isFirst = true;
+      this.nullify();
 
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
@@ -151,7 +151,7 @@ export class DashboardComponent implements OnInit {
   receiveBatteryIndex(index: string) {
     // this.batteryIndex = index;
     console.log(index);
-    this.isFirst = true;
+    this.nullify()
     ServerService.BOARD_ID = index;
   }
 
@@ -463,6 +463,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.nullify();
     // Запрос -- ТЕСТ -- начало
     this.intrvalSub();
     // Запрос -- ТЕСТ -- конец
@@ -487,7 +488,6 @@ export class DashboardComponent implements OnInit {
     // setInterval(() => { this.request(); } , 1000)
   }
   Now: string;
-  isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     // Десереализация -- начало
@@ -534,10 +534,6 @@ export class DashboardComponent implements OnInit {
       else if (max < voltages[i]) max = voltages[i];
     }
     // Десереализация -- конец
-    if (this.isFirst) {
-      this.nullify();
-      this.isFirst = false;
-    }
     //------------------Дельты
     this.deltaLast = +(max - min).toFixed(2);
     this.addTimePoint(this.delta, {

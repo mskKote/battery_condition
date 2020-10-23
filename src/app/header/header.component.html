@@ -1,26 +1,48 @@
 <mat-form-field>
   <mat-label>Батарея №</mat-label>
-  <mat-select>
+  <mat-select [(value)]="server.boards_ids[0]">
     <mat-option *ngFor="let num of server.boards_ids" [value]="num">
-      <button (click)="clickFilter($event);sendBatteryIndex(server.boards_ids[num]);" type="button" class="btn btn-link" [value]="num">
-      {{num}}
+      <button
+        (click)="sendBatteryIndex(server.boards_ids[num])"
+        type="button"
+        class="btn btn-link"
+        [value]="num"
+      >
+        {{ num }}
       </button>
     </mat-option>
   </mat-select>
 </mat-form-field>
 
-<br />
+<!-- <br /> -->
 
 <mat-form-field>
-  <mat-label >За последние...</mat-label>
+  <mat-label>За последние...</mat-label>
   <mat-select>
-
-    <mat-option *ngFor="let time of ['1 минута', '10 минут', '1 час', '1 день', '1 неделя', '1 месяц']; let i = index" [value]="time">
-      <button  (click)="clickFilter($event); sendDateRange(timeRange[i]);" [value]="timeRange[i]" type="button" class="btn btn-link" [value]="time">
-        {{time}}
+    <mat-option
+      *ngFor="
+        let time of [
+          '1 минута',
+          '10 минут',
+          '1 час',
+          '1 день',
+          '1 неделя',
+          '1 месяц'
+        ];
+        let i = index
+      "
+      [value]="time"
+    >
+      <button
+        (click)="clickFilter($event); sendDateRange(timeRange[i])"
+        [value]="timeRange[i]"
+        type="button"
+        class="btn btn-link"
+        [value]="time"
+      >
+        {{ time }}
       </button>
     </mat-option>
-
   </mat-select>
 </mat-form-field>
 
@@ -42,29 +64,41 @@
     />
   </mat-date-range-input>
 
-
-
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
 
-<br>
+<br />
 <!-- container - timepickers -->
-<div class="cont-tp"> 
-  <app-timepicker-start (timeStartEvent)="receiveTimeStart($event)" id="start-time" class="timepicker"></app-timepicker-start>
-  <app-timepicker-end   (timeEndEvent)="receiveTimeEnd($event)" id="end-time"   class="timepicker"></app-timepicker-end>
+<div class="cont-tp">
+  <app-timepicker-start
+    (timeStartEvent)="receiveTimeStart($event)"
+    id="start-time"
+    class="timepicker"
+  ></app-timepicker-start>
+  <app-timepicker-end
+    (timeEndEvent)="receiveTimeEnd($event)"
+    id="end-time"
+    class="timepicker"
+  ></app-timepicker-end>
 </div>
 
 <!-- <hr> -->
 
 <!-- <h2 style="color: gray; margin-top: 1rem;"> -->
-  <!-- <div> -->
-    <p class="last-change">
-      <span style="margin-left:auto;" *ngIf="realTimeWorks" >Последнее изменение:</span>
-      <span class="timepicker" *ngIf="realTimeWorks" > {{lastTime}}</span>
-    </p>
-    <button class="toRealTime" 
-      [ngClass]="{realTimeActive: realTimeWorks}" 
-      (click)="toRealTime($event)">{{ realTimeBtnText }}</button>
-  <!-- </div> -->
+<!-- <div> -->
+<p class="last-change">
+  <span style="margin-left: auto" *ngIf="realTimeWorks"
+    >Последнее изменение:</span
+  >
+  <span class="timepicker" *ngIf="realTimeWorks"> {{ lastTime }}</span>
+</p>
+<button
+  class="toRealTime"
+  [ngClass]="{ realTimeActive: realTimeWorks }"
+  (click)="toRealTime($event)"
+>
+  {{ realTimeBtnText }}
+</button>
+<!-- </div> -->
 <!-- </h2> -->

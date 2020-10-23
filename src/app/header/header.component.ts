@@ -89,13 +89,8 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-    if (this.isFirstSendDate) {
-      this.realTimeWorks = true;
-      this.server.IsRealTimeListener.next(true); 
-    } else {
-      this.realTimeWorks = false;
-      this.server.IsRealTimeListener.next(false); 
-    }
+    this.realTimeWorks = this.isFirstSendDate;
+    this.server.IsRealTimeListener.next(this.isFirstSendDate); 
 
     this.isFirstSendDate = false;
     this.dateRangeEvent.emit(obj);
