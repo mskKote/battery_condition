@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
   });
   @Output() dateRangeEvent = new EventEmitter<any>();
   sendDateRange(tRange: any) {
-    let obj = { };
+    let obj = {};
     if(typeof tRange == 'object') {
       obj = {
         start: new Date(tRange.start.toString()
@@ -68,22 +68,22 @@ export class HeaderComponent implements OnInit {
         end: new Date(tRange.end.toString()
                 .replace(/\d\d:\d\d:\d\d/, `${this.timeEnd ? this.timeEnd.hour   : '14'}:
                                             ${this.timeEnd ? this.timeEnd.minute : '00'}:00`)),
-        timeStart: this.timeStart,
-        timeEnd: this.timeEnd
+        // timeStart: this.timeStart,
+        // timeEnd: this.timeEnd
       }
+      // console.log(obj);
     } else if(typeof tRange == 'number') {
       obj = {
         start: new Date(tRange),
         end: new Date(),
-        timeStart: this.timeStart
+        // timeStart: this.timeStart
       }
     }
 
     if (this.isFirstSendDate) {
       this.realTimeWorks = true;
       this.server.IsRealTimeListener.next(true); 
-    }
-    else {
+    } else {
       this.realTimeWorks = false;
       this.server.IsRealTimeListener.next(false); 
     }

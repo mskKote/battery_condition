@@ -196,6 +196,9 @@ export class ServerService {
       start_time +
       '&end_time=' +
       end_time;
+      // '&data=' +
+      // data
+
     console.log('REQUEST URL >> ', str);
     return this.http.get<board[]>(str);
   }
