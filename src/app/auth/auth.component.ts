@@ -31,6 +31,11 @@ export class AuthComponent implements OnInit {
 
   authForm: FormGroup
   ngOnInit(): void {
+    if(this.isAuth){
+      setTimeout(() => {
+        this.router.navigate(['dashboard'])
+      }, 1000)
+    }
     this.authForm = new FormGroup({
       username: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
