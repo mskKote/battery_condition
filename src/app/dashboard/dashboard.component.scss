@@ -63,28 +63,32 @@ md-tab {
   border: solid 2px #a5a5a5;
   background-color: #a5a5a5;
   outline: none;
-
-  i {
+  color: white;
+  font-weight: bold;
+  span{
     pointer-events: none;
-    display: block;
-    position: relative;
-    top: 0;
-    left: -2px;
-    width: 20px;
-    height: 20px;
-    border-radius: 7px;
-    background-color: #fff;
-
-    transition: 0.2s;
   }
+  // i {
+  //   pointer-events: none;
+  //   display: block;
+  //   position: relative;
+  //   top: 0;
+  //   left: -2px;
+  //   width: 20px;
+  //   height: 20px;
+  //   border-radius: 7px;
+  //   background-color: #fff;
+
+  //   transition: 0.2s;
+  // }
 }
 #toggle_contactor.clicked,
 #toggle_balancing.clicked {
   border-color: red;
   background-color: red;
-  i {
-    left: 16px;
-  }
+  // i {
+  //   left: 16px;
+  // }
 }
 // Индикация переключения авторежима
 .indicator {
