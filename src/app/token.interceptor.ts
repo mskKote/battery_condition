@@ -67,6 +67,7 @@ export class TokenInterceptor implements HttpInterceptor {
           console.log('h401E catch err >> ', err);
           this.isRefreshing = false;
           localStorage.clear();
+          this.server.IsAuthored.next(false);
           this.router.navigate(['auth'])
           return of(null);
         })
