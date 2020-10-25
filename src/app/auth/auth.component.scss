@@ -13,3 +13,8 @@ mat-card{
 .allready-auth{
   height: auto;
 }
+@media (max-width: 420px){
+  mat-card{
+    width: 100%;
+  }
+}
