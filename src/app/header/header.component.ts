@@ -54,10 +54,8 @@ export class HeaderComponent implements OnInit {
     this.server.getBoardsIds()
     .then((data) =>
       data.subscribe(ids => {
-        server.boards_ids = ids;
-        for (const id of ids) {
-          console.log('id :>> ', id);
-        }
+        server.boards_ids = ids.boards;
+        // console.log(server.boards_ids);
       })
     );
   }
@@ -112,7 +110,10 @@ export class HeaderComponent implements OnInit {
   }
 
   @Output() sendBatteryIndexEvent = new EventEmitter<any>();
-  sendBatteryIndex(index:number) {
+  sendBatteryIndex(index: string) {
+    // console.log('sendBatteryIndex >> ', index);
+    // console.log('boards >> ', this.server.boards_ids);
+    // ServerService.BOARD_ID = index;
     this.sendBatteryIndexEvent.emit(index);
   }
 

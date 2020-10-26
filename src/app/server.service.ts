@@ -50,6 +50,9 @@ export interface data {
   // temperatures: number[];
   // timestamp: Timestamp<number>;
 }
+export interface boards {
+  boards: string[]
+}
 // export class totals {
 //   data: total[];
 //   timestamp: number;
@@ -75,15 +78,17 @@ export interface data {
 export class ServerService {
  static HOST = 'http://80.89.235.39';
   // static HOST = 'http://localhost:4200/api';
-  static BOARD_ID = '3737574e430234305d8ff36';
+  // static BOARD_ID = '3737574e430234305d8ff36';
+  static BOARD_ID = ''; // выбранная батарея
   // public datas: totals[];
-  public boards_ids = ['3737574e430234305d8ff36'];
-  async getBoardsIds(): Promise<Observable<string[]>> {
+  // public boards_ids = ['3737574e430234305d8ff36'];
+  public boards_ids = [];
+  async getBoardsIds(): Promise<Observable<boards>> {
 
-    const URL: string = ServerService.HOST + '/api/bms/boards_ids'; // Поменять URL
+    const URL: string = ServerService.HOST + '/api/boards'; // Поменять URL
 
-    console.log('REQUEST URL >> ', URL);
-    return this.http.get<string[]>(URL);
+    // console.log('REQUEST URL >> ', URL);
+    return this.http.get<boards>(URL);
   }
   //isToggledBalancingListener = new BehaviorSubject(false);
   isToggledBalancing;
