@@ -151,8 +151,11 @@ export class DashboardComponent implements OnInit {
   receiveBatteryIndex(index: string) {
     // this.batteryIndex = index;
     // console.log('receiveBatteryIndex >> ', index);
-    this.nullify()
-    ServerService.BOARD_ID = index;
+    this.source.unsubscribe();
+    this.nullify();
+    console.log('index :>> ', index, ServerService.BOARD_ID);
+    this.intrvalSub();
+    // ServerService.BOARD_ID = index;
   }
 
   nullify() {
@@ -453,7 +456,7 @@ export class DashboardComponent implements OnInit {
   isSmallScreen;
   isXSmallScreen;
 
-  source;
+  source: Subscription;
   intrvalSub() {
     this.BoardLast = this.server.getLastBmsQuery();
     this.source = interval(1000).subscribe((val) => {
