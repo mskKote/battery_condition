@@ -570,9 +570,12 @@ export class DashboardComponent implements OnInit {
       total_voltage_value += battery1 + battery2;
     }
 
+    let singleVal = ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100;
+    if (singleVal < 52.5) { singleVal = 0 };
+    console.log(total_voltage_value);
     this.single.push({
       name: 'Заряд батареи',
-      value: Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100)
+      value: Math.floor(singleVal)
     });
     this.addTimePoint(this.single_ACDC, {
       value: `${total_voltage_value}`,
