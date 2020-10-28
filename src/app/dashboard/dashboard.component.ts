@@ -153,7 +153,6 @@ export class DashboardComponent implements OnInit {
     // console.log('receiveBatteryIndex >> ', index);
     this.source.unsubscribe();
     this.nullify();
-    console.log('index :>> ', index, ServerService.BOARD_ID);
     this.intrvalSub();
     // ServerService.BOARD_ID = index;
   }

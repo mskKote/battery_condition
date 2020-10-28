@@ -50,11 +50,18 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  board_default: string;
   constructor(public server: ServerService) {
+    this.server.board_id_emit.subscribe(resp => this.board_default = resp);
+    
     this.server.getBoardsIds()
     .then((data) =>
       data.subscribe(ids => {
         server.boards_ids = ids.boards;
+
+        this.board_default = "3737574e430254305d9ff36";
+        this.server.board_id_emit.next(this.board_default); // По умолчанию
+        
         //ServerService.BOARD_ID = server.boards_ids[0];
         // server.board_id_emit.next(server.boards_ids[0]);
         // console.log(server.boards_ids);
@@ -113,8 +120,9 @@ export class HeaderComponent implements OnInit {
 
   @Output() sendBatteryIndexEvent = new EventEmitter<any>();
   sendBatteryIndex(index: string) {
-    console.log('sendBatteryIndex >> ', index);
+    // console.log('sendBatteryIndex >> ', index);
     this.server.board_id_emit.next(index);
+
     // console.log('boards >> ', this.server.boards_ids);
     // ServerService.BOARD_ID = index;
     this.sendBatteryIndexEvent.emit(index);

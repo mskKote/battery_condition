@@ -76,8 +76,8 @@ export interface boards {
   providedIn: 'root',
 })
 export class ServerService {
- static HOST = 'http://80.89.235.39';
-  //static HOST = 'http://localhost:4200/api';
+  static HOST = 'http://80.89.235.39';
+//  static HOST = 'http://localhost:4200/api';
   // static BOARD_ID = '3737574e430234305d8ff36';
   static BOARD_ID  = ''; // выбранная батарея
   public board_id_emit: BehaviorSubject<string>; 
@@ -173,7 +173,7 @@ export class ServerService {
     this.IsAuthored = new BehaviorSubject(false);
     this.IsRealTimeListener = new BehaviorSubject(true);
     this.IsRealTimeListener.subscribe((x) => (this.IsRealTime = x));
-    this.board_id_emit = new BehaviorSubject("");
+    this.board_id_emit = new BehaviorSubject("3737574e430254305d9ff36");
     this.board_id_emit.subscribe(resp => ServerService.BOARD_ID = resp);
   }
   boardLast: Observable<board>;
@@ -184,9 +184,9 @@ export class ServerService {
   // запрос на сервер с помощью фетча
   getLastBmsQuery(): Observable<board> {
     //output: 0,1,2,3,4,5....
-    console.log('getLastBmsQuery :>> ', ServerService.BOARD_ID);
+    // console.log('getLastBmsQuery :>> ', ServerService.BOARD_ID);
     const str: string = ServerService.HOST + '/api/bms/last' + '?board_id=' + ServerService.BOARD_ID;
-    console.log('str :>> ', str);
+    // console.log('str :>> ', str);
     this.boardLast = this.http.get<board>(str);
     // console.log('bms last resp >> ', this.boardLast);
     // this.boardLast.pipe(tap((resp) => {console.log('bms last resp >> ', resp);}))

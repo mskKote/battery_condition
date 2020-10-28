@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>Батарея №</mat-label>
-  <mat-select>
+  <mat-select [(value)]="board_default">
     <mat-option *ngFor="let id of server.boards_ids" [value]="id">
       <button
         (click)="sendBatteryIndex(id)"
