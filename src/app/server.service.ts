@@ -77,10 +77,10 @@ export interface boards {
 })
 export class ServerService {
   static HOST = 'http://80.89.235.39';
-//  static HOST = 'http://localhost:4200/api';
+  //static HOST = 'http://localhost:4200/api';
   // static BOARD_ID = '3737574e430234305d8ff36';
   static BOARD_ID  = ''; // выбранная батарея
-  public board_id_emit: BehaviorSubject<string>; 
+  public board_id_emit: BehaviorSubject<string>;
   // public datas: totals[];
   // public boards_ids = ['3737574e430234305d8ff36'];
   public boards_ids = [];
@@ -173,7 +173,7 @@ export class ServerService {
     this.IsAuthored = new BehaviorSubject(false);
     this.IsRealTimeListener = new BehaviorSubject(true);
     this.IsRealTimeListener.subscribe((x) => (this.IsRealTime = x));
-    this.board_id_emit = new BehaviorSubject("3737574e430254305d9ff36");
+    this.board_id_emit = new BehaviorSubject("3737574e430251305d3ff36");
     this.board_id_emit.subscribe(resp => ServerService.BOARD_ID = resp);
   }
   boardLast: Observable<board>;
