@@ -114,7 +114,7 @@ export class DashboardComponent implements OnInit {
       console.log(
         Math.floor(+this.dateRange['start'] / 1000),
         Math.floor(+this.dateRange['end'] / 1000),
-        Math.floor(+this.dateRange['end'] / 1000) - Math.floor(+this.dateRange['start'] / 1000) 
+        Math.floor(+this.dateRange['end'] / 1000) - Math.floor(+this.dateRange['start'] / 1000)
       );
       console.log(
         `start: ${new Date(+this.dateRange['start'])}`,
@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit {
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
     this.multi_ACDC_21_30 = [];
-    
+
     this.deltaLast = 0.0;
 
     for (let i = 0; i < 30; i++) {
@@ -182,7 +182,7 @@ export class DashboardComponent implements OnInit {
     this.single_ACDC =  [{ name: 'Заряд батареи', series: [] }];
     this.balance =      [{ name: 'Балансировка', series: [] }];
     this.contactor =    [{ name: 'Контактор', series: [] }];
-    this.delta =        [{ name: 'ΔV', series: [] }];  
+    this.delta =        [{ name: 'ΔV', series: [] }];
     this.multi =  [];
     this.single = [];
   }
@@ -226,6 +226,9 @@ export class DashboardComponent implements OnInit {
   batteryCharge(charge: any) {
     return charge + '%';
   }
+  // в 24 чаосвой формат
+  to24hour(val:Date){
+    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()  }
   //Линиии
   yAxisTickFormattingLine(val: any) {
     if (val == '0') {

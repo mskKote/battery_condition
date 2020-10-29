@@ -91,6 +91,7 @@
                 <mat-tab label="1 - 10">
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
+                    [xAxisTickFormatting] = "to24hour"
                       [roundDomains]="false"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
@@ -111,6 +112,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
+
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -130,6 +132,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
+
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -150,6 +153,7 @@
                     <ngx-charts-line-chart
                       [roundDomains]="false"
                       [autoScale]="true"
+
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
                       [timeline]="showTimeline"
@@ -240,7 +244,7 @@
           <mat-tab label="История">
             <ng-template matTabContent>
               <ngx-charts-line-chart
-                [showXAxisLabel]="showXAxisLabel"
+              [xAxisTickFormatting] = "to24hour"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="'Заряд батареи'"
                 [yAxisLabel]="'Заряд батареи'"
@@ -298,7 +302,7 @@
       <ngx-charts-line-chart
         [roundDomains]="true"
         [yAxisTickFormatting]="ChangeTemp"
-        [showXAxisLabel]="showXAxisLabel"
+        [xAxisTickFormatting] = "to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [yAxisLabel]="'Температура'"
         [xAxisLabel]="'Температура'"
@@ -330,7 +334,7 @@
     >
       <ngx-charts-line-chart
         [scheme]="colorChange_ACDC"
-        [showXAxisLabel]="showXAxisLabel"
+        [xAxisTickFormatting] = "to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [yAxisLabel]="'Сила тока'"
         [xAxisLabel]="'Сила тока'"
@@ -427,7 +431,7 @@
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
-        [showXAxisLabel]="showXAxisLabel"
+        [xAxisTickFormatting] = "to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="'Контактор'"
         [yAxisLabel]="'Контактор'"
@@ -511,7 +515,7 @@
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
-        [showXAxisLabel]="showXAxisLabel"
+        [xAxisTickFormatting] = "to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="'Балансировка'"
         [yAxisLabel]="'Балансировка'"
