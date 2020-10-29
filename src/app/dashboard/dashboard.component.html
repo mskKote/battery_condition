@@ -112,7 +112,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
-
+                      [xAxisTickFormatting] = "to24hour"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -132,7 +132,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
-
+                      [xAxisTickFormatting] = "to24hour"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -153,7 +153,7 @@
                     <ngx-charts-line-chart
                       [roundDomains]="false"
                       [autoScale]="true"
-
+                      [xAxisTickFormatting] = "to24hour"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
                       [timeline]="showTimeline"
