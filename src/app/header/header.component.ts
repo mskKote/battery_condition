@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   @Output() activateRealTimeEvent = new EventEmitter<boolean>()
   toRealTime(e: any) {
     e.preventDefault();
-    this.server.IsRealTimeListener.next(true); 
+    this.server.IsRealTimeListener.next(true);
 
     this.clickedBtnRT = e.target;
     if(!this.realTimeWorks)
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   receiveTimeEnd(e: any) {
     this.timeEnd = e;
     if(this.timeEnd && this.timeStart) {
-      
+
       this.sendDateRange({
         // new Date().getTime() - 60000
         start: (this.obj ? this.obj.start : new Date()),
@@ -53,15 +53,15 @@ export class HeaderComponent implements OnInit {
   board_default: string;
   constructor(public server: ServerService) {
     this.server.board_id_emit.subscribe(resp => this.board_default = resp);
-    
+
     this.server.getBoardsIds()
     .then((data) =>
       data.subscribe(ids => {
         server.boards_ids = ids.boards;
 
-        this.board_default = "3737574e430254305d9ff36";
+        this.board_default = "3737574e430251305d3ff36";
         this.server.board_id_emit.next(this.board_default); // По умолчанию
-        
+
         //ServerService.BOARD_ID = server.boards_ids[0];
         // server.board_id_emit.next(server.boards_ids[0]);
         // console.log(server.boards_ids);
@@ -97,7 +97,7 @@ export class HeaderComponent implements OnInit {
     }
 
     this.realTimeWorks = this.isFirstSendDate;
-    this.server.IsRealTimeListener.next(this.isFirstSendDate); 
+    this.server.IsRealTimeListener.next(this.isFirstSendDate);
 
     this.isFirstSendDate = false;
     this.dateRangeEvent.emit(obj);
