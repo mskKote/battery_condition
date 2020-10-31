@@ -60,14 +60,14 @@ export class DashboardComponent implements OnInit {
       // this.turnModeContactor = !this.turnModeContactor;
       // this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'A' : 'P';
       let state = !this.turnModeContactor;
-      this.server.modeContactorStateReg(state);
+      this.server.modeContactorStateReg(this.contactorTog, state);
     }
 
     if (this.clickedBtnTurn.id == 'modeBalancing') {
       // this.turnModeBalancing = !this.turnModeBalancing;
       // this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'A' : 'P';
       let state = !this.turnModeBalancing;
-      this.server.modeBalancerStateReg(state);
+      this.server.modeBalancerStateReg(this.balancingTog, state);
     }
   }
   onSwitch(e: any) {
@@ -88,13 +88,13 @@ export class DashboardComponent implements OnInit {
     if (e.target.classList.contains('contactor')) {
       // this.contactorTog = !this.contactorTog;
       let state = !this.contactorTog;
-      this.server.tgglrContactorStateReg(state);
+      this.server.tgglrContactorStateReg(state, this.turnModeContactor);
     }
 
     if (e.target.classList.contains('balancing')) {
       // this.balancingTog = !this.balancingTog;
       let state = !this.balancingTog;
-      this.server.tgglrBalancerStateReg(state);
+      this.server.tgglrBalancerStateReg(state, this.turnModeBalancing);
     }
   }
 

@@ -94,7 +94,7 @@ export class ServerService {
   //isToggledBalancingListener = new BehaviorSubject(false);
   isToggledBalancing;
   changedState: Observable<any>;
-  tgglrContactorStateReg(state: boolean) {
+  tgglrContactorStateReg(state: boolean, stateMode: boolean) {
     // 'http://80.89.235.39/api/contactor/3737574e430234305d8ff36/'
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID + '/';
@@ -105,14 +105,14 @@ export class ServerService {
     // };
     let contactor = new Contactor();
     contactor.contactor_close = state;
-    // contactor.contactor_override = true;
+    contactor.contactor_override = stateMode;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
       console.log('contactor changed: ' + state)
     );
   }
-  tgglrBalancerStateReg(state: boolean) {
+  tgglrBalancerStateReg(state: boolean, stateMode: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
@@ -121,7 +121,7 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let balancer = new Balancer();
-    // balancer.balancer_override = true;
+    balancer.balancer_override = stateMode;
     balancer.balancing_enable = state;
     const balancerStr = JSON.stringify(balancer);
     this.changedState = this.http.post(str, balancerStr);
@@ -129,7 +129,7 @@ export class ServerService {
       console.log('balancer changed: ' + state)
     );
   }
-  modeContactorStateReg(state: boolean) {
+  modeContactorStateReg(state: boolean, stateMode: boolean) {
     const str: string =
       ServerService.HOST + '/api/contactor/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + state + ' и пошел в ' + str);
@@ -138,15 +138,15 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let contactor = new Contactor();
-    // contactor.contactor_close = false;
-    contactor.contactor_override = state;
+    contactor.contactor_close = state;
+    contactor.contactor_override = stateMode;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('mode cont changed: ' + state)
+      console.log('mode cont changed: ' + stateMode)
     );
   }
-  modeBalancerStateReg(state: boolean) {
+  modeBalancerStateReg(state: boolean, stateMode: boolean) {
     const str: string =
       ServerService.HOST + '/api/balancer/' + ServerService.BOARD_ID + '/';
     // console.log('балансир сменился на: ' + !state + ' и пошел в ' + str);
@@ -155,13 +155,13 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let balancer = new Balancer();
-    balancer.balancer_override = state;
-    // balancer.balancing_enable = false;
+    balancer.balancer_override = stateMode;
+    balancer.balancing_enable = state;
     const balancerStr = JSON.stringify(balancer);
     console.log(balancer);
     this.changedState = this.http.post(str, balancerStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('mode bal changed: ' + state)
+      console.log('mode bal changed: ' + stateMode)
     );
   }
 
