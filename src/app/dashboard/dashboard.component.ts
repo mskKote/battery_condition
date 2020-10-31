@@ -511,7 +511,7 @@ export class DashboardComponent implements OnInit {
     let newACDC = data.current_ma / 1000;
     let dataArray: data[] = data.data;
     let voltages: number[] = [];
-    let contactor: boolean = !data.contactor0_closed;
+    let contactor: boolean = data.contactor0_closed;
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     let contactorOverride: boolean = data.controls.contactor_override;
