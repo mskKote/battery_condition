@@ -35,6 +35,7 @@ export interface board {
   // contactor1_closed: boolean;
   // contactor_close: boolean;
   contactor_override: boolean;
+  controls: any;
   // created_at: string;
   current_ma: number;
   data: data[];
@@ -76,8 +77,8 @@ export interface boards {
   providedIn: 'root',
 })
 export class ServerService {
-  static HOST = 'http://80.89.235.39';
-  //static HOST = 'http://localhost:4200/api';
+  // static HOST = 'http://80.89.235.39';
+  static HOST = 'http://localhost:4200/api';
   // static BOARD_ID = '3737574e430234305d8ff36';
   static BOARD_ID  = ''; // выбранная батарея
   public board_id_emit: BehaviorSubject<string>;
@@ -104,7 +105,7 @@ export class ServerService {
     // };
     let contactor = new Contactor();
     contactor.contactor_close = state;
-    contactor.contactor_override = true;
+    // contactor.contactor_override = true;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
@@ -120,7 +121,7 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let balancer = new Balancer();
-    balancer.balancer_override = true;
+    // balancer.balancer_override = true;
     balancer.balancing_enable = state;
     const balancerStr = JSON.stringify(balancer);
     this.changedState = this.http.post(str, balancerStr);
@@ -137,12 +138,12 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let contactor = new Contactor();
-    contactor.contactor_close = false;
+    // contactor.contactor_close = false;
     contactor.contactor_override = state;
     const contactorStr = JSON.stringify(contactor);
     this.changedState = this.http.post(str, contactorStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
+      console.log('mode cont changed: ' + state)
     );
   }
   modeBalancerStateReg(state: boolean) {
@@ -154,13 +155,13 @@ export class ServerService {
     //   withCredentials: true,
     // };
     let balancer = new Balancer();
-    balancer.balancer_override = !state;
-    balancer.balancing_enable = false;
+    balancer.balancer_override = state;
+    // balancer.balancing_enable = false;
     const balancerStr = JSON.stringify(balancer);
     console.log(balancer);
     this.changedState = this.http.post(str, balancerStr);
     this.isToggledBalancing = this.changedState.subscribe((resp) =>
-      console.log('balancer changed: ' + state)
+      console.log('mode bal changed: ' + state)
     );
   }
 

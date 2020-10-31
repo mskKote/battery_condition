@@ -91,7 +91,7 @@
                 <mat-tab label="1 - 10">
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
-                    [xAxisTickFormatting] = "to24hour"
+                      [xAxisTickFormatting]="to24hour"
                       [roundDomains]="false"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
@@ -100,7 +100,7 @@
                       [legend]="false"
                       [scheme]="colorScheme"
                       [schemeType]="'linear'"
-                      [gradient]="gradient" 
+                      [gradient]="gradient"
                       [xAxis]="xAxis"
                       [yAxis]="yAxis"
                       [results]="multi_ACDC_1_10"
@@ -112,7 +112,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
-                      [xAxisTickFormatting] = "to24hour"
+                      [xAxisTickFormatting]="to24hour"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -132,7 +132,7 @@
                   <ng-template matTabContent>
                     <ngx-charts-line-chart
                       [roundDomains]="false"
-                      [xAxisTickFormatting] = "to24hour"
+                      [xAxisTickFormatting]="to24hour"
                       [autoScale]="true"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
@@ -153,7 +153,7 @@
                     <ngx-charts-line-chart
                       [roundDomains]="false"
                       [autoScale]="true"
-                      [xAxisTickFormatting] = "to24hour"
+                      [xAxisTickFormatting]="to24hour"
                       [yAxisTickFormatting]="yAxisTickFormattingMultiACDC"
                       [animations]="false"
                       [timeline]="showTimeline"
@@ -244,7 +244,7 @@
           <mat-tab label="История">
             <ng-template matTabContent>
               <ngx-charts-line-chart
-              [xAxisTickFormatting] = "to24hour"
+                [xAxisTickFormatting]="to24hour"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="'Заряд батареи'"
                 [yAxisLabel]="'Заряд батареи'"
@@ -302,7 +302,7 @@
       <ngx-charts-line-chart
         [roundDomains]="true"
         [yAxisTickFormatting]="ChangeTemp"
-        [xAxisTickFormatting] = "to24hour"
+        [xAxisTickFormatting]="to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [yAxisLabel]="'Температура'"
         [xAxisLabel]="'Температура'"
@@ -334,7 +334,7 @@
     >
       <ngx-charts-line-chart
         [scheme]="colorChange_ACDC"
-        [xAxisTickFormatting] = "to24hour"
+        [xAxisTickFormatting]="to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [yAxisLabel]="'Сила тока'"
         [xAxisLabel]="'Сила тока'"
@@ -375,7 +375,7 @@
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        А
+        {{ turnModeContactor ? "А" : "Р" }}
       </button>
       <button
         *ngIf="server.IsRealTime"
@@ -431,7 +431,7 @@
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
-        [xAxisTickFormatting] = "to24hour"
+        [xAxisTickFormatting]="to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="'Контактор'"
         [yAxisLabel]="'Контактор'"
@@ -460,7 +460,7 @@
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        А
+        {{ turnModeBalancing ? "А" : "Р" }}
       </button>
       <button
         *ngIf="server.IsRealTime"
@@ -515,7 +515,7 @@
       <ngx-charts-line-chart
         [yAxisTickFormatting]="yAxisTickFormattingLine"
         [scheme]="colorChange"
-        [xAxisTickFormatting] = "to24hour"
+        [xAxisTickFormatting]="to24hour"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="'Балансировка'"
         [yAxisLabel]="'Балансировка'"

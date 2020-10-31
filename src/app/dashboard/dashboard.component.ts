@@ -46,10 +46,10 @@ export class DashboardComponent implements OnInit {
 
   clickedBtnToggle: HTMLElement;
   clickedBtnTurn: HTMLElement;
-  contactorTog: boolean = false;
-  balancingTog: boolean = false;
-  turnModeContactor: boolean = true;
-  turnModeBalancing: boolean = true;
+  contactorTog: boolean;
+  balancingTog: boolean;
+  turnModeContactor: boolean;
+  turnModeBalancing: boolean;
 
   turnMode(e: any) {
     e.preventDefault();
@@ -57,15 +57,17 @@ export class DashboardComponent implements OnInit {
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
-      this.turnModeContactor = !this.turnModeContactor;
-      this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'A' : 'P';
-      this.server.modeContactorStateReg(this.turnModeContactor);
+      // this.turnModeContactor = !this.turnModeContactor;
+      // this.clickedBtnTurn.innerHTML = this.turnModeContactor ? 'A' : 'P';
+      let state = !this.turnModeContactor;
+      this.server.modeContactorStateReg(state);
     }
 
     if (this.clickedBtnTurn.id == 'modeBalancing') {
-      this.turnModeBalancing = !this.turnModeBalancing;
-      this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'A' : 'P';
-      this.server.modeBalancerStateReg(this.turnModeBalancing);
+      // this.turnModeBalancing = !this.turnModeBalancing;
+      // this.clickedBtnTurn.innerHTML = this.turnModeBalancing ? 'A' : 'P';
+      let state = !this.turnModeBalancing;
+      this.server.modeBalancerStateReg(state);
     }
   }
   onSwitch(e: any) {
@@ -84,13 +86,15 @@ export class DashboardComponent implements OnInit {
   }
   confirmed(e: any) {
     if (e.target.classList.contains('contactor')) {
-      this.contactorTog = !this.contactorTog;
-      this.server.tgglrContactorStateReg(this.contactorTog);
+      // this.contactorTog = !this.contactorTog;
+      let state = !this.contactorTog;
+      this.server.tgglrContactorStateReg(state);
     }
 
     if (e.target.classList.contains('balancing')) {
-      this.balancingTog = !this.balancingTog;
-      this.server.tgglrBalancerStateReg(this.balancingTog);
+      // this.balancingTog = !this.balancingTog;
+      let state = !this.balancingTog;
+      this.server.tgglrBalancerStateReg(state);
     }
   }
 
@@ -510,8 +514,14 @@ export class DashboardComponent implements OnInit {
     let contactor: boolean = !data.contactor0_closed;
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
-    // let contactorOverride: boolean = data.contactor_override;
-    // let balancingOverride: boolean = data.balancer_override;
+    let contactorOverride: boolean = data.controls.contactor_override;
+    let balancingOverride: boolean = data.controls.balancer_override;
+
+    this.contactorTog = contactor;
+    this.balancingTog = balancing;
+    this.turnModeBalancing = balancingOverride;
+    this.turnModeContactor = contactorOverride;
+
     let boardsTemp: number[] = [];
     let timestamp: number = data.timestamp;
 
