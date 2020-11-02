@@ -414,8 +414,13 @@ export class DashboardComponent implements OnInit {
     }
 
     let singleVal = ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100;
+<<<<<<< HEAD
     if (singleVal < 52.5) singleVal = 0;
 
+=======
+    if (singleVal < 52.5) { singleVal = 0 };
+    // console.log(total_voltage_value);
+>>>>>>> 3c77a72643fdc6bcdf0e5982ac89f5410ed3d5d7
     this.single.push({
       name: 'Заряд батареи',
       value: Math.floor(singleVal)

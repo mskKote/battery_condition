@@ -16,7 +16,7 @@
 
 <!-- <br /> -->
 
-<mat-form-field>
+<mat-form-field id="lastSelect">
   <mat-label>За последние...</mat-label>
   <mat-select>
     <mat-option
@@ -34,7 +34,7 @@
       [value]="time"
     >
       <button
-        (click)="clickFilter($event); sendDateRange(timeRange[i])"
+        (click)="sendDateRange(timeRange[i])"
         [value]="timeRange[i]"
         type="button"
         class="btn btn-link"

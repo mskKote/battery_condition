@@ -1,5 +1,5 @@
 import { ServerService } from 'src/app/server.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { DateRange } from '@uiowa/date-range-picker';
 import { FormControl, FormGroup } from '@angular/forms';
 @Component({
@@ -12,16 +12,17 @@ export class HeaderComponent implements OnInit {
   realTimeBtnText = "LIVE";
   realTimeWorks: boolean = true;
   isFirstSendDate: boolean = true;
-  clickedBtnRT: HTMLElement;
+  // clickedBtnRT: HTMLElement;
 
   @Output() activateRealTimeEvent = new EventEmitter<boolean>()
   toRealTime(e: any) {
     e.preventDefault();
     this.server.IsRealTimeListener.next(true);
 
-    this.clickedBtnRT = e.target;
+    // this.clickedBtnRT = e.target;
     if(!this.realTimeWorks)
       this.realTimeWorks = true;
+      this.lastSelect.classList.add('onRealTime');
 
     this.activateRealTimeEvent.emit(true);
   }
@@ -97,6 +98,7 @@ export class HeaderComponent implements OnInit {
     }
 
     this.realTimeWorks = this.isFirstSendDate;
+    this.lastSelect.classList.remove('onRealTime');
     this.server.IsRealTimeListener.next(this.isFirstSendDate);
 
     this.isFirstSendDate = false;
@@ -117,11 +119,15 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-
+  
+  lastSelect: HTMLElement
   @Output() sendBatteryIndexEvent = new EventEmitter<any>();
   sendBatteryIndex(index: string) {
     // console.log('sendBatteryIndex >> ', index);
     this.server.board_id_emit.next(index);
+    if(!this.realTimeWorks)
+      this.realTimeWorks = true;
+      this.lastSelect.classList.add('onRealTime');
 
     // console.log('boards >> ', this.server.boards_ids);
     // ServerService.BOARD_ID = index;
@@ -129,18 +135,18 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  elClicked: any;
-  clickFilter(e: any) {
-    if (this.elClicked)
-      this.elClicked.classList.remove('clicked');
+  // elClicked: any;
+  // clickFilter(e: any) {
+  //   if (this.elClicked)
+  //     this.elClicked.classList.remove('clicked');
 
-    this.elClicked = e.target;
-    this.elClicked.classList.add('clicked');
-    // this.dateRange.start = new Date(+e.target.value);
-    // this.dateRange.end   = new Date();
-    // ServerService.start =this.dateRange.start;
-    // ServerService.end = this.dateRange.end;
-  }
+  //   this.elClicked = e.target;
+  //   this.elClicked.classList.add('clicked');
+  //   // this.dateRange.start = new Date(+e.target.value);
+  //   // this.dateRange.end   = new Date();
+  //   // ServerService.start =this.dateRange.start;
+  //   // ServerService.end = this.dateRange.end;
+  // }
 
   dateRange = new DateRange();
   maxDate = new Date();
@@ -150,6 +156,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.maxDate.setDate(this.maxDate.getDate());
+    this.lastSelect = document.querySelector('#lastSelect') as HTMLElement;
   }
 
   timeRange = [
