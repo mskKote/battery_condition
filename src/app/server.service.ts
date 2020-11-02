@@ -1,11 +1,9 @@
-import { Host, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Timestamp, Observable, BehaviorSubject } from 'rxjs';
-import { interval } from 'rxjs/internal/observable/interval';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, mapTo, tap } from 'rxjs/operators';
-import { ɵBrowserGetTestability } from '@angular/platform-browser';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+
 ///MODELS
 // export class Switcher{
 //     contactor_override: boolean;
@@ -77,8 +75,8 @@ export interface boards {
   providedIn: 'root',
 })
 export class ServerService {
-  // static HOST = 'http://80.89.235.39';
-  static HOST = 'http://localhost:4200/api';
+  static HOST = 'http://80.89.235.39';
+  // static HOST = 'http://localhost:4200/api';
   // static BOARD_ID = '3737574e430234305d8ff36';
   static BOARD_ID  = ''; // выбранная батарея
   public board_id_emit: BehaviorSubject<string>;
@@ -195,11 +193,7 @@ export class ServerService {
     return this.boardLast;
   }
 
-  async getDataQuery(
-    start_time = '1000',
-    end_time = '',
-    data = '100'
-  ): Promise<Observable<board[]>> {
+  async getDataQuery(start_time = '1000', end_time = ''): Promise<Observable<board[]>> {
     // Героическими усилиями осмысленно добавляем 3 часа
     // start_time = `${+start_time + 10800}`;
     // end_time = `${+end_time + 10800}`;
@@ -207,14 +201,11 @@ export class ServerService {
     console.log(new Date(+start_time * 1000), new Date(+end_time * 1000));
 
     const str: string =
-      ServerService.HOST +
-      '/api/bms?' +
-      '&start_time=' +
-      start_time +
-      '&end_time=' +
-      end_time;
-      // '&data=' +
-      // data
+      ServerService.HOST + '/api/bms?' +
+      '&start_time=' + start_time +
+      '&end_time=' + end_time +
+      // Добавляем в запрос батарею
+      '&board_id=' + ServerService.BOARD_ID;
 
     console.log('REQUEST URL >> ', str);
     return this.http.get<board[]>(str);

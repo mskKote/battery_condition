@@ -124,13 +124,10 @@ export class DashboardComponent implements OnInit {
         `start: ${new Date(+this.dateRange['start'])}`,
         `end: ${new Date(+this.dateRange['end'])}`
       );
-      this.server
-        .getDataQuery(
+      this.server.getDataQuery(
           `${Math.floor(+this.dateRange['start'] / 1000)}`,
-          `${Math.floor(+this.dateRange['end'] / 1000)}`,
-          '100'
-        )
-        .then((data) =>
+          `${Math.floor(+this.dateRange['end'] / 1000)}`
+        ).then((data) =>
           data.subscribe((resp) => {
             // console.group();
             // console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
@@ -231,17 +228,15 @@ export class DashboardComponent implements OnInit {
     return charge + '%';
   }
   // в 24 чаосвой формат
-  to24hour(val:Date){
-    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()  }
+  to24hour(val:Date) {
+    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()  
+  }
   //Линиии
   yAxisTickFormattingLine(val: any) {
-    if (val == '0') {
-      return 'Выкл';
-    }
-    if (val == '1') {
-      return 'Вкл';
-    }
+    if (val == '0') return 'Выкл';
+    if (val == '1') return 'Вкл';
   }
+
   showTimeline: boolean = true;
   linearCurveCardinal = shape.curveCardinal;
   linearCurveStep = shape.curveStepAfter;
@@ -275,170 +270,6 @@ export class DashboardComponent implements OnInit {
   deltaLast: number = 0.0;
   delta: any[] = [];
 
-  //---------------------------------------------------Раздел генерации значений
-  // static randomDate(start: Date, end: Date): Date {
-  //   return new Date(
-  //     start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  //   );
-  // }
-  // static randomNumber(start: number, end: number): number {
-  //   return start + Math.random() * (end - start);
-  // }
-  // Изменяю значения, расчётом на прежнее
-  // volatile -- вероятность смены значения
-  // static genBoolByPrevious(volatile): boolean {
-  //   return Math.random() > volatile;
-  // }
-
-  // Изменяем значения, НО с сохранением тренда с вероятностью volatile
-  // Может изменяться на variability
-  // Разворачивается при min и max
-  // @ Изменяем volatile и variability, чтобы сделать график более спокойным/буйным
-  // static getNumByPrevious(
-  //   prev: number,
-  //   volatile: number,
-  //   variability: number,
-  //   min: number,
-  //   max: number
-  // ): number {
-  //   // Предыдущее += знак*(изменяемость)
-  //   prev += (Math.random() > volatile ? 1 : -1) * (Math.random() * variability);
-  //   // Мы достигли дна. Принудительно останавливаем падение/рост
-  //   if (prev < min) {
-  //     prev = min;
-  //   } else if (prev > max) {
-  //     prev = max;
-  //   }
-  //   // Приступаем к развороту тренда, когда будет 10% до минимума или максимума
-  //   if (prev < min + (max - min) * 0.1) {
-  //     prev += (max - min) * AppComponent.randomNumber(0.03, 0.07);
-  //   } // Прибавляем от 3% до 7%
-  //   else if (prev > max - (max - min) * 0.1) {
-  //     prev -= (max - min) * AppComponent.randomNumber(0.03, 0.07);
-  //   }
-
-  //   return prev;
-  // }
-  // Генерит 1 партию данных с указанным timestamp
-  // temperature_gen: number[] = [
-  //   // Можно вручную задать стартовые значения
-  //   AppComponent.randomNumber(-40, 60),
-  //   AppComponent.randomNumber(-40, 60),
-  //   AppComponent.randomNumber(-40, 60),
-  //   AppComponent.randomNumber(-40, 60),
-  //   AppComponent.randomNumber(-40, 60),
-  // ];
-  // ACDC_gen: number = AppComponent.randomNumber(0, 1000);
-  // Итерация значений нужна, чтобы создавать кастомные изменения на графике
-  // iter: number = 0;
-
-  // total_voltage: number = 52.5;
-
-  // genData(timestamp: number) {
-
-  //   // Закидываем значения на график
-  //   this.addTimePoint(this.contactor, {
-  //     value: AppComponent.genBoolByPrevious(0.4) ? '1' : '0',
-  //     name: new Date(timestamp),
-  //   });
-  //   this.addTimePoint(this.balance, {
-  //     value: AppComponent.genBoolByPrevious(0.4) ? '1' : '0',
-  //     name: new Date(timestamp),
-  //   });
-  //   //---------Создаём параметры графиков
-  //   //3 примерно равных значения (+-1-3) + 1 сильный пик
-  //   if (this.iter < 5)
-  //     this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.7, 4, -40, 60);
-  //   else if (this.iter == 6 || this.iter == 8)
-  //     this.temperature_gen[0] += (Math.random() < 0.5 ? 1 : -1) * 40;
-  //   else
-  //     this.temperature_gen[0] = AppComponent.getNumByPrevious(this.temperature_gen[0], 0.5, 10, -40, 60);
-
-  //   if (this.temperature_gen[0] < -40) this.temperature_gen[0] = -40;
-  //   else if (this.temperature_gen[0] > 60) this.temperature_gen[0] = 60;
-  //   // Все равные значения (+-1)
-  //   this.temperature_gen[1] = AppComponent.getNumByPrevious(this.temperature_gen[1], 0.75, 1.5, -40, 60);
-  //   // Только пики +-30
-  //   this.temperature_gen[2] = AppComponent.getNumByPrevious(this.temperature_gen[2], 0.8, 30, -40, 60);
-  //   // Равномерно растущий и убывающий графики
-  //   this.temperature_gen[3] = AppComponent.getNumByPrevious(this.temperature_gen[3], 0.3, 5, -40, 60);
-  //   this.temperature_gen[4] = AppComponent.getNumByPrevious(this.temperature_gen[4], 0.3, 5, -40, 60);
-
-  //   for (let i = 0; i < this.time_temp0.length; i++) {
-  //     this.time_temp0[i].series.push({
-  //       value: `${Math.round(this.temperature_gen[i] * 100) / 100}`,
-  //       name: new Date(timestamp),
-  //     });
-  //   }
-
-  //   if (this.iter < 6)
-  //     this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 40);
-  //   else
-  //     this.ACDC_gen = AppComponent.getNumByPrevious(this.ACDC_gen, 0.7, 10, 15, 25);
-  //   this.addTimePoint(this.ACDC, {
-  //     value: `${this.ACDC_gen}`,
-  //     name: new Date(timestamp),
-  //   });
-
-  //   // Меняем цвета -- он вроде бы не обновляет значения...
-  //   this.colorChange.domain = ['#ff0000'];
-
-  //   this.colorChange_ACDC.domain = [];
-  //   this.colorChange_ACDC.domain.push([
-  //     ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF'][
-  //       Math.round((this.ACDC_gen - 15) / 5)
-  //     ],
-  //   ]);
-  //   this.iter++;
-  // }
-  // genGlobalCharts(
-  //   start = +Date.now() - 1000 * 60 * 10,
-  //   end = Date.now(),
-  //   amount = 10
-  // ) {
-  //   // Генерируем данные для 30 батарей --> общее
-  //   // Графикс c 30 батареями и total_voltage
-  //   this.total_voltage = 0;
-
-  //   for (let j = 0; j < 15; j++) {
-  //     const battery1 = AppComponent.randomNumber(1.75, 2.8);
-  //     const battery2 = AppComponent.randomNumber(1.75, 2.8);
-
-  //     this.multi.push({
-  //       name: (j + 1),
-  //       series: [
-  //         {
-  //           name: 'first',
-  //           value: battery1 - 1.75,
-  //           number: j * 2,
-  //         },
-  //         {
-  //           name: 'second',
-  //           value: battery2 - 1.75,
-  //           number: j * 2 + 1,
-  //         },
-  //       ],
-  //     });
-
-  //     this.total_voltage += battery1 + battery2;
-  //   }
-  //   this.single.push({
-  //     name: 'Заряд батареи',
-  //     value: Math.floor(((this.total_voltage - 30 * 1.75) / (30 * 1.05)) * 100),
-  //   });
-  //   // Цвет графика
-  //   this.colorChange_Total.domain = [
-  //     ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
-  //       Math.round(((this.total_voltage - 30 * 1.75) / (30 * 1.05)) * 5 - 1)
-  //     ],
-  //   ];
-
-  //   // Данные для остальных графиков
-  //   for (let i = amount; i > 0; i--) {
-  //     this.genData(end - ((end - start) / amount) * i);
-  //   }
-  // }
-
   addTimePoint(chart, point, index = 0) {
     chart[index].series.push(point);
     let buff = chart;
@@ -452,7 +283,6 @@ export class DashboardComponent implements OnInit {
   ) {
     server.IsAuthored.subscribe(resp => this.IsAuthored = resp);
     // this.nullify();
-    // this.genGlobalCharts();
   }
 
   BoardLast: Observable<board>;
@@ -535,7 +365,7 @@ export class DashboardComponent implements OnInit {
     // console.log("Дата из запроса: ", new Date(data.timestamp*1000));
     // console.groupCollapsed('data from JSON')
 
-    //console.log('dataArray >> ', dataArray);
+    // console.log('dataArray >> ', dataArray);
     // console.log('newACDC >> ', newACDC);
     // console.log('contactor >> ', contactor);
     // console.log('balancing >> ', balancing);
@@ -552,8 +382,8 @@ export class DashboardComponent implements OnInit {
     //------------------Дельты
     this.deltaLast = +(max - min).toFixed(2);
     this.addTimePoint(this.delta, {
-      value: `${this.deltaLast}`,//Math.floor(this.deltaLast * 100) / 100
-      name: new Date(timestamp * 1000),
+      value: `${this.deltaLast}`,
+      name: new Date(timestamp * 1000)
     });
     //------------------График с зарядом батареи
     this.multi = [];
@@ -584,8 +414,8 @@ export class DashboardComponent implements OnInit {
     }
 
     let singleVal = ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100;
-    if (singleVal < 52.5) { singleVal = 0 };
-    console.log(total_voltage_value);
+    if (singleVal < 52.5) singleVal = 0;
+
     this.single.push({
       name: 'Заряд батареи',
       value: Math.floor(singleVal)
@@ -597,9 +427,8 @@ export class DashboardComponent implements OnInit {
 
     this.colorChange_Total.domain = [
       // Цвет графика
-      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00'][
-        Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)
-      ],
+      ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
+      [Math.floor(((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 5)]
     ];
 
     //------------------Контактор и балансировка
@@ -615,8 +444,7 @@ export class DashboardComponent implements OnInit {
     // Добавляем значения на тогглеры
     this.contactorTog = contactor;
     this.balancingTog = balancing;
-
-
+    
     //------------------Сила тока
     this.addTimePoint(this.ACDC, {
       value: `${newACDC}`,
@@ -694,17 +522,17 @@ export class DashboardComponent implements OnInit {
       if (i < 10)
         this.multi_ACDC_1_10.push({
           name: 'Батарея №' + (i + 1),
-          series: [...buff[i]],
+          series: [...buff[i]]
         });
       else if (i < 20)
         this.multi_ACDC_11_20.push({
           name: 'Батарея №' + (i + 1),
-          series: [...buff[i]],
+          series: [...buff[i]]
         });
       else
         this.multi_ACDC_21_30.push({
           name: 'Батарея №' + (i + 1),
-          series: [...buff[i]],
+          series: [...buff[i]]
         });
     }
 
@@ -712,7 +540,7 @@ export class DashboardComponent implements OnInit {
     buff = this.single_ACDC[0].series;
     this.single_ACDC = [{
         name: 'Заряд батареи',
-        series: [...buff],
+        series: [...buff]
     }];
   }
 

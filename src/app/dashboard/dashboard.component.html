@@ -190,30 +190,7 @@
         </mat-tab-group>
       </div>
     </mat-grid-tile>
-    <!-- <mat-grid-tile
-      class="item"
-      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 4"
-      [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 19 : 5"
-    > -->
-    <!-- пары батареек -->
-    <!-- <div style="height: 100%; width: 100%">
-        <ngx-charts-line-chart
-          [roundDomains]="false"
-          [autoScale]="true"
-          [yAxisTickFormatting]="yAxisTickFormattingMulti"
-          [animations]="false"
-          [timeline]="showTimeline"
-          [legend]="false"
-          [scheme]="colorScheme"
-          [schemeType]="'linear'"
-          [gradient]="gradient"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [results]="multi_ACDC"
-        >
-        </ngx-charts-line-chart>
-      </div>
-    </mat-grid-tile> -->
+
     <mat-grid-tile
       [ngStyle]="{
         'box-shadow': '0px 4px 0px 0px ' + colorChange_Total.domain.toString()
@@ -270,30 +247,7 @@
         </mat-tab-group>
       </div>
     </mat-grid-tile>
-    <!-- <mat-grid-tile
-      class="item"
-      [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 4"
-      [rowspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 19 : 5"
-    > -->
-    <!-- пары батареек -->
-    <!-- <div style="height: 100%; width: 100%">
-        <ngx-charts-line-chart
-          [roundDomains]="false"
-          [autoScale]="true"
-          [yAxisTickFormatting]="yAxisTickFormattingMulti"
-          [animations]="false"
-          [timeline]="showTimeline"
-          [legend]="false"
-          [scheme]="colorScheme"
-          [schemeType]="'linear'"
-          [gradient]="gradient"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [results]="multi_ACDC"
-        >
-        </ngx-charts-line-chart>
-      </div>
-    </mat-grid-tile> -->
+
     <mat-grid-tile
       class="item"
       [colspan]="isSmallScreen || isXSmallScreen || isTabletScreen ? 6 : 2"
@@ -309,22 +263,12 @@
         [animations]="false"
         [timeline]="showTimeline"
         [legend]="false"
-        [scheme]="{
-          domain: [
-            '#18D8FF',
-            '#AFDAFC',
-            '#1F75FE',
-            '#0000FF',
-            '#CC0605',
-            '#C10020'
-          ]
-        }"
+        [scheme]="{ domain: ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020'] }"
         [schemeType]="'linear'"
         [gradient]="gradient"
         [xAxis]="xAxis"
         [yAxis]="yAxis"
-        [results]="time_temp0"
-      >
+        [results]="time_temp0">
       </ngx-charts-line-chart>
     </mat-grid-tile>
     <mat-grid-tile
@@ -339,16 +283,7 @@
         [yAxisLabel]="'Сила тока'"
         [xAxisLabel]="'Сила тока'"
         [legend]="false"
-        [scheme]="{
-          domain: [
-            '#000000',
-            '#011465',
-            '#1F75FE',
-            '#1845FF',
-            '#1888FF',
-            '#08E8DE'
-          ]
-        }"
+        [scheme]="{ domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE'] }"
         [schemeType]="'linear'"
         [gradient]="gradient"
         [timeline]="showTimeline"
@@ -357,8 +292,7 @@
         [yAxis]="yAxis"
         [roundDomains]="true"
         [yAxisTickFormatting]="ChangeAmper"
-        [results]="ACDC"
-      >
+        [results]="ACDC">
       </ngx-charts-line-chart>
     </mat-grid-tile>
     <mat-grid-tile
