@@ -184,7 +184,7 @@ export class ServerService {
   getLastBmsQuery(): Observable<board> {
     //output: 0,1,2,3,4,5....
     // console.log('getLastBmsQuery :>> ', ServerService.BOARD_ID);
-    const str: string = ServerService.HOST + '/api/bms/last' + '?board_id=' + ServerService.BOARD_ID;
+    const str: string = ServerService.HOST + '/api/bms/last?board_id=' + ServerService.BOARD_ID;
     // console.log('str :>> ', str);
     this.boardLast = this.http.get<board>(str);
     // console.log('bms last resp >> ', this.boardLast);

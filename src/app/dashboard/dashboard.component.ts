@@ -21,11 +21,12 @@ export interface Tile {
 export class DashboardComponent implements OnInit {
   isLastValTab: boolean = true;
   chooseTab(e: any){
-    if(!e.index) {
-      this.isLastValTab = true;
-    } else {
-      this.isLastValTab = false;
-    }
+    this.isLastValTab = !e.index; 
+    // if(!e.index) {
+    //   this.isLastValTab = true;
+    // } else {
+    //   this.isLastValTab = false;
+    // }
     // console.log(e);
   }
 
@@ -37,9 +38,7 @@ export class DashboardComponent implements OnInit {
   }
 
   formatLabel(value: number) {
-    if (value >= 1000) return value % 1000 + 'k'; //Math.round(value / 1000)
-
-    return value;
+    return value >= 1000 ? value % 1000 + 'k' : value;
   }
 
   //---------------------------------------------------Переключение тоглеров
@@ -112,7 +111,7 @@ export class DashboardComponent implements OnInit {
       this.server.IsRealTimeListener.next(false);
 
       this.nullify();
-
+      this.isFirst = true;
       this.dateRange = event;
       // let timeStart=  +this.dateRange['start'];
       console.log(
@@ -153,6 +152,7 @@ export class DashboardComponent implements OnInit {
     // this.batteryIndex = index;
     // console.log('receiveBatteryIndex >> ', index);
     this.source.unsubscribe();
+    this.isFirst = true;
     this.nullify();
     this.intrvalSub();
     // ServerService.BOARD_ID = index;
@@ -221,6 +221,7 @@ export class DashboardComponent implements OnInit {
     return (+val).toFixed(2) + 'V';
   }
   yAxisTickFormattingMulti2(val: any) {
+    // console.log('val', val, (52.5 + (84 - 52.5) * (val / 100)).toFixed(2) + 'V');
     return (52.5 + (84 - 52.5) * (val / 100)).toFixed(2) + 'V';
   }
 
@@ -327,6 +328,7 @@ export class DashboardComponent implements OnInit {
     // setInterval(() => { this.request(); } , 1000)
   }
   Now: string;
+  isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     // Десереализация -- начало
@@ -379,6 +381,10 @@ export class DashboardComponent implements OnInit {
       else if (max < voltages[i]) max = voltages[i];
     }
     // Десереализация -- конец
+    if (this.isFirst) {
+      this.nullify();
+      this.isFirst = false;
+    }
     //------------------Дельты
     this.deltaLast = +(max - min).toFixed(2);
     this.addTimePoint(this.delta, {
@@ -414,17 +420,19 @@ export class DashboardComponent implements OnInit {
     }
 
     let singleVal = ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100;
-    if (singleVal < 52.5) singleVal = 0;
-
+    
+    // if (singleVal < 52.5) singleVal = 0;
+    if (total_voltage_value < 52.5) singleVal = 0;
+    // console.log('singleVal', singleVal, 'total_voltage_value', total_voltage_value);
+    
     this.single.push({
       name: 'Заряд батареи',
-      value: Math.floor(singleVal)
+      value: singleVal.toFixed(2)//Math.floor(singleVal)
     });
     this.addTimePoint(this.single_ACDC, {
       value: `${total_voltage_value}`,
       name: new Date(timestamp * 1000),
     });
-
     this.colorChange_Total.domain = [
       // Цвет графика
       ['#ff0000', '#ffaf00', '#f9ff00', '#b0ff00', '#00ff00']
