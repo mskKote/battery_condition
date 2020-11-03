@@ -24,6 +24,7 @@ export class Tokens {
   refreshToken: string;
 }
 export interface board {
+  board_id: string;
   balancer_override: boolean;
   // balancing_enable: boolean;
   balancing_enabled: boolean;
@@ -76,7 +77,7 @@ export interface boards {
 })
 export class ServerService {
   static HOST = 'http://80.89.235.39';
-  // static HOST = 'http://localhost:4200/api';
+  //static HOST = 'http://localhost:4200/api';
   // static BOARD_ID = '3737574e430234305d8ff36';
   static BOARD_ID  = ''; // выбранная батарея
   public board_id_emit: BehaviorSubject<string>;

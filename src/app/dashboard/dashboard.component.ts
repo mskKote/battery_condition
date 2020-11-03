@@ -331,6 +331,8 @@ export class DashboardComponent implements OnInit {
   isFirst: boolean = true;
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
+    if (data.board_id != ServerService.BOARD_ID) return;
+
     // Десереализация -- начало
     this.Now = `${
         new Date(data.timestamp * 1000).getDate()}/${
