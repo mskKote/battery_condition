@@ -263,12 +263,22 @@
         [animations]="false"
         [timeline]="showTimeline"
         [legend]="false"
-        [scheme]="{ domain: ['#18D8FF', '#AFDAFC', '#1F75FE', '#0000FF', '#CC0605', '#C10020'] }"
+        [scheme]="{
+          domain: [
+            '#18D8FF',
+            '#AFDAFC',
+            '#1F75FE',
+            '#0000FF',
+            '#CC0605',
+            '#C10020'
+          ]
+        }"
         [schemeType]="'linear'"
         [gradient]="gradient"
         [xAxis]="xAxis"
         [yAxis]="yAxis"
-        [results]="time_temp0">
+        [results]="time_temp0"
+      >
       </ngx-charts-line-chart>
     </mat-grid-tile>
     <mat-grid-tile
@@ -283,7 +293,16 @@
         [yAxisLabel]="'Сила тока'"
         [xAxisLabel]="'Сила тока'"
         [legend]="false"
-        [scheme]="{ domain: ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#08E8DE'] }"
+        [scheme]="{
+          domain: [
+            '#000000',
+            '#011465',
+            '#1F75FE',
+            '#1845FF',
+            '#1888FF',
+            '#08E8DE'
+          ]
+        }"
         [schemeType]="'linear'"
         [gradient]="gradient"
         [timeline]="showTimeline"
@@ -292,7 +311,8 @@
         [yAxis]="yAxis"
         [roundDomains]="true"
         [yAxisTickFormatting]="ChangeAmper"
-        [results]="ACDC">
+        [results]="ACDC"
+      >
       </ngx-charts-line-chart>
     </mat-grid-tile>
     <mat-grid-tile
@@ -305,11 +325,11 @@
         *ngIf="server.IsRealTime"
         id="modeContactor"
         class="indicator"
-        [ngClass]="{ turnAutoOn: turnModeContactor }"
+        [ngClass]="{ turnAutoOn: !turnModeContactor }"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        {{ turnModeContactor ? "А" : "Р" }}
+        {{ turnModeContactor ? "Р" : "А" }}
       </button>
       <button
         *ngIf="server.IsRealTime"
@@ -390,11 +410,11 @@
         *ngIf="server.IsRealTime"
         id="modeBalancing"
         class="indicator"
-        [ngClass]="{ turnAutoOn: turnModeBalancing }"
+        [ngClass]="{ turnAutoOn: !turnModeBalancing }"
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        {{ turnModeBalancing ? "А" : "Р" }}
+        {{ turnModeBalancing ? "Р" : "А" }}
       </button>
       <button
         *ngIf="server.IsRealTime"
