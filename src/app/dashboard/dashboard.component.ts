@@ -77,11 +77,11 @@ export class DashboardComponent implements OnInit {
     // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
-    if (!this.turnModeContactor && this.clickedBtnToggle.id == 'toggle_contactor')
+    if (this.turnModeContactor && this.clickedBtnToggle.id == 'toggle_contactor')
       jQuery('#modal-contactor').modal('show');
 
     // Проверка статуса балансировки
-    if (!this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
+    if (this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
       jQuery('#modal-balancing').modal('show');
       this.clickedBtnToggle.setAttribute("disabled","true");
   }
