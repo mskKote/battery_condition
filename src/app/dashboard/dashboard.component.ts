@@ -20,6 +20,7 @@ export interface Tile {
 })
 export class DashboardComponent implements OnInit {
   isLastValTab: boolean = true;
+  ClickedTimeCheck: number;
   chooseTab(e: any) {
     this.isLastValTab = !e.index;
     // if(!e.index) {
@@ -104,6 +105,7 @@ export class DashboardComponent implements OnInit {
     this.clickedBtnToggle.disabled = true;
     this.clickedBtnToggle.setAttribute("class", "wait");
     this.timestampSaved = this.timestampGlobal;
+    this.ClickedTimeCheck = 1;
 
   }
 
@@ -353,9 +355,15 @@ export class DashboardComponent implements OnInit {
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     try {
-      if (this.timestampSaved != this.timestampGlobal) {
+      if (this.timestampSaved+5 < this.timestampGlobal&&this.ClickedTimeCheck) {
+        if (this.clickedBtnToggle.id == 'toggle_contactor')
+        this.clickedBtnToggle.setAttribute("class", this.balancingTog ? "":"clicked" );
+        // Проверка статуса балансировки
+        if (this.clickedBtnToggle.id == 'toggle_balancing')
         this.clickedBtnToggle.setAttribute("class", this.balancingTog ? "clicked" : "");
+
         this.clickedBtnToggle.disabled = false;
+        this.ClickedTimeCheck = 0;
       }
     } catch {
 
