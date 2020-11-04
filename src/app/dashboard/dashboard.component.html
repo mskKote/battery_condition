@@ -333,6 +333,7 @@
       </button>
       <button
         *ngIf="server.IsRealTime"
+
         id="toggle_contactor"
         [ngClass]="{ clicked: contactorTog }"
         (click)="onSwitch($event)"

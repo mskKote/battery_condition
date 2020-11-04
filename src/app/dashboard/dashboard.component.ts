@@ -357,7 +357,7 @@ export class DashboardComponent implements OnInit {
     try {
       if (this.timestampSaved+5 < this.timestampGlobal&&this.ClickedTimeCheck) {
         if (this.clickedBtnToggle.id == 'toggle_contactor')
-        this.clickedBtnToggle.setAttribute("class", this.balancingTog ? "":"clicked" );
+        this.clickedBtnToggle.setAttribute("class", this.contactorTog ? "clicked" : "" );
         // Проверка статуса балансировки
         if (this.clickedBtnToggle.id == 'toggle_balancing')
         this.clickedBtnToggle.setAttribute("class", this.balancingTog ? "clicked" : "");
