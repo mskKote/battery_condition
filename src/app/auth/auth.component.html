@@ -60,7 +60,7 @@
         />
         <mat-error>
           <span *ngIf="authForm.get('password').invalid && authForm.get('password').touched">
-            <span *ngIf="authForm.get('password').getError('required')">Не введён логин</span>
+            <span *ngIf="authForm.get('password').getError('required')">Не введён пароль</span>
             <span *ngIf="authForm.get('password').getError('incorrectData')">Некорректный логин или пароль</span>
             <span *ngIf="authForm.get('password').getError('incorrectPassword')">Некорректный пароль</span>
             <!-- <span *ngIf="incorrectDataCode == 100">Некорректный логин или пароль</span>
