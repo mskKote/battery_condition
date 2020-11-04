@@ -2,7 +2,7 @@ import { ServerService, board, data } from '../server.service';
 import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { interval } from 'rxjs/internal/observable/interval';
 // Если сделать стандартный импорт - вылетит ошибка, поэтому так
 declare var jQuery: any;
@@ -20,7 +20,7 @@ export interface Tile {
 })
 export class DashboardComponent implements OnInit {
   isLastValTab: boolean = true;
-  chooseTab(e: any){
+  chooseTab(e: any) {
     this.isLastValTab = !e.index;
     // if(!e.index) {
     //   this.isLastValTab = true;
@@ -42,7 +42,8 @@ export class DashboardComponent implements OnInit {
   }
 
   //---------------------------------------------------Переключение тоглеров
-
+  timestampSaved: number;
+  timestampGlobal: number;
   clickedBtnToggle: HTMLButtonElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean;
@@ -52,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   turnMode(e: any) {
     e.preventDefault();
-    console.log("turnMode "+ e);
+    console.log("turnMode " + e);
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
@@ -73,7 +74,7 @@ export class DashboardComponent implements OnInit {
   onSwitch(e: any) {
     e.preventDefault();
     this.clickedBtnToggle = e.target;
-    console.log("on switch "+e);
+    console.log("on switch " + e);
     // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
@@ -88,7 +89,7 @@ export class DashboardComponent implements OnInit {
 
   }
   confirmed(e: any) {
-    console.log("mew" ,e);
+    console.log("mew", e);
     if (e.target.classList.contains('contactor')) {
       // this.contactorTog = !this.contactorTog;
       let state = !this.contactorTog;
@@ -102,6 +103,7 @@ export class DashboardComponent implements OnInit {
     }
     this.clickedBtnToggle.disabled = true;
     this.clickedBtnToggle.setAttribute("class", "wait");
+    this.timestampSaved = this.timestampGlobal;
 
   }
 
@@ -111,7 +113,7 @@ export class DashboardComponent implements OnInit {
   receiveDateRange(event: any) {
     if (!this.isReceiveFirst) {
       // this.realTimeSubscription.next(false);
-      if(this.source){
+      if (this.source) {
         console.log(this.source);
         this.source.unsubscribe();
       }
@@ -132,22 +134,22 @@ export class DashboardComponent implements OnInit {
         `end: ${new Date(+this.dateRange['end'])}`
       );
       this.server.getDataQuery(
-          `${Math.floor(+this.dateRange['start'] / 1000)}`,
-          `${Math.floor(+this.dateRange['end'] / 1000)}`
-        ).then((data) =>
-          data.subscribe((resp) => {
-            // console.group();
-            // console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
-            this.nullify();
-            // console.groupCollapsed("Timestamps");
-            for (const dataset of resp) {
-              this.drawServerData(dataset);
-              // console.log(dataset.timestamp);
-            }
-            // console.groupEnd();
-            // console.groupEnd();
-          })
-        );
+        `${Math.floor(+this.dateRange['start'] / 1000)}`,
+        `${Math.floor(+this.dateRange['end'] / 1000)}`
+      ).then((data) =>
+        data.subscribe((resp) => {
+          // console.group();
+          // console.log("Разница между последним и первым в мс", resp[resp.length - 1].timestamp - resp[0].timestamp);
+          this.nullify();
+          // console.groupCollapsed("Timestamps");
+          for (const dataset of resp) {
+            this.drawServerData(dataset);
+            // console.log(dataset.timestamp);
+          }
+          // console.groupEnd();
+          // console.groupEnd();
+        })
+      );
     }
     this.isReceiveFirst = false;
     // this.nullify();
@@ -180,19 +182,19 @@ export class DashboardComponent implements OnInit {
 
     for (let i = 0; i < 30; i++) {
       if (i < 10)
-        this.multi_ACDC_1_10.push({  name: 'Сила тока ' + (i + 1), series: [] });
+        this.multi_ACDC_1_10.push({ name: 'Сила тока ' + (i + 1), series: [] });
       else if (i < 20)
         this.multi_ACDC_11_20.push({ name: 'Сила тока ' + (i + 1), series: [] });
       else
         this.multi_ACDC_21_30.push({ name: 'Сила тока ' + (i + 1), series: [] });
     }
 
-    this.ACDC =         [{ name: 'Сила тока', series: [] }];
-    this.single_ACDC =  [{ name: 'Заряд батареи', series: [] }];
-    this.balance =      [{ name: 'Балансировка', series: [] }];
-    this.contactor =    [{ name: 'Контактор', series: [] }];
-    this.delta =        [{ name: 'ΔV', series: [] }];
-    this.multi =  [];
+    this.ACDC = [{ name: 'Сила тока', series: [] }];
+    this.single_ACDC = [{ name: 'Заряд батареи', series: [] }];
+    this.balance = [{ name: 'Балансировка', series: [] }];
+    this.contactor = [{ name: 'Контактор', series: [] }];
+    this.delta = [{ name: 'ΔV', series: [] }];
+    this.multi = [];
     this.single = [];
   }
 
@@ -237,8 +239,8 @@ export class DashboardComponent implements OnInit {
     return charge + '%';
   }
   // в 24 чаосвой формат
-  to24hour(val:Date) {
-    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()
+  to24hour(val: Date) {
+    return val.getUTCHours() + 3 + ":" + val.getUTCMinutes() + ":" + val.getUTCSeconds()
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
@@ -305,7 +307,7 @@ export class DashboardComponent implements OnInit {
   intrvalSub() {
     this.BoardLast = this.server.getLastBmsQuery();
     this.source = interval(1000).subscribe((val) => {
-      this.BoardLast.subscribe((resp:board) => {
+      this.BoardLast.subscribe((resp: board) => {
         this.drawServerData(resp);
       });
     });
@@ -340,15 +342,9 @@ export class DashboardComponent implements OnInit {
   drawServerData(data: board) {
     // this.server.getDataQuery().then((data) => {
     if (data.board_id != ServerService.BOARD_ID) return;
-
+    this.timestampGlobal = data.timestamp;
     // Десереализация -- начало
-    this.Now = `${
-        new Date(data.timestamp * 1000).getDate()}/${
-        new Date(data.timestamp * 1000).getMonth() + 1}/${
-        new Date(data.timestamp * 1000).getFullYear()}  ${
-        new Date(data.timestamp * 1000).getHours()}:${
-        new Date(data.timestamp * 1000).getMinutes()}:${
-        new Date(data.timestamp * 1000).getSeconds()}`;
+    this.Now = `${new Date(data.timestamp * 1000).getDate()}/${new Date(data.timestamp * 1000).getMonth() + 1}/${new Date(data.timestamp * 1000).getFullYear()}  ${new Date(data.timestamp * 1000).getHours()}:${new Date(data.timestamp * 1000).getMinutes()}:${new Date(data.timestamp * 1000).getSeconds()}`;
 
     let newACDC = data.current_ma / 1000;
     let dataArray: data[] = data.data;
@@ -356,9 +352,12 @@ export class DashboardComponent implements OnInit {
     let contactor: boolean = data.contactor0_closed;
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
-    try{
-    this.clickedBtnToggle.setAttribute("class", this.balancingTog? "clicked":""  );
-  this.clickedBtnToggle.disabled = false;}catch{
+    try {
+      if (this.timestampSaved != this.timestampGlobal) {
+        this.clickedBtnToggle.setAttribute("class", this.balancingTog ? "clicked" : "");
+        this.clickedBtnToggle.disabled = false;
+      }
+    } catch {
 
     }
 
@@ -478,7 +477,7 @@ export class DashboardComponent implements OnInit {
     this.colorChange_ACDC.domain = [];
     this.colorChange_ACDC.domain.push([
       ['#000000', '#011465', '#1F75FE', '#1845FF', '#1888FF', '#18D8FF'][
-        Math.floor((newACDC - 15) / 5)
+      Math.floor((newACDC - 15) / 5)
       ],
     ]);
 
@@ -534,9 +533,9 @@ export class DashboardComponent implements OnInit {
     ////////////////////////////////
     buff = [];
     for (let i = 0; i < 30; i++) {
-      if (i < 10)      buff.push(this.multi_ACDC_1_10[i].series);
+      if (i < 10) buff.push(this.multi_ACDC_1_10[i].series);
       else if (i < 20) buff.push(this.multi_ACDC_11_20[i % 10].series);
-      else             buff.push(this.multi_ACDC_21_30[i % 10].series);
+      else buff.push(this.multi_ACDC_21_30[i % 10].series);
     }
     this.multi_ACDC_1_10 = [];
     this.multi_ACDC_11_20 = [];
@@ -563,8 +562,8 @@ export class DashboardComponent implements OnInit {
     ////////////////////////////////
     buff = this.single_ACDC[0].series;
     this.single_ACDC = [{
-        name: 'Заряд батареи',
-        series: [...buff]
+      name: 'Заряд батареи',
+      series: [...buff]
     }];
   }
 
