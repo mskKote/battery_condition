@@ -21,7 +21,7 @@ export interface Tile {
 export class DashboardComponent implements OnInit {
   isLastValTab: boolean = true;
   chooseTab(e: any){
-    this.isLastValTab = !e.index; 
+    this.isLastValTab = !e.index;
     // if(!e.index) {
     //   this.isLastValTab = true;
     // } else {
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
   turnMode(e: any) {
     e.preventDefault();
-
+    console.log("turnMode "+ e);
     this.clickedBtnTurn = e.target;
 
     if (this.clickedBtnTurn.id == 'modeContactor') {
@@ -68,11 +68,12 @@ export class DashboardComponent implements OnInit {
       let state = !this.turnModeBalancing;
       this.server.modeBalancerStateReg(this.balancingTog, state);
     }
+
   }
   onSwitch(e: any) {
     e.preventDefault();
     this.clickedBtnToggle = e.target;
-
+    console.log("on switch "+e);
     // this.server.isOverrideListener.next(true);
 
     // Проверка статуса контактора
@@ -82,8 +83,10 @@ export class DashboardComponent implements OnInit {
     // Проверка статуса балансировки
     if (!this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
       jQuery('#modal-balancing').modal('show');
+      this.clickedBtnToggle.setAttribute("disabled","true");
   }
   confirmed(e: any) {
+    console.log(e);
     if (e.target.classList.contains('contactor')) {
       // this.contactorTog = !this.contactorTog;
       let state = !this.contactorTog;
@@ -230,7 +233,7 @@ export class DashboardComponent implements OnInit {
   }
   // в 24 чаосвой формат
   to24hour(val:Date) {
-    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()  
+    return val.getUTCHours()+3+":"+val.getUTCMinutes()+":"+val.getUTCSeconds()
   }
   //Линиии
   yAxisTickFormattingLine(val: any) {
@@ -285,7 +288,7 @@ export class DashboardComponent implements OnInit {
     server.IsAuthored.subscribe(resp => this.IsAuthored = resp);
     // this.nullify();
   }
-
+  public balancingOverride: boolean;
   BoardLast: Observable<board>;
   isTabletScreen;
   isLargeScreen;
@@ -349,11 +352,11 @@ export class DashboardComponent implements OnInit {
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
     let contactorOverride: boolean = data.controls.contactor_override;
-    let balancingOverride: boolean = data.controls.balancer_override;
+    this.balancingOverride = data.controls.balancer_override;
 
     this.contactorTog = contactor;
     this.balancingTog = balancing;
-    this.turnModeBalancing = balancingOverride;
+    this.turnModeBalancing = this.balancingOverride;
     this.turnModeContactor = contactorOverride;
 
     let boardsTemp: number[] = [];
@@ -422,11 +425,11 @@ export class DashboardComponent implements OnInit {
     }
 
     let singleVal = ((total_voltage_value - 30 * 1.75) / (30 * 1.05)) * 100;
-    
+
     // if (singleVal < 52.5) singleVal = 0;
     if (total_voltage_value < 52.5) singleVal = 0;
     // console.log('singleVal', singleVal, 'total_voltage_value', total_voltage_value);
-    
+
     this.single.push({
       name: 'Заряд батареи',
       value: singleVal.toFixed(2)//Math.floor(singleVal)

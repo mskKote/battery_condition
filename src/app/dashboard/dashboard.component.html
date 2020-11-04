@@ -394,7 +394,7 @@
         title="Вкл./Выкл. автоматический режим"
         (click)="turnMode($event)"
       >
-        {{ turnModeBalancing ? "А" : "Р" }}
+        {{ !balancingOverride ? "А" : "Р" }}
       </button>
       <button
         *ngIf="server.IsRealTime"
