@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
 
   //---------------------------------------------------Переключение тоглеров
 
-  clickedBtnToggle: HTMLElement;
+  clickedBtnToggle: HTMLButtonElement;
   clickedBtnTurn: HTMLElement;
   contactorTog: boolean;
   balancingTog: boolean;
@@ -83,10 +83,12 @@ export class DashboardComponent implements OnInit {
     // Проверка статуса балансировки
     if (this.turnModeBalancing && this.clickedBtnToggle.id == 'toggle_balancing')
       jQuery('#modal-balancing').modal('show');
-      this.clickedBtnToggle.setAttribute("disabled","true");
+
+
+
   }
   confirmed(e: any) {
-    console.log(e);
+    console.log("mew" ,e);
     if (e.target.classList.contains('contactor')) {
       // this.contactorTog = !this.contactorTog;
       let state = !this.contactorTog;
@@ -98,6 +100,9 @@ export class DashboardComponent implements OnInit {
       let state = !this.balancingTog;
       this.server.tgglrBalancerStateReg(state, this.turnModeBalancing);
     }
+    this.clickedBtnToggle.disabled = true;
+    this.clickedBtnToggle.setAttribute("class", "wait");
+
   }
 
 
@@ -351,6 +356,12 @@ export class DashboardComponent implements OnInit {
     let contactor: boolean = data.contactor0_closed;
     //this.server.isToggledBalancingListener.next(data.contactor0_closed);
     let balancing: boolean = data.balancing_enabled; // балансировка есть во всех объектах даты, но балансировка синхронна, так что беру 1 значение
+    try{
+    this.clickedBtnToggle.setAttribute("class", this.balancingTog? "clicked":""  );
+  this.clickedBtnToggle.disabled = false;}catch{
+
+    }
+
     let contactorOverride: boolean = data.controls.contactor_override;
     this.balancingOverride = data.controls.balancer_override;
 
